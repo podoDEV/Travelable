@@ -1,3 +1,8 @@
+import 'package:emergency/data/repositories/CountryRepository.dart';
+import 'package:emergency/data/repositories/UserRepository.dart';
+import 'package:emergency/data/repositories/remote/CountryRemoteRepository.dart';
+import 'package:emergency/domain/CountryService.dart';
+import 'package:emergency/domain/usecases/CountryUseCase.dart';
 import 'package:flutter/material.dart';
 
 void main() => runApp(MyApp());
@@ -45,6 +50,13 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
+
+  CountryUseCase countryUseCase = CountryService(
+    CountryRepository(
+      CountryRemoteRepository()
+    ), 
+    UserRepository()
+  );
 
   void _incrementCounter() {
     setState(() {
@@ -97,6 +109,13 @@ class _MyHomePageState extends State<MyHomePage> {
             Text(
               '$_counter',
               style: Theme.of(context).textTheme.display1,
+            ),
+            FlatButton(
+              color: Colors.blue,
+              child: Text("read button", style: TextStyle(color : Colors.white)),
+              onPressed: (){
+                countryUseCase.allCountries();
+              },
             ),
           ],
         ),
