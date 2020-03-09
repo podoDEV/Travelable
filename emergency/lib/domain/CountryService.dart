@@ -9,7 +9,7 @@ class CountryService extends CountryUseCase {
   CountryRepositoryType countryRepository;
   UserRepositoryType userRepository;
   CountryService(this.countryRepository, this.userRepository);
-  
+
   @override
   Future<List<Country>> allCountries() async {
     var countries = await countryRepository.countries();
@@ -17,7 +17,7 @@ class CountryService extends CountryUseCase {
   }
 
   @override
-  Future<List<Country>> reservedCountries() async {
+  Future<List<Country>> subscribedCountries() async {
     var userId = await userRepository.userId();
     return countryRepository.countriesBy(userId);
   }
@@ -29,8 +29,12 @@ class CountryService extends CountryUseCase {
   }
 
   @override
-  void cancelReservation(Country country) {}
+  void subscribeNews(Country country, DateTime from, DateTime to) {
+    countryRepository.subscribe(country);
+  }
 
   @override
-  void reserveTrip(Country country, DateTime from, DateTime to) {}
+  void unsubscribe(Country country) {
+    countryRepository.unsubscribe(country);
+  }
 }
