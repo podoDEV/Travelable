@@ -19,7 +19,12 @@ class CountryRepository implements CountryRepositoryType {
   }
 
   @override
-  void removeCountryFromBy(String userId) {
-    remoteDataSource.deleteCountryFromBy(userId);
+  void subscribe(Country country) {
+    remoteDataSource.updateSubscription(country, true);
+  }
+
+  @override
+  void unsubscribe(Country country) {
+    remoteDataSource.updateSubscription(country, false);
   }
 }

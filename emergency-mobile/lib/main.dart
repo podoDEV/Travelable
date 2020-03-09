@@ -1,8 +1,14 @@
+import 'dart:async';
+import 'dart:io';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:emergency/data/helpers/FCM.dart';
 import 'package:emergency/data/repositories/CountryRepository.dart';
 import 'package:emergency/data/repositories/UserRepository.dart';
 import 'package:emergency/data/repositories/remote/CountryRemoteRepository.dart';
 import 'package:emergency/domain/CountryService.dart';
 import 'package:emergency/domain/usecases/CountryUseCase.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 
 void main() => runApp(MyApp());
@@ -49,14 +55,59 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  StreamSubscription iosSubscription;
   int _counter = 0;
 
   CountryUseCase countryUseCase = CountryService(
     CountryRepository(
-      CountryRemoteRepository()
+      CountryRemoteRepository(
+        Firestore.instance,
+        fcm
+      )
     ), 
     UserRepository()
   );
+
+  @override
+  void initState() {
+    super.initState();
+    if (Platform.isIOS) {
+      iosSubscription = fcm.onIosSettingsRegistered.listen((data) {
+        // save the token
+      });
+
+      fcm.requestNotificationPermissions(IosNotificationSettings());
+    }
+
+    fcm.configure(
+      onMessage: (Map<String, dynamic> message) async {
+        print("onMessage: $message");
+        showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            content: ListTile(
+              title: Text(message['notification']['title']),
+              subtitle: Text(message['notification']['body']),
+            ),
+            actions: <Widget>[
+              FlatButton(
+                child: Text('Ok'),
+                onPressed: () => Navigator.of(context).pop(),
+              ),
+            ],
+          ),
+        );
+      },
+      onLaunch: (Map<String, dynamic> message) async {
+          print("onLaunch: $message");
+          // TODO optional
+      },
+      onResume: (Map<String, dynamic> message) async {
+          print("onResume: $message");
+          // TODO optional
+      },
+    );
+  }
 
   void _incrementCounter() {
     setState(() {
