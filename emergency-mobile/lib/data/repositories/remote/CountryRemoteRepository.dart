@@ -12,17 +12,15 @@ class CountryRemoteRepository implements CountryRemoteDataSource {
 
   @override
   Future<List<Country>> getCountries() async {
-    QuerySnapshot querySnapshot = await firestore.collection("countries").getDocuments();
-    var countries = querySnapshot.documents.map((f) => Country(f.data["name"])).toList();
+    QuerySnapshot querySnapshot = await firestore.collection("contacts").getDocuments();
+    var countries = querySnapshot.documents.map((f) => Country.fromDocument(f)).toList();
     return countries;
   }
 
   @override
   Future<List<Country>> getCountriesBy(String userId) async {
     // TODO: filtering
-    QuerySnapshot querySnapshot = await firestore.collection("countries").getDocuments();
-    var countries = querySnapshot.documents.map((f) => Country(f.data["name"])).toList();
-    return countries;
+    return getCountries();
   }
 
   @override
