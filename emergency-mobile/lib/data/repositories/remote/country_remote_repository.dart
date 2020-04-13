@@ -1,7 +1,7 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:emergency/data/repositories/CountryDataSource.dart';
-import 'package:emergency/domain/entities/Country.dart';
+import 'package:emergency/data/repositories/country_datasource.dart';
+import 'package:emergency/domain/entities/country.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 
 class CountryRemoteRepository implements CountryRemoteDataSource {

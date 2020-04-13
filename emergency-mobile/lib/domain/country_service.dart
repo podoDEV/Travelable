@@ -1,8 +1,8 @@
 
-import 'package:emergency/domain/entities/Country.dart';
-import 'package:emergency/domain/repositories/CountryRepositoryType.dart';
-import 'package:emergency/domain/repositories/UserRepositoryType.dart';
-import 'package:emergency/domain/usecases/CountryUseCase.dart';
+import 'package:emergency/domain/entities/country.dart';
+import 'package:emergency/domain/repositories/country_repository_type.dart';
+import 'package:emergency/domain/repositories/user_repository_type.dart';
+import 'package:emergency/domain/usecases/country_usecase.dart';
 
 class CountryService extends CountryUseCase {
 

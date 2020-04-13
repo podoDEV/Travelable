@@ -1,5 +1,5 @@
 
-import 'package:emergency/domain/entities/Country.dart';
+import 'package:emergency/domain/entities/country.dart';
 
 abstract class CountryRepositoryType {
 

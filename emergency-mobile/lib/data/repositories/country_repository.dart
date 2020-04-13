@@ -1,7 +1,7 @@
 
-import 'package:emergency/data/repositories/CountryDataSource.dart';
-import 'package:emergency/domain/entities/Country.dart';
-import 'package:emergency/domain/repositories/CountryRepositoryType.dart';
+import 'package:emergency/data/repositories/country_datasource.dart';
+import 'package:emergency/domain/entities/country.dart';
+import 'package:emergency/domain/repositories/country_repository_type.dart';
 
 class CountryRepository implements CountryRepositoryType {
 

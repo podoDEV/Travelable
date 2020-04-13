@@ -2,7 +2,7 @@
 import 'dart:io';
 
 import 'package:device_info/device_info.dart';
-import 'package:emergency/domain/repositories/UserRepositoryType.dart';
+import 'package:emergency/domain/repositories/user_repository_type.dart';
 
 class UserRepository implements UserRepositoryType {
 

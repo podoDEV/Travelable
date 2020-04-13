@@ -3,11 +3,11 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:emergency/data/helpers/FCM.dart';
-import 'package:emergency/data/repositories/CountryRepository.dart';
-import 'package:emergency/data/repositories/UserRepository.dart';
-import 'package:emergency/data/repositories/remote/CountryRemoteRepository.dart';
-import 'package:emergency/domain/CountryService.dart';
-import 'package:emergency/domain/usecases/CountryUseCase.dart';
+import 'package:emergency/data/repositories/country_repository.dart';
+import 'package:emergency/data/repositories/user_repository.dart';
+import 'package:emergency/data/repositories/remote/country_remote_repository.dart';
+import 'package:emergency/domain/country_service.dart';
+import 'package:emergency/domain/usecases/country_usecase.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 
