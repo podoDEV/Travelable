@@ -1,11 +1,11 @@
-
 import 'package:emergency/data/repositories/country_datasource.dart';
 import 'package:emergency/domain/entities/country.dart';
+import 'package:emergency/domain/entities/notice.dart';
 import 'package:emergency/domain/repositories/country_repository_type.dart';
 
 class CountryRepository implements CountryRepositoryType {
-
   CountryRemoteDataSource remoteDataSource;
+
   CountryRepository(this.remoteDataSource);
 
   @override
@@ -14,17 +14,22 @@ class CountryRepository implements CountryRepositoryType {
   }
 
   @override
-  Future<List<Country>> countriesBy(String userId) {
-    return remoteDataSource.getCountriesBy(userId);
+  Future<Country> countriesBy(String userId) {
+    return remoteDataSource.getCountryBy(userId);
   }
 
   @override
-  void subscribe(Country country) {
-    remoteDataSource.updateSubscription(country, true);
+  Future<bool> pinCountry(String countryId) {
+    return remoteDataSource.pinCountry(countryId);
   }
 
   @override
-  void unsubscribe(Country country) {
-    remoteDataSource.updateSubscription(country, false);
+  Future<bool> unpinCountry(String countryId) {
+    return remoteDataSource.unpinCountry(countryId);
+  }
+
+  @override
+  Future<List<Notice>> notices() {
+    return remoteDataSource.getNotices();
   }
 }

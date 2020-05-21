@@ -1,40 +1,54 @@
-
 import 'package:emergency/domain/entities/country.dart';
 import 'package:emergency/domain/repositories/country_repository_type.dart';
 import 'package:emergency/domain/repositories/user_repository_type.dart';
 import 'package:emergency/domain/usecases/country_usecase.dart';
 
-class CountryService extends CountryUseCase {
+import 'entities/notice.dart';
 
-  CountryRepositoryType countryRepository;
-  UserRepositoryType userRepository;
+class CountryService extends CountryUseCase {
+  final CountryRepositoryType countryRepository;
+  final UserRepositoryType userRepository;
+
+  List<Country> countries;
+
   CountryService(this.countryRepository, this.userRepository);
 
   @override
   Future<List<Country>> allCountries() async {
+    if (this.countries.isNotEmpty) {
+      return this.countries;
+    }
+
     var countries = await countryRepository.countries();
+    this.countries = countries;
     return countries;
   }
 
   @override
-  Future<List<Country>> subscribedCountries() async {
-    var userId = await userRepository.userId();
-    return countryRepository.countriesBy(userId);
+  Future<Country> country(String countryId) async {
+    var country = await countryRepository.countriesBy(countryId);
+    return country;
   }
 
   @override
-  Future<List<Country>> searchCountries(String name) async {
-    var countries = await countryRepository.countries();
+  Future<void> pin(String countryId) {
+    return countryRepository.pinCountry(countryId);
+  }
+
+  @override
+  Future<void> unpin(String countryId) {
+    return countryRepository.unpinCountry(countryId);
+  }
+
+  @override
+  Future<List<Country>> searchByName(String name) async {
+    var countries = await this.allCountries();
     return countries.where((f) => f.name.startsWith(name));
   }
 
   @override
-  void subscribeNews(Country country, DateTime from, DateTime to) {
-    countryRepository.subscribe(country);
-  }
-
-  @override
-  void unsubscribe(Country country) {
-    countryRepository.unsubscribe(country);
+  Future<List<Notice>> notices() async {
+    var notices = await countryRepository.notices();
+    return notices;
   }
 }
