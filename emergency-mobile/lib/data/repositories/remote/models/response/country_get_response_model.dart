@@ -5,6 +5,6 @@ class CountryGetResponseModel {
 
   CountryGetResponseModel({this.country});
 
-  factory CountryGetResponseModel.fromJson(Map<String, dynamic> json) =>
-      new CountryGetResponseModel(country: Country.fromJson(json));
+  factory CountryGetResponseModel.fromMap(Map<String, dynamic> map) =>
+      new CountryGetResponseModel(country: Country.fromMap(map));
 }

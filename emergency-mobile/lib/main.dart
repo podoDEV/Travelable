@@ -2,15 +2,9 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:emergency/data/helpers/FCM.dart';
-import 'package:emergency/data/repositories/country_repository.dart';
-import 'package:emergency/data/repositories/remote/country_remote_repository.dart';
-import 'package:emergency/data/repositories/remote/networking/api_provider.dart';
-import 'package:emergency/data/repositories/user_repository.dart';
-import 'package:emergency/domain/country_service.dart';
-import 'package:emergency/domain/usecases/country_usecase.dart';
+import 'package:emergency/factory/usecase_factory.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart';
 
 void main() => runApp(MyApp());
 
@@ -56,57 +50,11 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  StreamSubscription iosSubscription;
   int _counter = 0;
-
-  CountryUseCase countryUseCase = CountryService(
-    CountryRepository(
-      CountryRemoteRepository(
-        EGApiProvider(Client())
-      )
-    ), 
-    UserRepository()
-  );
 
   @override
   void initState() {
     super.initState();
-    if (Platform.isIOS) {
-      iosSubscription = fcm.onIosSettingsRegistered.listen((data) {
-        // save the token
-      });
-
-      fcm.requestNotificationPermissions(IosNotificationSettings());
-    }
-
-    fcm.configure(
-      onMessage: (Map<String, dynamic> message) async {
-        print("onMessage: $message");
-        showDialog(
-          context: context,
-          builder: (context) => AlertDialog(
-            content: ListTile(
-              title: Text(message['notification']['title']),
-              subtitle: Text(message['notification']['body']),
-            ),
-            actions: <Widget>[
-              FlatButton(
-                child: Text('Ok'),
-                onPressed: () => Navigator.of(context).pop(),
-              ),
-            ],
-          ),
-        );
-      },
-      onLaunch: (Map<String, dynamic> message) async {
-          print("onLaunch: $message");
-          // TODO optional
-      },
-      onResume: (Map<String, dynamic> message) async {
-          print("onResume: $message");
-          // TODO optional
-      },
-    );
   }
 
   void _incrementCounter() {
@@ -163,9 +111,18 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             FlatButton(
               color: Colors.blue,
-              child: Text("read button", style: TextStyle(color : Colors.white)),
-              onPressed: (){
-                countryUseCase.allCountries();
+              child:
+                  Text("login button", style: TextStyle(color: Colors.white)),
+              onPressed: () {
+                UseCaseFactory.userUseCase.login();
+              },
+            ),
+            FlatButton(
+              color: Colors.blue,
+              child: Text("countries button",
+                  style: TextStyle(color: Colors.white)),
+              onPressed: () {
+                UseCaseFactory.countryUseCase.allCountries();
               },
             ),
           ],
@@ -177,5 +134,61 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
+  }
+}
+
+class MessageHandler extends StatefulWidget {
+  @override
+  _MessageHandlerState createState() => _MessageHandlerState();
+}
+
+class _MessageHandlerState extends State<MessageHandler> {
+  StreamSubscription iosSubscription;
+
+  @override
+  void initState() {
+    super.initState();
+    if (Platform.isIOS) {
+      iosSubscription = fcm.onIosSettingsRegistered.listen((data) {
+        // save the token
+      });
+
+      fcm.requestNotificationPermissions(IosNotificationSettings());
+
+      fcm.configure(
+        onMessage: (Map<String, dynamic> message) async {
+          print("onMessage: $message");
+          showDialog(
+            context: context,
+            builder: (context) => AlertDialog(
+              content: ListTile(
+                title: Text(message['notification']['title']),
+                subtitle: Text(message['notification']['body']),
+              ),
+              actions: <Widget>[
+                FlatButton(
+                  child: Text('Ok'),
+                  onPressed: () => Navigator.of(context).pop(),
+                ),
+              ],
+            ),
+          );
+        },
+        onLaunch: (Map<String, dynamic> message) async {
+          print("onLaunch: $message");
+          // TODO optional
+        },
+        onResume: (Map<String, dynamic> message) async {
+          print("onResume: $message");
+          // TODO optional
+        },
+      );
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    // TODO: implement build
+    throw UnimplementedError();
   }
 }

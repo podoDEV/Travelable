@@ -1,10 +1,9 @@
+import 'package:emergency/data/repositories/remote/models/request/base_request.dart';
 import 'package:emergency/data/repositories/remote/models/request/country_unpin_post_request_model.dart';
 import 'package:emergency/data/repositories/remote/networking/content_encoding.dart';
 import 'package:emergency/data/repositories/remote/networking/http_method.dart';
 
-import '../networking/http_request.dart';
-
-class CountryUnpinPostRequest extends HttpRequestProtocol {
+class CountryUnpinPostRequest extends BaseRequest {
   final CountryUnpinPostRequestModel requestModel;
 
   CountryUnpinPostRequest(this.requestModel);
@@ -18,7 +17,7 @@ class CountryUnpinPostRequest extends HttpRequestProtocol {
   @override
   Map<String, String> get headers => {
         "content-type": "application/json",
-        "accept": "application/json",
+        "accept": "*/*",
       };
 
   @override

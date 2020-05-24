@@ -5,9 +5,9 @@ class CountriesGetResponseModel {
 
   CountriesGetResponseModel({this.countries});
 
-  factory CountriesGetResponseModel.fromJson(Map<String, dynamic> json) {
-    var list = json['data'] as List;
+  factory CountriesGetResponseModel.fromMap(Map<String, dynamic> map) {
+    var list = map['data'] as List;
     return new CountriesGetResponseModel(
-        countries: list.map((e) => Country.fromJson(e)).toList());
+        countries: list.map((e) => Country.fromMap(e)).toList());
   }
 }

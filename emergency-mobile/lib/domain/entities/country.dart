@@ -1,5 +1,5 @@
 class Country {
-  final int id;
+  final String id;
   final String name;
   final bool pinned;
 
@@ -11,11 +11,11 @@ class Country {
 
   Country({this.id, this.name, this.pinned});
 
-  factory Country.fromJson(Map<String, dynamic> json) {
-    return new Country(
-        id: json['id'],
-        name: json['name'],
-        pinned: json['pinned']
-    );
+  Map<String, dynamic> toMap() {
+    return {'id': id, 'name': name, 'pinned': pinned};
+  }
+
+  factory Country.fromMap(Map<String, dynamic> map) {
+    return new Country(id: map['id'], name: map['name'], pinned: map['pinned']);
   }
 }

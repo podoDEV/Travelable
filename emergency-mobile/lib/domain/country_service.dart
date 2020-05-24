@@ -1,17 +1,15 @@
 import 'package:emergency/domain/entities/country.dart';
 import 'package:emergency/domain/repositories/country_repository_type.dart';
-import 'package:emergency/domain/repositories/user_repository_type.dart';
 import 'package:emergency/domain/usecases/country_usecase.dart';
 
 import 'entities/notice.dart';
 
 class CountryService extends CountryUseCase {
   final CountryRepositoryType countryRepository;
-  final UserRepositoryType userRepository;
 
-  List<Country> countries;
+  List<Country> countries = [];
 
-  CountryService(this.countryRepository, this.userRepository);
+  CountryService(this.countryRepository);
 
   @override
   Future<List<Country>> allCountries() async {

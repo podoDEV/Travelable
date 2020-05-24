@@ -1,10 +1,9 @@
+import 'package:emergency/data/repositories/remote/models/request/base_request.dart';
 import 'package:emergency/data/repositories/remote/models/request/notices_get_request_model.dart';
 import 'package:emergency/data/repositories/remote/networking/content_encoding.dart';
 import 'package:emergency/data/repositories/remote/networking/http_method.dart';
 
-import '../networking/http_request.dart';
-
-class NoticesGetRequest extends HttpRequestProtocol {
+class NoticesGetRequest extends BaseRequest {
   final NoticesGetRequestModel requestModel;
 
   NoticesGetRequest(this.requestModel);
@@ -18,7 +17,7 @@ class NoticesGetRequest extends HttpRequestProtocol {
   @override
   Map<String, String> get headers => {
         "content-type": "application/json",
-        "accept": "application/json",
+        "accept": "*/*",
       };
 
   @override

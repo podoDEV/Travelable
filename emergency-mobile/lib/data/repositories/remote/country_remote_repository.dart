@@ -26,14 +26,14 @@ class CountryRemoteRepository implements CountryRemoteDataSource {
   Future<List<Country>> getCountries() async {
     final requestModel = CountriesGetRequestModel();
     final response = await provider.send(CountriesGetRequest(requestModel));
-    return CountriesGetResponseModel.fromJson(response).countries;
+    return CountriesGetResponseModel.fromMap(response).countries;
   }
 
   @override
   Future<Country> getCountryBy(String countryId) async {
     final requestModel = CountryGetRequestModel(countryId);
     final response = await provider.send(CountryGetRequest(requestModel));
-    return CountryGetResponseModel.fromJson(response).country;
+    return CountryGetResponseModel.fromMap(response).country;
   }
 
   @override
@@ -54,6 +54,6 @@ class CountryRemoteRepository implements CountryRemoteDataSource {
   Future<List<Notice>> getNotices() async {
     final requestModel = NoticesGetRequestModel();
     final response = await provider.send(NoticesGetRequest(requestModel));
-    return NoticesGetResponseModel.fromJson(response).notices;
+    return NoticesGetResponseModel.fromMap(response).notices;
   }
 }

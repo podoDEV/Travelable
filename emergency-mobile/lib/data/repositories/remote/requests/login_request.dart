@@ -1,18 +1,18 @@
 import 'package:emergency/data/repositories/remote/models/request/base_request.dart';
-import 'package:emergency/data/repositories/remote/models/request/country_pin_post_request_model.dart';
+import 'package:emergency/data/repositories/remote/models/request/login_request_model.dart';
 import 'package:emergency/data/repositories/remote/networking/content_encoding.dart';
 import 'package:emergency/data/repositories/remote/networking/http_method.dart';
 
-class CountryPinPostRequest extends BaseRequest {
-  final CountryPinPostRequestModel requestModel;
+class LoginRequest extends BaseRequest {
+  final LoginRequestModel requestModel;
 
-  CountryPinPostRequest(this.requestModel);
+  LoginRequest(this.requestModel);
 
   @override
   String get baseUrl => 'http://emergency.podo.world:8080/api';
 
   @override
-  ContentEncoding get contentEncoding => ContentEncoding.url;
+  ContentEncoding get contentEncoding => ContentEncoding.json;
 
   @override
   Map<String, String> get headers => {
@@ -27,5 +27,5 @@ class CountryPinPostRequest extends BaseRequest {
   Map<String, dynamic> get parameters => requestModel.toJson();
 
   @override
-  String get path => '/countries/${requestModel.countryId}/pin';
+  String get path => '/members/login';
 }
