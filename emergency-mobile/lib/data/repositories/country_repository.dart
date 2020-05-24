@@ -4,9 +4,10 @@ import 'package:emergency/domain/entities/notice.dart';
 import 'package:emergency/domain/repositories/country_repository_type.dart';
 
 class CountryRepository implements CountryRepositoryType {
+  CountryLocalDataSource localDataSource;
   CountryRemoteDataSource remoteDataSource;
 
-  CountryRepository(this.remoteDataSource);
+  CountryRepository(this.localDataSource, this.remoteDataSource);
 
   @override
   Future<List<Country>> countries() {

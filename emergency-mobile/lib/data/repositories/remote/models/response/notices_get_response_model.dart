@@ -5,9 +5,9 @@ class NoticesGetResponseModel {
 
   NoticesGetResponseModel({this.notices});
 
-  factory NoticesGetResponseModel.fromJson(Map<String, dynamic> json) {
-    var list = json['data'] as List;
+  factory NoticesGetResponseModel.fromMap(Map<String, dynamic> map) {
+    var list = map['data'] as List;
     return new NoticesGetResponseModel(
-        notices: list.map((e) => Notice.fromJson(e)).toList());
+        notices: list.map((e) => Notice.fromMap(e)).toList());
   }
 }

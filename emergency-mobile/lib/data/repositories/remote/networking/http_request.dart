@@ -1,12 +1,16 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
+import 'package:emergency/data/repositories/remote/networking/http_header.dart';
+import 'package:emergency/data/repositories/remote/networking/plugin_type.dart';
 import 'package:http/http.dart';
 
 import 'content_encoding.dart';
 import 'http_method.dart';
 
 abstract class HttpRequestProtocol {
+  List<HTTPHeader> additionalHeaders;
+
   String get baseUrl;
 
   String get path;
@@ -15,31 +19,35 @@ abstract class HttpRequestProtocol {
 
   Map<String, String> get headers;
 
+  Map<String, String> get allHeaders;
+
   Map<String, dynamic> get parameters;
 
   ContentEncoding get contentEncoding;
 
-  String get queryParameters {
-    if (method == HttpMethod.GET && parameters != null) {
-      final jsonString = Uri(queryParameters: parameters);
-      return '?${jsonString.query}';
-    }
+  String get queryParameters;
 
-    return '';
-  }
+  void putAdditionalHeader(HTTPHeader header);
 }
 
 class HttpRequest extends Request {
-  final HttpRequestProtocol request;
+  HttpRequestProtocol request;
 
-  HttpRequest(this.request)
+  HttpRequest(HttpRequestProtocol request, [List<PluginType> plugins])
       : super(
             request.method.value,
             Uri.parse(
-                '${request.baseUrl}${request.path}${request.queryParameters}'));
+                '${request.baseUrl}${request.path}${request.queryParameters}')) {
+    if (plugins != null) {
+      plugins.forEach((element) {
+        request = element.prepare(request);
+      });
+    }
+    this.request = request;
+  }
 
   @override
-  Map<String, String> get headers => this.request.headers;
+  Map<String, String> get headers => this.request.allHeaders;
 
   @override
   String get body => json.encode(this.request.parameters);

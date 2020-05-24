@@ -3,7 +3,7 @@ class Notice {
 
   Notice({this.id});
 
-  factory Notice.fromJson(Map<String, dynamic> json) {
-    return new Notice(id: json['id']);
+  factory Notice.fromMap(Map<String, dynamic> map) {
+    return new Notice(id: map['id']);
   }
 }
