@@ -1,10 +1,10 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:emergency/data/helpers/FCM.dart';
-import 'package:emergency/factory/usecase_factory.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+
+import 'core/helpers/FCM.dart';
 
 void main() => runApp(MyApp());
 
@@ -114,7 +114,7 @@ class _MyHomePageState extends State<MyHomePage> {
               child:
                   Text("login button", style: TextStyle(color: Colors.white)),
               onPressed: () {
-                UseCaseFactory.userUseCase.login();
+                // UseCaseFactory.userUseCase.login();
               },
             ),
             FlatButton(
@@ -122,7 +122,7 @@ class _MyHomePageState extends State<MyHomePage> {
               child: Text("countries button",
                   style: TextStyle(color: Colors.white)),
               onPressed: () {
-                UseCaseFactory.countryUseCase.allCountries();
+                // UseCaseFactory.countryUseCase.allCountries();
               },
             ),
           ],

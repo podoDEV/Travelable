@@ -19,18 +19,34 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  device_info:
+
+  # Functional
+  dartz:
+
+  # Network
   http: ^0.12.0+1
+  data_connection_checker:
+
+  # Local cache
+  shared_preferences:
+
+  # Local database
   sqflite:
   path:
+
+  # Firebase
   firebase_core: 0.4.4
   firebase_analytics: ^1.0.4
   firebase_messaging: ^5.0.2
   cloud_firestore: ^0.12.10
+
+  # Mock
+  mockito:
+
+  # Etc
+  equatable:
+  device_info:
   logger:
-  shared_preferences:
-  # The following adds the Cupertino Icons font to your application.
-  # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^0.1.2
 
 dev_dependencies:
