@@ -1,21 +1,20 @@
-import 'package:emergency/core/networking/api_provider.dart';
-import 'package:emergency/features/country/data/datasources/country_remote_data_source.dart';
-import 'package:emergency/features/country/data/repositories/remote/models/request/countries_get_request_model.dart';
-import 'package:emergency/features/country/data/repositories/remote/models/request/country_get_request_model.dart';
-import 'package:emergency/features/country/data/repositories/remote/models/request/country_pin_post_request_model.dart';
-import 'package:emergency/features/country/data/repositories/remote/models/request/country_unpin_post_request_model.dart';
-import 'package:emergency/features/country/data/repositories/remote/models/request/notices_get_request_model.dart';
-import 'package:emergency/features/country/data/repositories/remote/models/response/countries_get_response_model.dart';
-import 'package:emergency/features/country/data/repositories/remote/models/response/country_get_response_model.dart';
-import 'package:emergency/features/country/data/repositories/remote/models/response/notices_get_response_model.dart';
-import 'package:emergency/features/country/data/repositories/remote/requests/countries_get_request.dart';
-import 'package:emergency/features/country/data/repositories/remote/requests/country_get_request.dart';
-import 'package:emergency/features/country/data/repositories/remote/requests/country_pin_post_request.dart';
-import 'package:emergency/features/country/data/repositories/remote/requests/country_unpin_post_request.dart';
-import 'package:emergency/features/country/data/repositories/remote/requests/notices_get_request.dart';
-import 'package:emergency/features/country/domain/entities/country.dart';
-import 'package:emergency/features/country/domain/entities/notice.dart';
-
+import '../../../../../core/networking/api_provider.dart';
+import '../../../domain/entities/country.dart';
+import '../../../domain/entities/notice.dart';
+import '../../datasources/country_remote_data_source.dart';
+import 'models/request/countries_get_request_model.dart';
+import 'models/request/country_get_request_model.dart';
+import 'models/request/country_pin_post_request_model.dart';
+import 'models/request/country_unpin_post_request_model.dart';
+import 'models/request/notices_get_request_model.dart';
+import 'models/response/countries_get_response_model.dart';
+import 'models/response/country_get_response_model.dart';
+import 'models/response/notices_get_response_model.dart';
+import 'requests/countries_get_request.dart';
+import 'requests/country_get_request.dart';
+import 'requests/country_pin_post_request.dart';
+import 'requests/country_unpin_post_request.dart';
+import 'requests/notices_get_request.dart';
 
 class CountryRemoteRepository implements CountryRemoteDataSource {
   final ApiProviderProtocol provider;

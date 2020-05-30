@@ -5,4 +5,3 @@ class MemberUseCaseFactory {
   static LoginUseCase loginUseCase
     = LoginUseCase(MemberModuleFactory.userRepository);
 }
-

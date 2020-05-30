@@ -18,4 +18,3 @@ class CountryUseCaseFactory {
   static SearchCountriesUseCase searchCountriesUseCase
     = SearchCountriesUseCase(CountryModuleFactory.countryRepository);
 }
-
