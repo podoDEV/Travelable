@@ -27,7 +27,7 @@ class UserRepositoryImpl implements UserRepository {
   @override
   Future<Either<Failure, void>> login() async {
     if (this.accessToken != null) {
-      return null;
+      return Right(null);
     }
 
     String userId = await getUserId();
