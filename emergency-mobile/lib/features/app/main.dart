@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 
+import '../../injection_container.dart' as di;
 import '../country/presentation/pages/country_list_page.dart';
 import '../country/presentation/pages/country_search_page.dart';
 import 'launch_page.dart';
 
-void main() => runApp(MyApp());
+void main() async {
+  await di.init();
+  runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
   @override

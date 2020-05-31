@@ -12,15 +12,15 @@ abstract class ApiProviderProtocol {
 }
 
 class EGApiProvider implements ApiProviderProtocol {
-  final Client _client = Client();
+  final Client client;
   List<PluginType> _plugins = [];
 
-  EGApiProvider([this._plugins]);
+  EGApiProvider(this.client, [this._plugins]);
 
   Future<Map<String, dynamic>> send(HttpRequestProtocol req) async {
     final request = HttpRequest(req, _plugins);
     logger.d("REQUEST: $request");
-    final response = await _client.send(request);
+    final response = await client.send(request);
 
     if (response.statusCode >= 200 && response.statusCode < 300) {
       logger.d("SUCCESS: $request");

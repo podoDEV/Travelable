@@ -5,8 +5,6 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 
 import '../../core/helpers/FCM.dart';
-import '../../core/usecases/usecase.dart';
-import '../member/factory/member_usecase_factory.dart';
 
 class LaunchPage extends StatefulWidget {
 
@@ -70,7 +68,7 @@ class _LaunchPageState extends State<LaunchPage> {
               color: Colors.blue,
               child: Text("로그인 -> 무조건 처음에 한번 요청해야함.", style: TextStyle(color: Colors.white)),
               onPressed: () {
-                MemberUseCaseFactory.loginUseCase(NoParams());
+                // MemberUseCaseFactory.loginUseCase(NoParams());
               },
             ),
             FlatButton(
