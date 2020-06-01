@@ -59,7 +59,19 @@ class _CountrySearchResultsState extends State<CountrySearchResults> {
             } else if (state is Error) {
               return MessageDisplay(message: state.message);
             } else if (state is Loaded) {
-              return MessageDisplay(message: state.countries.toString());
+              return ListView.builder(
+                padding: const EdgeInsets.all(8),
+                itemCount: state.countries.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return Container(
+                    height: 50,
+                    color: Color.fromRGBO(100, 100, 100, 1),
+                    child: Center(
+                      child: Text('${state.countries[index].name}')
+                    ),
+                  );
+                }
+              );
             }
             return Container();
           },
