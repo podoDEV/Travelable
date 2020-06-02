@@ -28,7 +28,8 @@ Future<void> init() async {
   // Bloc
   sl.registerFactory(
     () => CountryBloc(
-      searchCountries: sl(), 
+      allCountriesUseCase: sl(),
+      searchCountriesUseCase: sl(), 
       validator: sl(),
     ),
   );

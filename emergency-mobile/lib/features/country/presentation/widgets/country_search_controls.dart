@@ -13,10 +13,11 @@ class CountrySearchControls extends StatefulWidget {
 }
 
 class _CountrySearchControlsState extends State<CountrySearchControls> {
-  String inputStr;
+  String inputStr = '';
 
   @override
   Widget build(BuildContext context) {
+    dispatchSearch();
     return Container(
       height: 44,
       child: Row(
@@ -35,6 +36,7 @@ class _CountrySearchControlsState extends State<CountrySearchControls> {
               ),
               onChanged: (value) {
                 inputStr = value;
+                dispatchSearch();
               }
             ),
           ),

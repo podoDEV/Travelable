@@ -3,11 +3,24 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../injection_container.dart';
 import '../bloc/country_bloc.dart';
+import '../widgets/country_search_all_country_list_widget.dart';
+import '../widgets/country_search_control_separator.dart';
 import '../widgets/country_search_controls.dart';
+import '../widgets/country_search_matching_country_list_widget.dart';
+import '../widgets/country_search_use_mysite_widget.dart';
 import '../widgets/loading_widget.dart';
 import '../widgets/message_widget.dart';
 
-class CountrySearchPage extends StatelessWidget {
+class CountrySearchPage extends StatefulWidget {
+  const CountrySearchPage({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  _CountrySearchPageState createState() => _CountrySearchPageState();
+}
+
+class _CountrySearchPageState extends State<CountrySearchPage> {
 
   @override
   Widget build(BuildContext context) {
@@ -22,15 +35,10 @@ class CountrySearchPage extends StatelessWidget {
       child: Column(children: <Widget>[
         SizedBox(height: 44),
         CountrySearchControls(),
-        Container(
-          height: 44,
-          child: Placeholder(),
-        ),
-        Container(
-          height: 11, 
-          color: Color.fromRGBO(241, 241, 241, 1)
-        ),
-        CountrySearchResults(),
+        Expanded(
+          flex: 1, 
+          child: CountrySearchResults()
+        )
       ]),
     );
   }
@@ -58,19 +66,19 @@ class _CountrySearchResultsState extends State<CountrySearchResults> {
               return LoadingWidget();
             } else if (state is Error) {
               return MessageDisplay(message: state.message);
-            } else if (state is Loaded) {
-              return ListView.builder(
-                padding: const EdgeInsets.all(8),
-                itemCount: state.countries.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return Container(
-                    height: 50,
-                    color: Color.fromRGBO(100, 100, 100, 1),
-                    child: Center(
-                      child: Text('${state.countries[index].name}')
-                    ),
-                  );
-                }
+            } else if (state is AllLoaded) {
+              return Expanded(
+                flex: 1,
+                child: Column(children: <Widget>[
+                  CountrySearchUseMysiteWidget(),
+                  CountrySearchControlSeparator(),
+                  CountrySearchAllCountryListWidget(countries: state.countries)
+                ])
+              );
+            } else if (state is MatchingLoaded) {
+              return Expanded(
+                flex: 1,
+                child: CountrySearchMatchingCountryListWidget(countries: state.countries) 
               );
             }
             return Container();

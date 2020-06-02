@@ -15,23 +15,37 @@ class Loading extends CountryState {
   List<Object> get props => [];
 }
 
-class Searching extends CountryState {
+class AllLoaded extends CountryState {
   final List<Country> countries;
 
-  Searching({@required this.countries}) : super(countries);
+  AllLoaded({@required this.countries}) : super(countries);
 
   @override
   List<Object> get props => countries;
 }
 
-class Loaded extends CountryState {
+class MatchingLoaded extends CountryState {
   final List<Country> countries;
 
-  Loaded({@required this.countries}) : super(countries);
+  MatchingLoaded({@required this.countries}) : super(countries);
 
   @override
   List<Object> get props => countries;
 }
+
+class NoMatching extends CountryState {
+  @override
+  List<Object> get props => [];
+}
+
+// class Searching extends CountryState {
+//   final List<Country> countries;
+
+//   Searching({@required this.countries}) : super(countries);
+
+//   @override
+//   List<Object> get props => countries;
+// }
 
 class Error extends CountryState {
   final String message;

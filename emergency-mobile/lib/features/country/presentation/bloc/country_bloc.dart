@@ -6,8 +6,10 @@ import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 
 import '../../../../core/error/failures.dart';
+import '../../../../core/usecases/usecase.dart';
 import '../../../../core/util/keyword_validator.dart';
 import '../../domain/entities/country.dart';
+import '../../domain/usecases/get_all_countries_usecase.dart';
 import '../../domain/usecases/search_countries_usecase.dart';
 
 part 'country_event.dart';
@@ -18,15 +20,19 @@ const String CACHE_FAILURE_MESSAGE = 'Cache Failure';
 const String INVALIDA_INPUT_FAILURE_MESSAGE = 'Failure';
 
 class CountryBloc extends Bloc<CountryEvent, CountryState> {
-  final SearchCountriesUseCase searchCountriesUseCase;
+  final GetAllCountriesUseCase allCountries;
+  final SearchCountriesUseCase searchCountries;
   final KeywordValidator validator;
 
   CountryBloc({
-    @required SearchCountriesUseCase searchCountries,
+    @required GetAllCountriesUseCase allCountriesUseCase,
+    @required SearchCountriesUseCase searchCountriesUseCase,
     @required this.validator
-  })  : assert(searchCountries != null), 
+  })  : assert(allCountriesUseCase != null), 
+        assert(searchCountriesUseCase != null), 
         assert(validator != null),
-        searchCountriesUseCase = searchCountries;
+        allCountries = allCountriesUseCase,
+        searchCountries = searchCountriesUseCase;
 
   @override
   CountryState get initialState => Empty();
@@ -40,22 +46,36 @@ class CountryBloc extends Bloc<CountryEvent, CountryState> {
       yield* inputEither.fold(
         (failure) async* {
           yield Error(message: INVALIDA_INPUT_FAILURE_MESSAGE);
-        }, 
+        },
         (keyword) async* {
           yield Loading();
-          final failureOrCountries = await searchCountriesUseCase(SearchParams(keyword));
-          yield* _eitherLoadedOrErrorState(failureOrCountries);
+          if (keyword.isEmpty) {
+            final failureOrCountries = await allCountries(NoParams());
+            yield* _eitherAllLoadedOrErrorState(failureOrCountries);
+          } else {
+            final failureOrCountries = await searchCountries(SearchParams(keyword));
+            yield* _eitherMatchingLoadedOrErrorState(failureOrCountries);
+          }
         },
       );
     }
   }
 
-  Stream<CountryState> _eitherLoadedOrErrorState(
+  Stream<CountryState> _eitherAllLoadedOrErrorState(
     Either<Failure, List<Country>> failureOrCountries,
   ) async* {
     yield failureOrCountries.fold(
       (failure) => Error(message: _mapFailureToMessage(failure)), 
-      (countries) => Loaded(countries: countries)
+      (countries) => AllLoaded(countries: countries)
+    );
+  }
+
+  Stream<CountryState> _eitherMatchingLoadedOrErrorState(
+    Either<Failure, List<Country>> failureOrCountries,
+  ) async* {
+    yield failureOrCountries.fold(
+      (failure) => Error(message: _mapFailureToMessage(failure)), 
+      (countries) => MatchingLoaded(countries: countries)
     );
   }
 
