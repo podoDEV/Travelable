@@ -26,6 +26,8 @@ class CountryRepositoryImpl implements CountryRepository {
 
   @override
   Future<Either<Failure, List<Country>>> countries() async {
+    var countries = [Country(name: "가나"), Country(name: "가나다"), Country(name: "나라"), Country(name: "다리미"), Country(name: "마늘"), Country(name: "바다"), Country(name: "사자"), Country(name: "아기"), Country(name: "자전거"), Country(name: "차콜"), Country(name: "카메라"), Country(name: "타잔"), Country(name: "파도"), Country(name: "하늘")];
+    return Right(countries);
     if (await networkInfo.isConnected) {
       try {
         final countries = await remoteDataSource.getCountries();
