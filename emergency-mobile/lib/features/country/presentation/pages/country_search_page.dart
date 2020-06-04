@@ -21,12 +21,9 @@ class CountrySearchPage extends StatefulWidget {
 }
 
 class _CountrySearchPageState extends State<CountrySearchPage> {
-
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: buildBody(context)
-    );
+    return Scaffold(body: buildBody(context));
   }
 
   BlocProvider<CountryBloc> buildBody(BuildContext context) {
@@ -35,10 +32,7 @@ class _CountrySearchPageState extends State<CountrySearchPage> {
       child: Column(children: <Widget>[
         SizedBox(height: 44),
         CountrySearchControls(),
-        Expanded(
-          flex: 1, 
-          child: CountrySearchResults()
-        )
+        Expanded(flex: 1, child: CountrySearchResults())
       ]),
     );
   }
@@ -68,18 +62,20 @@ class _CountrySearchResultsState extends State<CountrySearchResults> {
               return MessageDisplay(message: state.message);
             } else if (state is AllLoaded) {
               return Expanded(
-                flex: 1,
-                child: Column(children: <Widget>[
-                  CountrySearchUseMysiteWidget(),
-                  CountrySearchControlSeparator(),
-                  CountrySearchAllCountryListWidget(countries: state.countries)
-                ])
-              );
+                  flex: 1,
+                  child: Column(children: <Widget>[
+                    // CountrySearchUseMysiteWidget(),
+                    CountrySearchControlSeparator(),
+                    CountrySearchAllCountryListWidget(
+                      countries: state.countries,
+                      indexing: state.indexing,
+                    )
+                  ]));
             } else if (state is MatchingLoaded) {
               return Expanded(
-                flex: 1,
-                child: CountrySearchMatchingCountryListWidget(countries: state.countries) 
-              );
+                  flex: 1,
+                  child: CountrySearchMatchingCountryListWidget(
+                      countries: state.countries));
             }
             return Container();
           },

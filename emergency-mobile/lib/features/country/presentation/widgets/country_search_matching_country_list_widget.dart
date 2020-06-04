@@ -5,9 +5,7 @@ import '../../domain/entities/country.dart';
 class CountrySearchMatchingCountryListWidget extends StatelessWidget {
   final List<Country> countries;
 
-  CountrySearchMatchingCountryListWidget({
-    @required this.countries
-  });
+  CountrySearchMatchingCountryListWidget({@required this.countries});
 
   @override
   Widget build(BuildContext context) {
@@ -25,17 +23,12 @@ class CountrySearchMatchingCountryListWidget extends StatelessWidget {
               child: RaisedButton(onPressed: null),
             ),
             SizedBox(width: 16),
-            Text(
-              '${countries[index].name}'
-            ),
+            Text('${countries[index].name}'),
           ]),
         );
       },
       separatorBuilder: (BuildContext context, int index) {
-        return Container(
-          height: 1, 
-          color: Color.fromRGBO(151, 151, 151, 0.1)
-        );
+        return Container(height: 1, color: Color.fromRGBO(151, 151, 151, 0.1));
       },
       itemCount: countries.length,
     );

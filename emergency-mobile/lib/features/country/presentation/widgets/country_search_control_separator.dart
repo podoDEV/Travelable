@@ -7,9 +7,6 @@ class CountrySearchControlSeparator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 11, 
-      color: Color.fromRGBO(241, 241, 241, 1)
-    );
+    return Container(height: 11, color: Color.fromRGBO(241, 241, 241, 1));
   }
 }
