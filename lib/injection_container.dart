@@ -30,6 +30,7 @@ Future<void> init() async {
   sl.registerFactory(
     () => CountryBloc(
       allCountriesUseCase: sl(),
+      countryUseCase: sl(),
       searchCountriesUseCase: sl(),
       indexingUseCase: sl(),
       validator: sl(),

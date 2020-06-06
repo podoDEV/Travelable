@@ -7,7 +7,6 @@ import '../widgets/country_search_all_country_list_widget.dart';
 import '../widgets/country_search_control_separator.dart';
 import '../widgets/country_search_controls.dart';
 import '../widgets/country_search_matching_country_list_widget.dart';
-import '../widgets/country_search_use_mysite_widget.dart';
 import '../widgets/loading_widget.dart';
 import '../widgets/message_widget.dart';
 
@@ -30,7 +29,10 @@ class _CountrySearchPageState extends State<CountrySearchPage> {
     return BlocProvider(
       create: (_) => sl<CountryBloc>(),
       child: Column(children: <Widget>[
-        SizedBox(height: 44),
+        SizedBox(
+          height: 44,
+          child: Container(color: Colors.white),
+        ),
         CountrySearchControls(),
         Expanded(flex: 1, child: CountrySearchResults())
       ]),
@@ -64,8 +66,13 @@ class _CountrySearchResultsState extends State<CountrySearchResults> {
               return Expanded(
                   flex: 1,
                   child: Column(children: <Widget>[
-                    // CountrySearchUseMysiteWidget(),
-                    CountrySearchControlSeparator(),
+                    CountrySearchControlSeparator(height: 11),
+                    SizedBox(
+                      height: 21,
+                      child: Container(
+                        color: Colors.white,
+                      ),
+                    ),
                     CountrySearchAllCountryListWidget(
                       countries: state.countries,
                       indexing: state.indexing,
@@ -74,8 +81,11 @@ class _CountrySearchResultsState extends State<CountrySearchResults> {
             } else if (state is MatchingLoaded) {
               return Expanded(
                   flex: 1,
-                  child: CountrySearchMatchingCountryListWidget(
-                      countries: state.countries));
+                  child: Column(children: <Widget>[
+                    CountrySearchControlSeparator(height: 1),
+                    CountrySearchMatchingCountryListWidget(
+                        countries: state.countries)
+                  ]));
             }
             return Container();
           },

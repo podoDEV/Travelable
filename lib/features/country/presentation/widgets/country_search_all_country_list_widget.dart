@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../domain/entities/country.dart';
+import 'country_search_matching_country_list_widget.dart';
 
 class CountrySearchAllCountryListWidget extends StatefulWidget {
   final List<Country> countries;
@@ -28,7 +29,7 @@ class _CountrySearchAllCountryListWidgetState
   var diff = 0.0;
   var height = 0.0;
   var textSliderPos = 0.0;
-  var _rowHeight = 57.5;
+  var _rowHeight = 38.0;
 
   final List<Country> countries;
   final List<String> indexing;
@@ -51,23 +52,34 @@ class _CountrySearchAllCountryListWidgetState
       _heightScroller = (contrainsts.biggest.height) / indexing.length;
       _sizeHeightContainer = (contrainsts.biggest.height);
       return new Stack(children: [
-        ListView.separated(
+        ListView.builder(
           padding: EdgeInsets.only(top: 0),
           scrollDirection: Axis.vertical,
           controller: _controller,
           itemBuilder: (context, index) {
-            return Container(
-              height: _rowHeight,
-              padding: EdgeInsets.all(14),
-              color: Color.fromRGBO(255, 255, 255, 1),
-              child: Row(children: <Widget>[
-                Text('${countries[index].name}'),
-              ]),
+            return GestureDetector(
+              onTap: () {
+                showModalBottomSheet(
+                    context: context,
+                    builder: (BuildContext bc) {
+                      return CountryDetailBottomSheet();
+                    });
+              },
+              child: Container(
+                height: _rowHeight,
+                padding: EdgeInsets.only(left: 34),
+                color: Color.fromRGBO(255, 255, 255, 1),
+                child: Row(children: <Widget>[
+                  Text(
+                    '${countries[index].name}',
+                    style: TextStyle(
+                        fontSize: 17,
+                        fontWeight: FontWeight.w500,
+                        color: Color.fromRGBO(48, 48, 48, 1)),
+                  ),
+                ]),
+              ),
             );
-          },
-          separatorBuilder: (BuildContext context, int index) {
-            return Container(
-                height: 1, color: Color.fromRGBO(151, 151, 151, 0.1));
           },
           itemCount: countries.length,
         ),
@@ -127,11 +139,14 @@ class _CountrySearchAllCountryListWidgetState
   _getIndexItem(int index) {
     return new Expanded(
       child: new Container(
-        width: 40,
-        height: 20,
+        width: 46,
+        height: 13,
         alignment: Alignment.center,
         child: new Text(indexing[index],
-            style: new TextStyle(fontSize: 12, fontWeight: FontWeight.w400)),
+            style: new TextStyle(
+                fontSize: 11,
+                fontWeight: FontWeight.w300,
+                color: Color.fromRGBO(116, 116, 116, 1))),
       ),
     );
   }

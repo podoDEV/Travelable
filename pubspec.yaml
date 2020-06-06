@@ -49,3 +49,8 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  assets:
+      - images/btn_back_gray.png
+      - images/btn_search_big.png
+      - images/ic_search_small.png
+      - images/btn_clear.png

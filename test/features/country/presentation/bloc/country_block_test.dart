@@ -3,6 +3,7 @@ import 'package:emergency/core/error/failures.dart';
 import 'package:emergency/core/util/keyword_validator.dart';
 import 'package:emergency/features/country/domain/entities/country.dart';
 import 'package:emergency/features/country/domain/usecases/get_all_countries_usecase.dart';
+import 'package:emergency/features/country/domain/usecases/get_country_usecase.dart';
 import 'package:emergency/features/country/domain/usecases/get_indexing_usecase.dart';
 import 'package:emergency/features/country/domain/usecases/search_countries_usecase.dart';
 import 'package:emergency/features/country/presentation/bloc/country_bloc.dart';
@@ -10,6 +11,8 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 
 class MockAllCountriesUseCase extends Mock implements GetAllCountriesUseCase {}
+
+class MockCountryUseCase extends Mock implements GetCountryUseCase {}
 
 class MockSearchCountriesUseCase extends Mock
     implements SearchCountriesUseCase {}
@@ -21,18 +24,21 @@ class MockKeywordValidator extends Mock implements KeywordValidator {}
 void main() {
   CountryBloc bloc;
   MockAllCountriesUseCase mockAllCountriesUseCase;
+  MockCountryUseCase mockCountryUseCase;
   MockSearchCountriesUseCase mockSearchCountriesUseCase;
   MockIndexingUseCase mockIndexingUseCase;
   MockKeywordValidator mockKeywordValidator;
 
   setUp(() {
     mockAllCountriesUseCase = MockAllCountriesUseCase();
+    mockCountryUseCase = MockCountryUseCase();
     mockSearchCountriesUseCase = MockSearchCountriesUseCase();
     mockIndexingUseCase = MockIndexingUseCase();
     mockKeywordValidator = MockKeywordValidator();
 
     bloc = CountryBloc(
         allCountriesUseCase: mockAllCountriesUseCase,
+        countryUseCase: mockCountryUseCase,
         searchCountriesUseCase: mockSearchCountriesUseCase,
         indexingUseCase: mockIndexingUseCase,
         validator: mockKeywordValidator);

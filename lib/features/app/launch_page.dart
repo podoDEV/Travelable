@@ -63,7 +63,7 @@ class _LaunchPageState extends State<LaunchPage> {
   Widget build(BuildContext context) {
     Future.delayed(Duration(seconds: 2), () async {
       try {
-        await sl<LoginUseCase>()(NoParams());
+        // await sl<LoginUseCase>()(NoParams());
         Navigator.popAndPushNamed(context, '/country/list');
       } on ServerException {
         logger.e(SERVER_FAILURE_MESSAGE);
