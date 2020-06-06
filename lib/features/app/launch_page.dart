@@ -4,7 +4,13 @@ import 'dart:io';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 
+import '../../core/error/exceptions.dart';
 import '../../core/helpers/FCM.dart';
+import '../../core/logger.dart';
+import '../../core/usecases/usecase.dart';
+import '../../injection_container.dart';
+import '../country/presentation/bloc/country_bloc.dart';
+import '../member/domain/usecases/login_usecase.dart';
 
 class LaunchPage extends StatefulWidget {
   @override
@@ -55,48 +61,30 @@ class _LaunchPageState extends State<LaunchPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-        child: Flexible(
-      flex: 1,
-      child: Container(
-        color: Color.fromRGBO(11, 133, 255, 1),
-      ),
-    ));
-    // return Scaffold(
-    //   body: Container(
-    //     child: Flexible(
-    //       flex: 1,
-    //       child: Container(
-    //         color: Colors.red,
-    //       )),
-    // ));
-    // return Scaffold(
-    //   appBar: AppBar(
-    //     title: Text("launch"),
-    //   ),
-    //   body: Center(
-    //     child: Column(
-    //       mainAxisAlignment: MainAxisAlignment.center,
-    //       children: <Widget>[
-    //         FlatButton(
-    //           color: Colors.blue,
-    //           child: Text("로그인 -> 무조건 처음에 한번 요청해야함.",
-    //               style: TextStyle(color: Colors.white)),
-    //           onPressed: () {
-    //             sl<LoginUseCase>()(NoParams());
-    //           },
-    //         ),
-    //         FlatButton(
-    //           color: Colors.blue,
-    //           child: Text("리스트 화면 이동", style: TextStyle(color: Colors.white)),
-    //           onPressed: () {
-    //             // Navigator.pushNamedAndRemoveUntil(context, '/country/list', (_) => false);
-    //             Navigator.popAndPushNamed(context, '/country/list');
-    //           },
-    //         ),
-    //       ],
-    //     ),
-    //   ),
-    // );
+    Future.delayed(Duration(seconds: 2), () async {
+      try {
+        await sl<LoginUseCase>()(NoParams());
+        Navigator.popAndPushNamed(context, '/country/list');
+      } on ServerException {
+        logger.e(SERVER_FAILURE_MESSAGE);
+      }
+    });
+    return Material(
+        type: MaterialType.transparency,
+        child: Container(
+            child: Flexible(
+          flex: 1,
+          child: Container(
+            color: Color.fromRGBO(11, 133, 255, 1),
+            child: Center(
+                child: Text(
+              "travelable",
+              style: TextStyle(
+                  color: Color.fromRGBO(245, 245, 245, 1),
+                  fontSize: 34,
+                  fontStyle: FontStyle.normal),
+            )),
+          ),
+        )));
   }
 }
