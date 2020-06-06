@@ -29,7 +29,10 @@ class _CountrySearchPageState extends State<CountrySearchPage> {
     return BlocProvider(
       create: (_) => sl<CountryBloc>(),
       child: Column(children: <Widget>[
-        SizedBox(height: 44),
+        SizedBox(
+          height: 44,
+          child: Container(color: Colors.white),
+        ),
         CountrySearchControls(),
         Expanded(flex: 1, child: CountrySearchResults())
       ]),
@@ -63,7 +66,7 @@ class _CountrySearchResultsState extends State<CountrySearchResults> {
               return Expanded(
                   flex: 1,
                   child: Column(children: <Widget>[
-                    CountrySearchControlSeparator(),
+                    CountrySearchControlSeparator(height: 11),
                     SizedBox(
                       height: 21,
                       child: Container(
@@ -78,8 +81,11 @@ class _CountrySearchResultsState extends State<CountrySearchResults> {
             } else if (state is MatchingLoaded) {
               return Expanded(
                   flex: 1,
-                  child: CountrySearchMatchingCountryListWidget(
-                      countries: state.countries));
+                  child: Column(children: <Widget>[
+                    CountrySearchControlSeparator(height: 1),
+                    CountrySearchMatchingCountryListWidget(
+                        countries: state.countries)
+                  ]));
             }
             return Container();
           },
@@ -87,6 +93,4 @@ class _CountrySearchResultsState extends State<CountrySearchResults> {
       ]),
     );
   }
-
-  void _countrySummaryModalBottomSheet(context) {}
 }

@@ -9,42 +9,45 @@ class CountrySearchMatchingCountryListWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.separated(
-      padding: const EdgeInsets.all(8),
+    return Expanded(
+        child: ListView.separated(
+      padding: const EdgeInsets.only(top: 0),
       scrollDirection: Axis.vertical,
       itemBuilder: (BuildContext context, int index) {
-        return Container(
-          height: 57.5,
-          padding: EdgeInsets.all(14),
-          color: Color.fromRGBO(255, 255, 255, 1),
-          child: Row(children: <Widget>[
-            GestureDetector(
-              onTap: () {
-                showModalBottomSheet(
-                    context: context,
-                    builder: (BuildContext bc) {
-                      return CountryDetailBottomSheet();
-                    });
-              },
-              child: Row(
-                children: <Widget>[
-                  Container(
-                    width: 30,
-                    child: RaisedButton(onPressed: null),
-                  ),
-                  SizedBox(width: 16),
-                  Text('${countries[index].name}'),
-                ],
-              ),
-            )
-          ]),
-        );
+        return GestureDetector(
+            onTap: () {
+              showModalBottomSheet(
+                  context: context,
+                  builder: (BuildContext bc) {
+                    return CountryDetailBottomSheet();
+                  });
+            },
+            child: Container(
+              height: 57.5,
+              color: Color.fromRGBO(255, 255, 255, 1),
+              child: Row(children: <Widget>[
+                Row(
+                  children: <Widget>[
+                    Container(
+                      width: 62,
+                      child: Image.asset('images/ic_search_small.png'),
+                    ),
+                    // SizedBox(width: 16),
+                    Text('${countries[index].name}',
+                        style: TextStyle(
+                            fontSize: 17,
+                            fontWeight: FontWeight.w500,
+                            color: Color.fromRGBO(48, 48, 48, 1))),
+                  ],
+                ),
+              ]),
+            ));
       },
       separatorBuilder: (BuildContext context, int index) {
         return Container(height: 1, color: Color.fromRGBO(151, 151, 151, 0.1));
       },
       itemCount: countries.length,
-    );
+    ));
   }
 }
 

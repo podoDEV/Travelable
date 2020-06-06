@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
 class CountrySearchControlSeparator extends StatelessWidget {
-  const CountrySearchControlSeparator({
-    Key key,
-  }) : super(key: key);
+  final double height;
+
+  CountrySearchControlSeparator({@required this.height});
 
   @override
   Widget build(BuildContext context) {
-    return Container(height: 11, color: Color.fromRGBO(228, 230, 233, 1));
+    return Container(height: height, color: Color.fromRGBO(228, 230, 233, 1));
   }
 }

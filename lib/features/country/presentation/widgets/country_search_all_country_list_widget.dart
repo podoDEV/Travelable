@@ -139,11 +139,14 @@ class _CountrySearchAllCountryListWidgetState
   _getIndexItem(int index) {
     return new Expanded(
       child: new Container(
-        width: 40,
-        height: 20,
+        width: 46,
+        height: 13,
         alignment: Alignment.center,
         child: new Text(indexing[index],
-            style: new TextStyle(fontSize: 12, fontWeight: FontWeight.w400)),
+            style: new TextStyle(
+                fontSize: 11,
+                fontWeight: FontWeight.w300,
+                color: Color.fromRGBO(116, 116, 116, 1))),
       ),
     );
   }
