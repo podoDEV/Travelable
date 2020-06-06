@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "1046767576236",
+    "firebase_url": "https://emergency-aacad.firebaseio.com",
+    "project_id": "emergency-aacad",
+    "storage_bucket": "emergency-aacad.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1046767576236:android:aa82a4670a19f0bb87eb09",
+        "android_client_info": {
+          "package_name": "com.podo.emergency"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1046767576236-ku3nlbbk3g03faf9oo60oej1c8vl7vmc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCSBzz-pmi7fRulJmaPvrUvNRkSZhruQw4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1046767576236-ku3nlbbk3g03faf9oo60oej1c8vl7vmc.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1046767576236-18ncp39hv34lce20hhsd2m3p1puh6v8l.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.podo.emergency"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
