@@ -63,8 +63,13 @@ class _CountrySearchResultsState extends State<CountrySearchResults> {
               return Expanded(
                   flex: 1,
                   child: Column(children: <Widget>[
-                    // CountrySearchUseMysiteWidget(),
                     CountrySearchControlSeparator(),
+                    SizedBox(
+                      height: 21,
+                      child: Container(
+                        color: Colors.white,
+                      ),
+                    ),
                     CountrySearchAllCountryListWidget(
                       countries: state.countries,
                       indexing: state.indexing,

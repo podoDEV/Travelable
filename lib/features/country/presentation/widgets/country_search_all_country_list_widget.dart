@@ -29,7 +29,7 @@ class _CountrySearchAllCountryListWidgetState
   var diff = 0.0;
   var height = 0.0;
   var textSliderPos = 0.0;
-  var _rowHeight = 57.5;
+  var _rowHeight = 38.0;
 
   final List<Country> countries;
   final List<String> indexing;
@@ -52,7 +52,7 @@ class _CountrySearchAllCountryListWidgetState
       _heightScroller = (contrainsts.biggest.height) / indexing.length;
       _sizeHeightContainer = (contrainsts.biggest.height);
       return new Stack(children: [
-        ListView.separated(
+        ListView.builder(
           padding: EdgeInsets.only(top: 0),
           scrollDirection: Axis.vertical,
           controller: _controller,
@@ -67,17 +67,19 @@ class _CountrySearchAllCountryListWidgetState
               },
               child: Container(
                 height: _rowHeight,
-                padding: EdgeInsets.all(14),
+                padding: EdgeInsets.only(left: 34),
                 color: Color.fromRGBO(255, 255, 255, 1),
                 child: Row(children: <Widget>[
-                  Text('${countries[index].name}'),
+                  Text(
+                    '${countries[index].name}',
+                    style: TextStyle(
+                        fontSize: 17,
+                        fontWeight: FontWeight.w500,
+                        color: Color.fromRGBO(48, 48, 48, 1)),
+                  ),
                 ]),
               ),
             );
-          },
-          separatorBuilder: (BuildContext context, int index) {
-            return Container(
-                height: 1, color: Color.fromRGBO(151, 151, 151, 0.1));
           },
           itemCount: countries.length,
         ),
