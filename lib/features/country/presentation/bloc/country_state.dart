@@ -40,6 +40,15 @@ class NoMatching extends CountryState {
   List<Object> get props => [];
 }
 
+class DetailSheet extends CountryState {
+  final Country country;
+
+  DetailSheet({@required this.country}) : super([country]);
+
+  @override
+  List<Object> get props => [country];
+}
+
 class Error extends CountryState {
   final String message;
 

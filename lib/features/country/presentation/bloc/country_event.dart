@@ -13,3 +13,12 @@ class GetCountrySearchResult extends CountryEvent {
   @override
   List<Object> get props => [keyword];
 }
+
+class GetCountryDetail extends CountryEvent {
+  final String countryId;
+
+  GetCountryDetail(this.countryId);
+
+  @override
+  List<Object> get props => [countryId];
+}

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../domain/entities/country.dart';
+import 'country_search_matching_country_list_widget.dart';
 
 class CountrySearchAllCountryListWidget extends StatefulWidget {
   final List<Country> countries;
@@ -56,13 +57,22 @@ class _CountrySearchAllCountryListWidgetState
           scrollDirection: Axis.vertical,
           controller: _controller,
           itemBuilder: (context, index) {
-            return Container(
-              height: _rowHeight,
-              padding: EdgeInsets.all(14),
-              color: Color.fromRGBO(255, 255, 255, 1),
-              child: Row(children: <Widget>[
-                Text('${countries[index].name}'),
-              ]),
+            return GestureDetector(
+              onTap: () {
+                showModalBottomSheet(
+                    context: context,
+                    builder: (BuildContext bc) {
+                      return CountryDetailBottomSheet();
+                    });
+              },
+              child: Container(
+                height: _rowHeight,
+                padding: EdgeInsets.all(14),
+                color: Color.fromRGBO(255, 255, 255, 1),
+                child: Row(children: <Widget>[
+                  Text('${countries[index].name}'),
+                ]),
+              ),
             );
           },
           separatorBuilder: (BuildContext context, int index) {

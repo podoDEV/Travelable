@@ -7,7 +7,6 @@ import '../widgets/country_search_all_country_list_widget.dart';
 import '../widgets/country_search_control_separator.dart';
 import '../widgets/country_search_controls.dart';
 import '../widgets/country_search_matching_country_list_widget.dart';
-import '../widgets/country_search_use_mysite_widget.dart';
 import '../widgets/loading_widget.dart';
 import '../widgets/message_widget.dart';
 
@@ -83,4 +82,6 @@ class _CountrySearchResultsState extends State<CountrySearchResults> {
       ]),
     );
   }
+
+  void _countrySummaryModalBottomSheet(context) {}
 }
