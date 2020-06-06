@@ -19,8 +19,8 @@ class CountryRepositoryImpl implements CountryRepository {
   List<Notice> cachedNotices = [];
 
   CountryRepositoryImpl({
-    @required this.localDataSource, 
-    @required this.remoteDataSource, 
+    @required this.localDataSource,
+    @required this.remoteDataSource,
     @required this.networkInfo,
   });
 
@@ -28,6 +28,7 @@ class CountryRepositoryImpl implements CountryRepository {
   Future<Either<Failure, List<Country>>> countries() async {
     if (await networkInfo.isConnected) {
       try {
+        return Right(Country.mocks);
         final countries = await remoteDataSource.getCountries();
         localDataSource.insertCountries(countries);
         cachedCountries = countries;
@@ -50,8 +51,10 @@ class CountryRepositoryImpl implements CountryRepository {
 
   @override
   Future<Either<Failure, List<Country>>> countriesBy({String name}) async {
+    // TODO: - Search 고도화
     if (cachedCountries.isNotEmpty) {
-      return Right(cachedCountries.where((e) => e.name.contains(name)));
+      return Right(
+          cachedCountries.where((e) => e.name.contains(name)).toList());
     }
 
     if (await networkInfo.isConnected) {
@@ -83,7 +86,8 @@ class CountryRepositoryImpl implements CountryRepository {
         final country = await remoteDataSource.getCountryBy(id);
         localDataSource.updateCountry(country);
         if (cachedCountries.isNotEmpty) {
-          var replaceIndex = cachedCountries.indexWhere((e) => e.id == country.id); 
+          var replaceIndex =
+              cachedCountries.indexWhere((e) => e.id == country.id);
           if (replaceIndex >= 0) cachedCountries[replaceIndex] = country;
         }
         return Right(country);

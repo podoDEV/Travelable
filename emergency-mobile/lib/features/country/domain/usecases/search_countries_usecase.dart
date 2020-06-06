@@ -23,5 +23,5 @@ class SearchParams extends Equatable {
   SearchParams(this.name);
 
   @override
-  List<Object> get props => throw UnimplementedError();
+  List<Object> get props => [name];
 }
