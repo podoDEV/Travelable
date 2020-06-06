@@ -1,23 +1,19 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:emergency/core/usecases/usecase.dart';
-import 'package:emergency/features/member/domain/usecases/login_usecase.dart';
-import 'package:emergency/injection_container.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 
 import '../../core/helpers/FCM.dart';
 
 class LaunchPage extends StatefulWidget {
-
   @override
   _LaunchPageState createState() => _LaunchPageState();
 }
 
 class _LaunchPageState extends State<LaunchPage> {
   StreamSubscription iosSubscription;
-  
+
   @override
   void initState() {
     super.initState();
@@ -59,32 +55,48 @@ class _LaunchPageState extends State<LaunchPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("launch"),
+    return Container(
+        child: Flexible(
+      flex: 1,
+      child: Container(
+        color: Color.fromRGBO(11, 133, 255, 1),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            FlatButton(
-              color: Colors.blue,
-              child: Text("로그인 -> 무조건 처음에 한번 요청해야함.", style: TextStyle(color: Colors.white)),
-              onPressed: () {
-                sl<LoginUseCase>()(NoParams());
-              },
-            ),
-            FlatButton(
-              color: Colors.blue,
-              child: Text("리스트 화면 이동", style: TextStyle(color: Colors.white)),
-              onPressed: () {
-                // Navigator.pushNamedAndRemoveUntil(context, '/country/list', (_) => false);
-                Navigator.popAndPushNamed(context, '/country/list');
-              },
-            ),
-          ],
-        ),
-      ),
-    );
+    ));
+    // return Scaffold(
+    //   body: Container(
+    //     child: Flexible(
+    //       flex: 1,
+    //       child: Container(
+    //         color: Colors.red,
+    //       )),
+    // ));
+    // return Scaffold(
+    //   appBar: AppBar(
+    //     title: Text("launch"),
+    //   ),
+    //   body: Center(
+    //     child: Column(
+    //       mainAxisAlignment: MainAxisAlignment.center,
+    //       children: <Widget>[
+    //         FlatButton(
+    //           color: Colors.blue,
+    //           child: Text("로그인 -> 무조건 처음에 한번 요청해야함.",
+    //               style: TextStyle(color: Colors.white)),
+    //           onPressed: () {
+    //             sl<LoginUseCase>()(NoParams());
+    //           },
+    //         ),
+    //         FlatButton(
+    //           color: Colors.blue,
+    //           child: Text("리스트 화면 이동", style: TextStyle(color: Colors.white)),
+    //           onPressed: () {
+    //             // Navigator.pushNamedAndRemoveUntil(context, '/country/list', (_) => false);
+    //             Navigator.popAndPushNamed(context, '/country/list');
+    //           },
+    //         ),
+    //       ],
+    //     ),
+    //   ),
+    // );
   }
 }
