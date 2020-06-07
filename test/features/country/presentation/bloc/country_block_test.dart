@@ -52,8 +52,7 @@ void main() {
   group("GetCountrySearchResult", () {
     final tKeyword = 'k';
     final List<Country> tCountries = [
-      Country(name: 'korea'),
-      Country(name: 'kkk')
+      Country(names: {'en': 'korea'}),
     ];
 
     void setUpMockKeywordValidatorSuccess() =>

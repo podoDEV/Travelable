@@ -33,7 +33,7 @@ class CountrySearchMatchingCountryListWidget extends StatelessWidget {
                       child: Image.asset('images/ic_search_small.png'),
                     ),
                     // SizedBox(width: 16),
-                    Text('${countries[index].name}',
+                    Text(countries[index].displayName,
                         style: TextStyle(
                             fontSize: 17,
                             fontWeight: FontWeight.w500,

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../domain/entities/country.dart';
-import 'country_search_matching_country_list_widget.dart';
+import '../pages/country_detail_page.dart';
 
 class CountrySearchAllCountryListWidget extends StatefulWidget {
   final List<Country> countries;
@@ -59,11 +59,13 @@ class _CountrySearchAllCountryListWidgetState
           itemBuilder: (context, index) {
             return GestureDetector(
               onTap: () {
-                showModalBottomSheet(
-                    context: context,
-                    builder: (BuildContext bc) {
-                      return CountryDetailBottomSheet();
-                    });
+                Navigator.pushNamed(context, CountryDetailPage.routeName,
+                    arguments: CountryDetailPageArguments(countries[index]));
+                // showModalBottomSheet(
+                //     context: context,
+                //     builder: (BuildContext bc) {
+                //       return CountryDetailBottomSheet();
+                //     });
               },
               child: Container(
                 height: _rowHeight,
@@ -71,7 +73,7 @@ class _CountrySearchAllCountryListWidgetState
                 color: Color.fromRGBO(255, 255, 255, 1),
                 child: Row(children: <Widget>[
                   Text(
-                    '${countries[index].name}',
+                    countries[index].displayName,
                     style: TextStyle(
                         fontSize: 17,
                         fontWeight: FontWeight.w500,
@@ -117,7 +119,7 @@ class _CountrySearchAllCountryListWidgetState
           for (var i = 0; i < countries.length; i++) {
             if (_text
                     .toString()
-                    .compareTo(countries[i].name.toUpperCase()[0]) ==
+                    .compareTo(countries[i].displayName.toUpperCase()[0]) ==
                 0) {
               var newOffset = i * _rowHeight;
               var maxScrollExtent = _controller.position.maxScrollExtent;
