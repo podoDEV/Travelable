@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../pages/country_detail_page.dart';
-
 class CountryDetailBottomSheet extends StatelessWidget {
   const CountryDetailBottomSheet({
     Key key,

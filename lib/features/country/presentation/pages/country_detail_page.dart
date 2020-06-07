@@ -4,7 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../injection_container.dart';
 import '../../domain/entities/country.dart';
 import '../bloc/country_bloc.dart';
-import '../widgets/country_detail_info_widget.dart';
+import 'country_detail_info_page.dart';
+import 'country_detail_notices_page.dart';
 
 class CountryDetailPageArguments {
   final Country country;
@@ -24,7 +25,16 @@ class CountryDetailPage extends StatefulWidget {
 }
 
 class _CountryDetailPageState extends State<CountryDetailPage> {
-  final controller = PageController(initialPage: 1);
+  int selectedIndex;
+  PageController controller;
+
+  @override
+  void initState() {
+    selectedIndex = 0;
+    controller = PageController(initialPage: selectedIndex);
+
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,29 +44,21 @@ class _CountryDetailPageState extends State<CountryDetailPage> {
   BlocProvider<CountryBloc> buildBody(BuildContext context) {
     final CountryDetailPageArguments args =
         ModalRoute.of(context).settings.arguments;
+    final country = args.country;
 
     return BlocProvider(
         create: (_) => sl<CountryBloc>(),
         child: Column(
           children: <Widget>[
-            _getCountryDetailNavigationBarWidget(context, args),
-            _getCountryDetailPageBarWidget(args),
-            Expanded(
-              flex: 1,
-              child: PageView(
-                controller: controller,
-                scrollDirection: Axis.horizontal,
-                children: <Widget>[
-                  CountryDetailInfoWidget(country: args.country)
-                ],
-              ),
-            )
+            _getCountryDetailNavigationBarWidget(context, country),
+            _getCountryDetailPageBarWidget(),
+            _getCountryDetailPageBody(country)
           ],
         ));
   }
 
   Widget _getCountryDetailNavigationBarWidget(
-      BuildContext context, CountryDetailPageArguments args) {
+      BuildContext context, Country country) {
     return Column(
       children: <Widget>[
         SizedBox(
@@ -81,7 +83,7 @@ class _CountryDetailPageState extends State<CountryDetailPage> {
                   flex: 1,
                   child: Center(
                       child: Text(
-                    args.country.displayName,
+                    country.displayName,
                     style: TextStyle(
                         fontSize: 24,
                         fontWeight: FontWeight.bold,
@@ -97,42 +99,71 @@ class _CountryDetailPageState extends State<CountryDetailPage> {
     );
   }
 
-  Widget _getCountryDetailPageBarWidget(CountryDetailPageArguments args) {
+  Widget _getCountryDetailPageBarWidget() {
     return Container(
         height: 57,
         padding: EdgeInsets.only(top: 14, left: 17, right: 17),
         child: Row(
           children: <Widget>[
-            _getCountryDetailPageBarItemWidget(
-                title: '주요 정보', isSelected: true),
-            _getCountryDetailPageBarItemWidget(
-                title: '안전 공지', isSelected: false),
+            _getCountryDetailPageBarItemWidget(title: '주요 정보', index: 0),
+            _getCountryDetailPageBarItemWidget(title: '안전 공지', index: 1),
           ],
         ));
   }
 
-  Widget _getCountryDetailPageBarItemWidget({String title, bool isSelected}) {
+  Widget _getCountryDetailPageBarItemWidget({String title, int index}) {
     return Expanded(
         flex: 1,
-        child: Column(children: <Widget>[
-          Expanded(
-              flex: 1,
-              child: Center(
-                  child: Text(
-                title,
-                style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: isSelected ? FontWeight.w700 : FontWeight.w500,
-                    color: isSelected
-                        ? Color.fromRGBO(11, 133, 255, 1)
-                        : Color.fromRGBO(136, 136, 136, 1)),
-              ))),
-          Container(
-            height: isSelected ? 2 : 1,
-            color: isSelected
-                ? Color.fromRGBO(11, 133, 255, 1)
-                : Color.fromRGBO(236, 236, 236, 1),
-          )
-        ]));
+        child: GestureDetector(
+            behavior: HitTestBehavior.translucent,
+            onTap: () {
+              setState(() {
+                selectedIndex = index;
+                controller.animateToPage(index,
+                    duration: Duration(milliseconds: 200), curve: Curves.ease);
+              });
+            },
+            child: Column(children: <Widget>[
+              Expanded(
+                  flex: 1,
+                  child: Container(
+                      child: Center(
+                          child: Text(
+                    title,
+                    style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: selectedIndex == index
+                            ? FontWeight.w700
+                            : FontWeight.w500,
+                        color: selectedIndex == index
+                            ? Color.fromRGBO(11, 133, 255, 1)
+                            : Color.fromRGBO(136, 136, 136, 1)),
+                  )))),
+              Container(
+                height: selectedIndex == index ? 2 : 1,
+                color: selectedIndex == index
+                    ? Color.fromRGBO(11, 133, 255, 1)
+                    : Color.fromRGBO(236, 236, 236, 1),
+              )
+            ])));
+  }
+
+  Widget _getCountryDetailPageBody(Country country) {
+    return Expanded(
+      flex: 1,
+      child: PageView(
+        controller: controller,
+        scrollDirection: Axis.horizontal,
+        onPageChanged: (index) {
+          setState(() {
+            selectedIndex = index;
+          });
+        },
+        children: <Widget>[
+          CountryDetailInfoPage(country: country),
+          CountryDetailNoticesPage(country: country)
+        ],
+      ),
+    );
   }
 }

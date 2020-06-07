@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:maps_launcher/maps_launcher.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../domain/entities/country.dart';
 
-class CountryDetailInfoWidget extends StatelessWidget {
+class CountryDetailInfoPage extends StatelessWidget {
   final Country country;
 
-  const CountryDetailInfoWidget({@required this.country});
+  const CountryDetailInfoPage({@required this.country});
 
   @override
   Widget build(BuildContext context) {
@@ -71,7 +73,7 @@ class CountryDetailInfoWidget extends StatelessWidget {
               children: <Widget>[
                 Container(
                     width: 120,
-                    height: 100,
+                    height: 90,
                     child: FlatButton(
                         splashColor: Colors.transparent,
                         highlightColor: Colors.transparent,
@@ -180,55 +182,66 @@ class CountryDetailInfoWidget extends StatelessWidget {
   }
 
   Widget _getCountryDetailEmbassyAddressInfoWidget(Country country) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        Container(
-          width: 18,
-          height: 18,
-          child: Image.asset('images/ic_pin_blue.png'),
-        ),
-        SizedBox(width: 12),
-        Flexible(
-            child: Column(
+    return GestureDetector(
+        onTap: () {
+          MapsLauncher.launchQuery(country.embassy.address);
+        },
+        child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Text(country.embassy.address,
-                maxLines: 3,
-                style: TextStyle(
-                    fontSize: 15,
-                    fontWeight: FontWeight.w600,
-                    color: Color.fromRGBO(48, 48, 48, 1))),
+            Container(
+              width: 18,
+              height: 18,
+              child: Image.asset('images/ic_pin_blue.png'),
+            ),
+            SizedBox(width: 12),
+            Flexible(
+                child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Text(country.embassy.address,
+                    maxLines: 3,
+                    style: TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.w600,
+                        color: Color.fromRGBO(48, 48, 48, 1))),
+              ],
+            ))
           ],
-        ))
-      ],
-    );
+        ));
   }
 
   Widget _getCountryDetailEmbassyEmailInfoWidget(Country country) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        Container(
-          width: 18,
-          height: 18,
-          child: Image.asset('images/ic_mail.png'),
-        ),
-        SizedBox(width: 12),
-        Flexible(
-            child: Column(
+    return GestureDetector(
+        onTap: () async {
+          var mailScheme = 'mailto:${country.embassy.email}';
+          if (await canLaunch(mailScheme)) {
+            await launch(mailScheme);
+          }
+        },
+        child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Text(country.embassy.email,
-                maxLines: 3,
-                style: TextStyle(
-                    fontSize: 15,
-                    fontWeight: FontWeight.w600,
-                    color: Color.fromRGBO(48, 48, 48, 1))),
+            Container(
+              width: 18,
+              height: 18,
+              child: Image.asset('images/ic_mail.png'),
+            ),
+            SizedBox(width: 12),
+            Flexible(
+                child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Text(country.embassy.email,
+                    maxLines: 3,
+                    style: TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.w600,
+                        color: Color.fromRGBO(48, 48, 48, 1))),
+              ],
+            ))
           ],
-        ))
-      ],
-    );
+        ));
   }
 
   Widget _getCountryDetailEmbassyMoreInfoWidget(Country country) {
@@ -243,7 +256,11 @@ class CountryDetailInfoWidget extends StatelessWidget {
               BorderSide(width: 2, color: Color.fromRGBO(11, 133, 255, 1)),
           child: Text('더 자세한 정보 알아보기',
               style: TextStyle(fontSize: 19, fontWeight: FontWeight.w600)),
-          onPressed: () {},
+          onPressed: () async {
+            if (await canLaunch(country.link)) {
+              await launch(country.link, forceSafariVC: true);
+            }
+          },
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(27)),
         ));
