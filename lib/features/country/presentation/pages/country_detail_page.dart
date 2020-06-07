@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../injection_container.dart';
 import '../../domain/entities/country.dart';
 import '../bloc/country_bloc.dart';
+import '../widgets/country_detail_info_widget.dart';
 
 class CountryDetailPageArguments {
   final Country country;
@@ -46,11 +47,7 @@ class _CountryDetailPageState extends State<CountryDetailPage> {
                 controller: controller,
                 scrollDirection: Axis.horizontal,
                 children: <Widget>[
-                  Column(children: <Widget>[
-                    Column(
-                      children: <Widget>[Text('주요 기관 전화번호')],
-                    )
-                  ])
+                  CountryDetailInfoWidget(country: args.country)
                 ],
               ),
             )
@@ -58,46 +55,7 @@ class _CountryDetailPageState extends State<CountryDetailPage> {
         ));
   }
 
-  Container _getCountryDetailPageBarWidget(CountryDetailPageArguments args) {
-    return Container(
-        height: 57,
-        padding: EdgeInsets.only(top: 14, left: 17, right: 17),
-        child: Row(
-          children: <Widget>[
-            _getCountryDetailPageBarItemWidget(
-                title: '주요 정보', isSelected: true),
-            _getCountryDetailPageBarItemWidget(
-                title: '안전 공지', isSelected: false),
-          ],
-        ));
-  }
-
-  Expanded _getCountryDetailPageBarItemWidget({String title, bool isSelected}) {
-    return Expanded(
-        flex: 1,
-        child: Column(children: <Widget>[
-          Expanded(
-              flex: 1,
-              child: Center(
-                  child: Text(
-                title,
-                style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: isSelected ? FontWeight.w700 : FontWeight.w500,
-                    color: isSelected
-                        ? Color.fromRGBO(11, 133, 255, 1)
-                        : Color.fromRGBO(136, 136, 136, 1)),
-              ))),
-          Container(
-            height: isSelected ? 2 : 1,
-            color: isSelected
-                ? Color.fromRGBO(11, 133, 255, 1)
-                : Color.fromRGBO(236, 236, 236, 1),
-          )
-        ]));
-  }
-
-  Column _getCountryDetailNavigationBarWidget(
+  Widget _getCountryDetailNavigationBarWidget(
       BuildContext context, CountryDetailPageArguments args) {
     return Column(
       children: <Widget>[
@@ -137,5 +95,44 @@ class _CountryDetailPageState extends State<CountryDetailPage> {
         )
       ],
     );
+  }
+
+  Widget _getCountryDetailPageBarWidget(CountryDetailPageArguments args) {
+    return Container(
+        height: 57,
+        padding: EdgeInsets.only(top: 14, left: 17, right: 17),
+        child: Row(
+          children: <Widget>[
+            _getCountryDetailPageBarItemWidget(
+                title: '주요 정보', isSelected: true),
+            _getCountryDetailPageBarItemWidget(
+                title: '안전 공지', isSelected: false),
+          ],
+        ));
+  }
+
+  Widget _getCountryDetailPageBarItemWidget({String title, bool isSelected}) {
+    return Expanded(
+        flex: 1,
+        child: Column(children: <Widget>[
+          Expanded(
+              flex: 1,
+              child: Center(
+                  child: Text(
+                title,
+                style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: isSelected ? FontWeight.w700 : FontWeight.w500,
+                    color: isSelected
+                        ? Color.fromRGBO(11, 133, 255, 1)
+                        : Color.fromRGBO(136, 136, 136, 1)),
+              ))),
+          Container(
+            height: isSelected ? 2 : 1,
+            color: isSelected
+                ? Color.fromRGBO(11, 133, 255, 1)
+                : Color.fromRGBO(236, 236, 236, 1),
+          )
+        ]));
   }
 }
