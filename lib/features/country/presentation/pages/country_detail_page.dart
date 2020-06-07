@@ -1,0 +1,141 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../../../injection_container.dart';
+import '../../domain/entities/country.dart';
+import '../bloc/country_bloc.dart';
+
+class CountryDetailPageArguments {
+  final Country country;
+
+  CountryDetailPageArguments(this.country);
+}
+
+class CountryDetailPage extends StatefulWidget {
+  static const routeName = '/country/detail';
+
+  const CountryDetailPage({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  _CountryDetailPageState createState() => _CountryDetailPageState();
+}
+
+class _CountryDetailPageState extends State<CountryDetailPage> {
+  final controller = PageController(initialPage: 1);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(body: buildBody(context));
+  }
+
+  BlocProvider<CountryBloc> buildBody(BuildContext context) {
+    final CountryDetailPageArguments args =
+        ModalRoute.of(context).settings.arguments;
+
+    return BlocProvider(
+        create: (_) => sl<CountryBloc>(),
+        child: Column(
+          children: <Widget>[
+            _getCountryDetailNavigationBarWidget(context, args),
+            _getCountryDetailPageBarWidget(args),
+            Expanded(
+              flex: 1,
+              child: PageView(
+                controller: controller,
+                scrollDirection: Axis.horizontal,
+                children: <Widget>[
+                  Column(children: <Widget>[
+                    Column(
+                      children: <Widget>[Text('주요 기관 전화번호')],
+                    )
+                  ])
+                ],
+              ),
+            )
+          ],
+        ));
+  }
+
+  Container _getCountryDetailPageBarWidget(CountryDetailPageArguments args) {
+    return Container(
+        height: 57,
+        padding: EdgeInsets.only(top: 14, left: 17, right: 17),
+        child: Row(
+          children: <Widget>[
+            _getCountryDetailPageBarItemWidget(
+                title: '주요 정보', isSelected: true),
+            _getCountryDetailPageBarItemWidget(
+                title: '안전 공지', isSelected: false),
+          ],
+        ));
+  }
+
+  Expanded _getCountryDetailPageBarItemWidget({String title, bool isSelected}) {
+    return Expanded(
+        flex: 1,
+        child: Column(children: <Widget>[
+          Expanded(
+              flex: 1,
+              child: Center(
+                  child: Text(
+                title,
+                style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: isSelected ? FontWeight.w700 : FontWeight.w500,
+                    color: isSelected
+                        ? Color.fromRGBO(11, 133, 255, 1)
+                        : Color.fromRGBO(136, 136, 136, 1)),
+              ))),
+          Container(
+            height: isSelected ? 2 : 1,
+            color: isSelected
+                ? Color.fromRGBO(11, 133, 255, 1)
+                : Color.fromRGBO(236, 236, 236, 1),
+          )
+        ]));
+  }
+
+  Column _getCountryDetailNavigationBarWidget(
+      BuildContext context, CountryDetailPageArguments args) {
+    return Column(
+      children: <Widget>[
+        SizedBox(
+          height: 48,
+          child: Container(color: Color.fromRGBO(11, 133, 255, 1)),
+        ),
+        Container(
+          height: 59,
+          color: Color.fromRGBO(11, 133, 255, 1),
+          child: Row(
+            children: <Widget>[
+              Container(
+                  width: 56,
+                  height: 56,
+                  child: FlatButton(
+                    splashColor: Colors.transparent,
+                    highlightColor: Colors.transparent,
+                    onPressed: () => Navigator.pop(context),
+                    child: Image.asset('images/btn_back_white.png'),
+                  )),
+              Expanded(
+                  flex: 1,
+                  child: Center(
+                      child: Text(
+                    args.country.displayName,
+                    style: TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                        color: Color.fromRGBO(228, 230, 233, 1)),
+                  ))),
+              SizedBox(
+                width: 56,
+              )
+            ],
+          ),
+        )
+      ],
+    );
+  }
+}

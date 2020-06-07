@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 
-import 'injection_container.dart' as di;
 import 'features/app/launch_page.dart';
+import 'features/country/presentation/pages/country_detail_page.dart';
 import 'features/country/presentation/pages/country_list_page.dart';
 import 'features/country/presentation/pages/country_search_page.dart';
+import 'injection_container.dart' as di;
 
 void main() async {
   await di.init();
@@ -13,10 +14,11 @@ void main() async {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    var routes2 = {
-      '/': (BuildContext context) => LaunchPage(),
-      '/country/list': (BuildContext context) => CountryListPage(),
-      '/country/search': (BuildContext context) => CountrySearchPage(),
+    var routes = {
+      '/': (context) => LaunchPage(),
+      '/country/list': (context) => CountryListPage(),
+      '/country/search': (context) => CountrySearchPage(),
+      CountryDetailPage.routeName: (context) => CountryDetailPage()
     };
     return MaterialApp(
       title: 'Flutter Demo',
@@ -24,7 +26,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       initialRoute: '/',
-      routes: routes2,
+      routes: routes,
     );
   }
 }

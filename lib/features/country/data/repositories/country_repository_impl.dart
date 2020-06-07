@@ -26,9 +26,9 @@ class CountryRepositoryImpl implements CountryRepository {
 
   @override
   Future<Either<Failure, List<Country>>> countries() async {
+    return Right(Country.mocks);
     if (await networkInfo.isConnected) {
       try {
-        return Right(Country.mocks);
         final countries = await remoteDataSource.getCountries();
         localDataSource.insertCountries(countries);
         cachedCountries = countries;
@@ -55,7 +55,7 @@ class CountryRepositoryImpl implements CountryRepository {
     return Right(Country.mocks);
     if (cachedCountries.isNotEmpty) {
       return Right(
-          cachedCountries.where((e) => e.name.contains(name)).toList());
+          cachedCountries.where((e) => e.displayName.contains(name)).toList());
     }
 
     if (await networkInfo.isConnected) {
@@ -63,7 +63,7 @@ class CountryRepositoryImpl implements CountryRepository {
         final countries = await remoteDataSource.getCountries();
         localDataSource.insertCountries(countries);
         cachedCountries = countries;
-        return Right(countries.where((e) => e.name.contains(name)));
+        return Right(countries.where((e) => e.displayName.contains(name)));
       } on ServerException {
         return Left(ServerFailure());
       }
@@ -73,7 +73,7 @@ class CountryRepositoryImpl implements CountryRepository {
         if (cachedCountries.isEmpty) {
           cachedCountries = countries;
         }
-        return Right(countries.where((e) => e.name.contains(name)));
+        return Right(countries.where((e) => e.displayName.contains(name)));
       } on CacheException {
         return Left(CacheFailure());
       }
@@ -82,6 +82,7 @@ class CountryRepositoryImpl implements CountryRepository {
 
   @override
   Future<Either<Failure, Country>> countryBy({String id}) async {
+    return Right(Country.mocks.first);
     if (await networkInfo.isConnected) {
       try {
         final country = await remoteDataSource.getCountryBy(id);
