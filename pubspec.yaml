@@ -34,6 +34,10 @@ dependencies:
   firebase_messaging: ^5.0.2
   cloud_firestore: ^0.12.10
 
+  # Launcher
+  url_launcher:
+  maps_launcher:
+
   # Etc
   equatable:
   device_info:
