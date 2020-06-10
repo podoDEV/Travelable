@@ -1,33 +1,30 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../../../injection_container.dart';
+import '../bloc/country_bloc.dart';
+import '../widgets/country_list_navigation_bar.dart';
+import '../widgets/country_pinned_list_widget.dart';
 
 class CountryListPage extends StatelessWidget {
+  static const routeName = '/country/list';
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text('country list page'),),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            FlatButton(
-              color: Colors.blue,
-              child: Text("국가 리스트", style: TextStyle(color: Colors.white)),
-              onPressed: () {
+    return Scaffold(body: buildBody(context));
+  }
 
-              },
-            ),
-            FlatButton(
-              color: Colors.blue,
-              child: Text("추가 버튼", style: TextStyle(color: Colors.white)),
-              onPressed: () {
-                Navigator.pushNamed(context, '/country/search');
-              },
-            ),
-          ],
-        ),
-      ),
-
-    );
+  BlocProvider<CountryBloc> buildBody(BuildContext context) {
+    return BlocProvider(
+        create: (_) => sl<CountryBloc>(),
+        child: Container(
+            color: Color.fromRGBO(228, 230, 233, 1),
+            child: Column(
+              children: <Widget>[
+                SizedBox(height: 44),
+                CountryListNavigationBar(),
+                CountryPinnedListWidget()
+              ],
+            )));
   }
 }

@@ -13,6 +13,8 @@ import '../country/presentation/bloc/country_bloc.dart';
 import '../member/domain/usecases/login_usecase.dart';
 
 class LaunchPage extends StatefulWidget {
+  static const routeName = '/';
+
   @override
   _LaunchPageState createState() => _LaunchPageState();
 }

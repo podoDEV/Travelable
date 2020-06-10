@@ -1,3 +1,4 @@
+import 'package:emergency/features/app/setting_page.dart';
 import 'package:flutter/material.dart';
 
 import 'features/app/launch_page.dart';
@@ -15,17 +16,18 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var routes = {
-      '/': (context) => LaunchPage(),
-      '/country/list': (context) => CountryListPage(),
-      '/country/search': (context) => CountrySearchPage(),
-      CountryDetailPage.routeName: (context) => CountryDetailPage()
+      LaunchPage.routeName: (context) => LaunchPage(),
+      CountryListPage.routeName: (context) => CountryListPage(),
+      CountrySearchPage.routeName: (context) => CountrySearchPage(),
+      CountryDetailPage.routeName: (context) => CountryDetailPage(),
+      SettingPage.routeName: (context) => SettingPage()
     };
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      initialRoute: '/',
+      initialRoute: LaunchPage.routeName,
       routes: routes,
     );
   }

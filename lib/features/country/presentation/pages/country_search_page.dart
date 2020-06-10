@@ -11,6 +11,8 @@ import '../widgets/loading_widget.dart';
 import '../widgets/message_widget.dart';
 
 class CountrySearchPage extends StatefulWidget {
+  static const routeName = '/country/search';
+
   const CountrySearchPage({
     Key key,
   }) : super(key: key);

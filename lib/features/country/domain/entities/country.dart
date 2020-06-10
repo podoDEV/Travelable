@@ -1,3 +1,4 @@
+import 'covid.dart';
 import 'embassy.dart';
 import 'notice.dart';
 import 'tel.dart';
@@ -11,6 +12,8 @@ class Country {
   final Embassy embassy;
   final String link;
   final List<Notice> notices;
+  final Covid covid;
+  final bool noti;
 
   String get displayName {
     if (names == null) {
@@ -27,7 +30,9 @@ class Country {
       this.tels,
       this.embassy,
       this.link,
-      this.notices});
+      this.notices,
+      this.covid,
+      this.noti});
 
   Map<String, dynamic> toMap() {
     return {'id': id, 'names': names, 'pinned': pinned};
@@ -52,7 +57,9 @@ class Country {
         tels: telsMap.map((e) => Tel.fromMap(e)).toList(),
         embassy: Embassy.fromMap(map['embassy']),
         link: map['link'],
-        notices: noticesMap.map((e) => Notice.fromMap(e)).toList());
+        notices: noticesMap.map((e) => Notice.fromMap(e)).toList(),
+        covid: Covid.fromMap(map['covid']),
+        noti: map['noti']);
   }
 
   static var mocks = [
@@ -61,102 +68,136 @@ class Country {
         countryNumber: '123-123',
         tels: Tel.mocks,
         embassy: Embassy.mock,
-        link: 'https://google.com'),
+        link: 'https://naver.com',
+        covid: Covid.mock,
+        noti: true),
     Country(
         names: {'ko': '가나다'},
         countryNumber: '123-123',
         tels: Tel.mocks,
         embassy: Embassy.mock,
-        link: 'https://google.com'),
+        link: 'https://naver.com',
+        covid: Covid.mock,
+        noti: true),
     Country(
         names: {'ko': '가나다라'},
         countryNumber: '123-123',
         tels: Tel.mocks,
         embassy: Embassy.mock,
-        link: 'https://google.com'),
+        link: 'https://naver.com',
+        covid: Covid.mock,
+        noti: true),
     Country(
         names: {'ko': '나가'},
         countryNumber: '123-123',
         tels: Tel.mocks,
         embassy: Embassy.mock,
-        link: 'https://google.com'),
+        link: 'https://naver.com',
+        covid: Covid.mock,
+        noti: false),
     Country(
         names: {'ko': '나라'},
         countryNumber: '123-123',
         tels: Tel.mocks,
         embassy: Embassy.mock,
-        link: 'https://google.com'),
+        link: 'https://naver.com',
+        covid: Covid.mock,
+        noti: false),
     Country(
         names: {'ko': '다리미'},
         countryNumber: '123-123',
         tels: Tel.mocks,
         embassy: Embassy.mock,
-        link: 'https://google.com'),
+        link: 'https://naver.com',
+        covid: Covid.mock,
+        noti: false),
     Country(
         names: {'ko': '다시'},
         countryNumber: '123-123',
         tels: Tel.mocks,
         embassy: Embassy.mock,
-        link: 'https://google.com'),
+        link: 'https://naver.com',
+        covid: Covid.mock,
+        noti: false),
     Country(
         names: {'ko': '마늘'},
         countryNumber: '123-123',
         tels: Tel.mocks,
         embassy: Embassy.mock,
-        link: 'https://google.com'),
+        link: 'https://naver.com',
+        covid: Covid.mock,
+        noti: false),
     Country(
         names: {'ko': '바다'},
         countryNumber: '123-123',
         tels: Tel.mocks,
         embassy: Embassy.mock,
-        link: 'https://google.com'),
+        link: 'https://naver.com',
+        covid: Covid.mock,
+        noti: true),
     Country(
         names: {'ko': '사자'},
         countryNumber: '123-123',
         tels: Tel.mocks,
         embassy: Embassy.mock,
-        link: 'https://google.com'),
+        link: 'https://naver.com',
+        covid: Covid.mock,
+        noti: false),
     Country(
         names: {'ko': '아기'},
         countryNumber: '123-123',
         tels: Tel.mocks,
         embassy: Embassy.mock,
-        link: 'https://google.com'),
+        link: 'https://naver.com',
+        covid: Covid.mock,
+        noti: false),
     Country(
         names: {'ko': '자전거'},
         countryNumber: '123-123',
         tels: Tel.mocks,
         embassy: Embassy.mock,
-        link: 'https://google.com'),
+        link: 'https://naver.com',
+        covid: Covid.mock,
+        noti: false),
     Country(
         names: {'ko': '차콜'},
         countryNumber: '123-123',
         tels: Tel.mocks,
         embassy: Embassy.mock,
-        link: 'https://google.com'),
+        link: 'https://naver.com',
+        covid: Covid.mock,
+        noti: true),
     Country(
         names: {'ko': '카메라'},
         countryNumber: '123-123',
         tels: Tel.mocks,
         embassy: Embassy.mock,
-        link: 'https://google.com'),
+        link: 'https://naver.com',
+        covid: Covid.mock,
+        noti: false),
     Country(
         names: {'ko': '타잔'},
         countryNumber: '123-123',
         tels: Tel.mocks,
         embassy: Embassy.mock,
-        link: 'https://google.com'),
+        link: 'https://naver.com',
+        covid: Covid.mock,
+        noti: false),
     Country(
         names: {'ko': '파도'},
         countryNumber: '123-123',
         tels: Tel.mocks,
         embassy: Embassy.mock,
-        link: 'https://google.com'),
+        link: 'https://naver.com',
+        covid: Covid.mock,
+        noti: false),
     Country(
         names: {'ko': '하늘'},
         countryNumber: '123-123',
         tels: Tel.mocks,
         embassy: Embassy.mock,
-        link: 'https://google.com')
+        link: 'https://naver.com',
+        covid: Covid.mock,
+        noti: true)
   ];
 }
