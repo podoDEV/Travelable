@@ -1,8 +1,10 @@
+import 'package:emergency/features/country/domain/entities/tel.dart';
 import 'package:flutter/material.dart';
 import 'package:maps_launcher/maps_launcher.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../domain/entities/country.dart';
+import '../widgets/separator_widget.dart';
 
 class CountryDetailInfoPage extends StatelessWidget {
   final Country country;
@@ -21,11 +23,8 @@ class CountryDetailInfoPage extends StatelessWidget {
               SizedBox(
                 height: 30,
               ),
-              Container(
-                height: 2,
-                width: double.infinity,
-                color: Color.fromRGBO(236, 236, 236, 1),
-              ),
+              SeparatorWidget(
+                  height: 2, color: Color.fromRGBO(236, 236, 236, 1)),
               SizedBox(
                 height: 30,
               ),
@@ -69,43 +68,16 @@ class CountryDetailInfoPage extends StatelessWidget {
             SizedBox(
               height: 30,
             ),
-            Row(
-              children: <Widget>[
-                Container(
-                    width: 120,
-                    height: 90,
-                    child: FlatButton(
-                        splashColor: Colors.transparent,
-                        highlightColor: Colors.transparent,
-                        onPressed: () => Navigator.pop(context),
-                        child: Column(
-                          children: <Widget>[
-                            Container(
-                                width: 23,
-                                height: 23,
-                                child: Image.asset('images/ic_police.png')),
-                            SizedBox(
-                              height: 12,
-                            ),
-                            Text('경찰',
-                                style: TextStyle(
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.w600,
-                                    color: Color.fromRGBO(11, 133, 255, 1))),
-                            SizedBox(
-                              height: 7,
-                            ),
-                            Text(country.countryNumber,
-                                style: TextStyle(
-                                    fontSize: 17,
-                                    fontWeight: FontWeight.w600,
-                                    color: Color.fromRGBO(48, 48, 48, 1)))
-                          ],
-                        ))),
-              ],
-            ),
+            _getTelWidgets(country.tels, country.countryNumber),
           ],
         ));
+  }
+
+  Widget _getTelWidgets(List<Tel> tels, String countryNumber) {
+    return new Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children:
+            tels.map((tel) => _getBadgeWidget(tel, countryNumber)).toList());
   }
 
   Widget _getCountryDetailEmbassyInfoWidget(Country country) {
@@ -258,11 +230,47 @@ class CountryDetailInfoPage extends StatelessWidget {
               style: TextStyle(fontSize: 19, fontWeight: FontWeight.w600)),
           onPressed: () async {
             if (await canLaunch(country.link)) {
-              await launch(country.link, forceSafariVC: true);
+              await launch(country.link, forceSafariVC: false);
             }
           },
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(27)),
         ));
+  }
+
+  Widget _getBadgeWidget(Tel tel, String countryNumber) {
+    return Container(
+        width: 120,
+        height: 90,
+        child: FlatButton(
+            splashColor: Colors.transparent,
+            highlightColor: Colors.transparent,
+            onPressed: () async {
+              var tellScheme = 'tel:' + tel.callNumber(countryNumber);
+              if (await canLaunch(tellScheme)) {
+                await launch(tellScheme, forceSafariVC: false);
+              }
+            },
+            child: Column(
+              children: <Widget>[
+                Container(width: 23, height: 23, child: tel.displayImage()),
+                SizedBox(
+                  height: 12,
+                ),
+                Text(tel.displayName(),
+                    style: TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.w600,
+                        color: Color.fromRGBO(11, 133, 255, 1))),
+                SizedBox(
+                  height: 7,
+                ),
+                Text(tel.displayNumber(),
+                    style: TextStyle(
+                        fontSize: 17,
+                        fontWeight: FontWeight.w600,
+                        color: Color.fromRGBO(48, 48, 48, 1)))
+              ],
+            )));
   }
 }

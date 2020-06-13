@@ -1,4 +1,5 @@
 import 'package:data_connection_checker/data_connection_checker.dart';
+import 'package:emergency/features/country/domain/usecases/get_pinned_countries_usecase.dart';
 import 'package:get_it/get_it.dart';
 import 'package:http/http.dart';
 
@@ -30,6 +31,7 @@ Future<void> init() async {
   sl.registerFactory(
     () => CountryBloc(
       allCountriesUseCase: sl(),
+      pinnedCountriesUseCase: sl(),
       countryUseCase: sl(),
       searchCountriesUseCase: sl(),
       indexingUseCase: sl(),
@@ -39,6 +41,7 @@ Future<void> init() async {
 
   // Use cases
   sl.registerLazySingleton(() => GetAllCountriesUseCase(sl()));
+  sl.registerLazySingleton(() => GetPinnedCountriesUseCase(sl()));
   sl.registerLazySingleton(() => GetCountryUseCase(sl()));
   sl.registerLazySingleton(() => SearchCountriesUseCase(sl()));
   sl.registerLazySingleton(() => GetIndexingUseCase());

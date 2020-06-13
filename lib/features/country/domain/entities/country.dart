@@ -1,6 +1,7 @@
 import 'covid.dart';
 import 'embassy.dart';
 import 'notice.dart';
+import 'precaution_level.dart';
 import 'tel.dart';
 
 class Country {
@@ -13,7 +14,11 @@ class Country {
   final String link;
   final List<Notice> notices;
   final Covid covid;
-  final bool noti;
+  final bool alarmEnabled;
+  final bool travelAdvisory;
+  final PrecautionLevel precautionLevel;
+  final DateTime begin;
+  final DateTime end;
 
   String get displayName {
     if (names == null) {
@@ -32,7 +37,11 @@ class Country {
       this.link,
       this.notices,
       this.covid,
-      this.noti});
+      this.alarmEnabled,
+      this.travelAdvisory,
+      this.precautionLevel,
+      this.begin,
+      this.end});
 
   Map<String, dynamic> toMap() {
     return {'id': id, 'names': names, 'pinned': pinned};
@@ -59,7 +68,9 @@ class Country {
         link: map['link'],
         notices: noticesMap.map((e) => Notice.fromMap(e)).toList(),
         covid: Covid.fromMap(map['covid']),
-        noti: map['noti']);
+        alarmEnabled: map['alarmEnabled'],
+        travelAdvisory: map['travelAdvisory'],
+        precautionLevel: map['precautionLevel']);
   }
 
   static var mocks = [
@@ -70,7 +81,8 @@ class Country {
         embassy: Embassy.mock,
         link: 'https://naver.com',
         covid: Covid.mock,
-        noti: true),
+        alarmEnabled: true,
+        precautionLevel: PrecautionLevel.avoidAll),
     Country(
         names: {'ko': '가나다'},
         countryNumber: '123-123',
@@ -78,7 +90,8 @@ class Country {
         embassy: Embassy.mock,
         link: 'https://naver.com',
         covid: Covid.mock,
-        noti: true),
+        alarmEnabled: true,
+        precautionLevel: PrecautionLevel.none),
     Country(
         names: {'ko': '가나다라'},
         countryNumber: '123-123',
@@ -86,7 +99,8 @@ class Country {
         embassy: Embassy.mock,
         link: 'https://naver.com',
         covid: Covid.mock,
-        noti: true),
+        alarmEnabled: true,
+        precautionLevel: PrecautionLevel.avoidNonessential),
     Country(
         names: {'ko': '나가'},
         countryNumber: '123-123',
@@ -94,7 +108,8 @@ class Country {
         embassy: Embassy.mock,
         link: 'https://naver.com',
         covid: Covid.mock,
-        noti: false),
+        alarmEnabled: false,
+        precautionLevel: PrecautionLevel.usual),
     Country(
         names: {'ko': '나라'},
         countryNumber: '123-123',
@@ -102,7 +117,8 @@ class Country {
         embassy: Embassy.mock,
         link: 'https://naver.com',
         covid: Covid.mock,
-        noti: false),
+        alarmEnabled: false,
+        precautionLevel: PrecautionLevel.usual),
     Country(
         names: {'ko': '다리미'},
         countryNumber: '123-123',
@@ -110,7 +126,8 @@ class Country {
         embassy: Embassy.mock,
         link: 'https://naver.com',
         covid: Covid.mock,
-        noti: false),
+        alarmEnabled: false,
+        precautionLevel: PrecautionLevel.usual),
     Country(
         names: {'ko': '다시'},
         countryNumber: '123-123',
@@ -118,7 +135,8 @@ class Country {
         embassy: Embassy.mock,
         link: 'https://naver.com',
         covid: Covid.mock,
-        noti: false),
+        alarmEnabled: false,
+        precautionLevel: PrecautionLevel.usual),
     Country(
         names: {'ko': '마늘'},
         countryNumber: '123-123',
@@ -126,7 +144,8 @@ class Country {
         embassy: Embassy.mock,
         link: 'https://naver.com',
         covid: Covid.mock,
-        noti: false),
+        alarmEnabled: false,
+        precautionLevel: PrecautionLevel.usual),
     Country(
         names: {'ko': '바다'},
         countryNumber: '123-123',
@@ -134,7 +153,8 @@ class Country {
         embassy: Embassy.mock,
         link: 'https://naver.com',
         covid: Covid.mock,
-        noti: true),
+        alarmEnabled: true,
+        precautionLevel: PrecautionLevel.usual),
     Country(
         names: {'ko': '사자'},
         countryNumber: '123-123',
@@ -142,7 +162,8 @@ class Country {
         embassy: Embassy.mock,
         link: 'https://naver.com',
         covid: Covid.mock,
-        noti: false),
+        alarmEnabled: false,
+        precautionLevel: PrecautionLevel.enhanced),
     Country(
         names: {'ko': '아기'},
         countryNumber: '123-123',
@@ -150,7 +171,8 @@ class Country {
         embassy: Embassy.mock,
         link: 'https://naver.com',
         covid: Covid.mock,
-        noti: false),
+        alarmEnabled: false,
+        precautionLevel: PrecautionLevel.enhanced),
     Country(
         names: {'ko': '자전거'},
         countryNumber: '123-123',
@@ -158,7 +180,8 @@ class Country {
         embassy: Embassy.mock,
         link: 'https://naver.com',
         covid: Covid.mock,
-        noti: false),
+        alarmEnabled: false,
+        precautionLevel: PrecautionLevel.enhanced),
     Country(
         names: {'ko': '차콜'},
         countryNumber: '123-123',
@@ -166,7 +189,8 @@ class Country {
         embassy: Embassy.mock,
         link: 'https://naver.com',
         covid: Covid.mock,
-        noti: true),
+        alarmEnabled: true,
+        precautionLevel: PrecautionLevel.enhanced),
     Country(
         names: {'ko': '카메라'},
         countryNumber: '123-123',
@@ -174,7 +198,8 @@ class Country {
         embassy: Embassy.mock,
         link: 'https://naver.com',
         covid: Covid.mock,
-        noti: false),
+        alarmEnabled: false,
+        precautionLevel: PrecautionLevel.enhanced),
     Country(
         names: {'ko': '타잔'},
         countryNumber: '123-123',
@@ -182,7 +207,8 @@ class Country {
         embassy: Embassy.mock,
         link: 'https://naver.com',
         covid: Covid.mock,
-        noti: false),
+        alarmEnabled: false,
+        precautionLevel: PrecautionLevel.avoidNonessential),
     Country(
         names: {'ko': '파도'},
         countryNumber: '123-123',
@@ -190,7 +216,8 @@ class Country {
         embassy: Embassy.mock,
         link: 'https://naver.com',
         covid: Covid.mock,
-        noti: false),
+        alarmEnabled: false,
+        precautionLevel: PrecautionLevel.enhanced),
     Country(
         names: {'ko': '하늘'},
         countryNumber: '123-123',
@@ -198,6 +225,7 @@ class Country {
         embassy: Embassy.mock,
         link: 'https://naver.com',
         covid: Covid.mock,
-        noti: true)
+        alarmEnabled: true,
+        precautionLevel: PrecautionLevel.avoidNonessential)
   ];
 }

@@ -60,6 +60,7 @@ flutter:
       - images/ic_search_small.png
       - images/ic_call.png
       - images/ic_fire.png
+      - images/ic_hospital.png
       - images/ic_mail.png
       - images/ic_pin_blue.png
       - images/ic_police.png

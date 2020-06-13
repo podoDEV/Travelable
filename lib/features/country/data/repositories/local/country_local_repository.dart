@@ -22,6 +22,13 @@ class CountryLocalRepository implements CountryLocalDataSource {
   }
 
   @override
+  Future<List<Country>> getPinnedCountries() async {
+    final Database db = await database;
+    final List<Map<String, dynamic>> maps = await db.query("countries");
+    return maps.map((e) => Country.fromMap(e)).toList();
+  }
+
+  @override
   Future<void> insertCountries(List<Country> countries) async {
     final Database db = await database;
     // await db.insert('countries', countries)

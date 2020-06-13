@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 
+import '../../domain/entities/country.dart';
+import 'country_card_widget.dart';
+
 class CountryPinnedListWidget extends StatelessWidget {
-  const CountryPinnedListWidget({
-    Key key,
-  }) : super(key: key);
+  List<Country> countries = [];
+  CountryPinnedListWidget({this.countries});
 
   @override
   Widget build(BuildContext context) {
@@ -11,26 +13,12 @@ class CountryPinnedListWidget extends StatelessWidget {
         flex: 1,
         child: Container(
           child: ListView.builder(
-            padding: EdgeInsets.only(top: 0),
-            itemCount: 10,
+            padding: EdgeInsets.only(top: 0, bottom: 60),
+            itemCount: countries.length,
             itemBuilder: (context, index) {
-              return _getPinnedCountryCardWidget();
+              return CountryCardWidget(country: countries[index]);
             },
           ),
         ));
-  }
-
-  Widget _getPinnedCountryCardWidget() {
-    return Container(
-        padding: EdgeInsets.only(left: 24, right: 24, bottom: 10),
-        child: Card(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12.0),
-            ),
-            child: Container(
-                height: 100,
-                child: Text(
-                  '',
-                ))));
   }
 }

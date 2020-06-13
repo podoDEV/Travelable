@@ -50,6 +50,31 @@ class CountryRepositoryImpl implements CountryRepository {
   }
 
   @override
+  Future<Either<Failure, List<Country>>> pinnedCountries() async {
+    return Right(Country.mocks);
+    if (await networkInfo.isConnected) {
+      try {
+        final countries = await remoteDataSource.getPinnedCountries();
+        localDataSource.insertCountries(countries);
+        cachedCountries = countries;
+        return Right(countries);
+      } on ServerException {
+        return Left(ServerFailure());
+      }
+    } else {
+      try {
+        final countries = await localDataSource.getCountries();
+        if (cachedCountries.isEmpty) {
+          cachedCountries = countries;
+        }
+        return Right(countries);
+      } on CacheException {
+        return Left(CacheFailure());
+      }
+    }
+  }
+
+  @override
   Future<Either<Failure, List<Country>>> countriesBy({String name}) async {
     // TODO: - Search 고도화
     return Right(Country.mocks);

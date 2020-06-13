@@ -15,6 +15,7 @@ import 'requests/country_get_request.dart';
 import 'requests/country_pin_post_request.dart';
 import 'requests/country_unpin_post_request.dart';
 import 'requests/notices_get_request.dart';
+import 'requests/pinned_countries_get_request.dart';
 
 class CountryRemoteRepository implements CountryRemoteDataSource {
   final ApiProviderProtocol provider;
@@ -25,6 +26,14 @@ class CountryRemoteRepository implements CountryRemoteDataSource {
   Future<List<Country>> getCountries() async {
     final requestModel = CountriesGetRequestModel();
     final response = await provider.send(CountriesGetRequest(requestModel));
+    return CountriesGetResponseModel.fromMap(response).countries;
+  }
+
+  @override
+  Future<List<Country>> getPinnedCountries() async {
+    final requestModel = CountriesGetRequestModel();
+    final response =
+        await provider.send(PinnedCountriesGetRequest(requestModel));
     return CountriesGetResponseModel.fromMap(response).countries;
   }
 

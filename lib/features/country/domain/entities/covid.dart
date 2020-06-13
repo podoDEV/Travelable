@@ -1,19 +1,26 @@
 class Covid {
-  final String total;
-  final String died;
-  final String today;
+  final String totalConfirmCases;
+  final String deltaConfirmCases;
+  final String totalDeathToll;
   final DateTime updatedAt;
 
-  Covid({this.total, this.died, this.today, this.updatedAt});
+  Covid(
+      {this.totalConfirmCases,
+      this.deltaConfirmCases,
+      this.totalDeathToll,
+      this.updatedAt});
 
   factory Covid.fromMap(Map<String, dynamic> map) {
     return new Covid(
-        total: map['total'],
-        died: map['died'],
-        today: map['today'],
+        totalConfirmCases: map['totalConfirmCases'],
+        deltaConfirmCases: map['deltaConfirmCases'],
+        totalDeathToll: map['totalDeathToll'],
         updatedAt: map['updatedAt']);
   }
 
   static var mock = Covid(
-      total: '22304', died: '289', today: '23', updatedAt: DateTime.now());
+      totalConfirmCases: '22304',
+      deltaConfirmCases: '289',
+      totalDeathToll: '23',
+      updatedAt: DateTime.now());
 }

@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
 import 'package:emergency/features/country/domain/usecases/get_country_usecase.dart';
+import 'package:emergency/features/country/domain/usecases/get_pinned_countries_usecase.dart';
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 
@@ -23,6 +24,7 @@ const String INVALID_INPUT_FAILURE_MESSAGE = 'Failure';
 
 class CountryBloc extends Bloc<CountryEvent, CountryState> {
   final GetAllCountriesUseCase allCountriesUseCase;
+  final GetPinnedCountriesUseCase pinnedCountriesUseCase;
   final GetCountryUseCase countryUseCase;
   final SearchCountriesUseCase searchCountriesUseCase;
   final GetIndexingUseCase indexing;
@@ -30,11 +32,13 @@ class CountryBloc extends Bloc<CountryEvent, CountryState> {
 
   CountryBloc(
       {@required this.allCountriesUseCase,
+      @required this.pinnedCountriesUseCase,
       @required this.countryUseCase,
       @required this.searchCountriesUseCase,
       @required GetIndexingUseCase indexingUseCase,
       @required this.validator})
       : assert(allCountriesUseCase != null),
+        assert(pinnedCountriesUseCase != null),
         assert(countryUseCase != null),
         assert(searchCountriesUseCase != null),
         assert(indexingUseCase != null),
@@ -72,6 +76,9 @@ class CountryBloc extends Bloc<CountryEvent, CountryState> {
       final failureOrCountry =
           await countryUseCase(GetCountryParams(event.countryId));
       yield* _eitherDetailSheetOrErrorState(failureOrCountry);
+    } else if (event is GetPinnedCountries) {
+      final failureOrCountries = await pinnedCountriesUseCase(NoParams());
+      yield* _eitherPinnedOrErrorState(failureOrCountries);
     }
   }
 
@@ -97,6 +104,20 @@ class CountryBloc extends Bloc<CountryEvent, CountryState> {
     yield failureOrCountries.fold(
         (failure) => Error(message: _mapFailureToMessage(failure)),
         (countries) => MatchingLoaded(countries: countries));
+  }
+
+  Stream<CountryState> _eitherPinnedOrErrorState(
+    Either<Failure, List<Country>> failureOrCountries,
+  ) async* {
+    yield failureOrCountries
+        .fold((failure) => Error(message: _mapFailureToMessage(failure)),
+            (countries) {
+      if (countries.isEmpty) {
+        return NoPinned();
+      } else {
+        return PinnedLoaded(countries: countries);
+      }
+    });
   }
 
   Stream<CountryState> _eitherDetailSheetOrErrorState(

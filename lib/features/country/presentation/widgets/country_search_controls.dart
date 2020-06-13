@@ -44,7 +44,7 @@ class _CountrySearchControlsState extends State<CountrySearchControls> {
                       fontWeight: FontWeight.w500,
                       color: Color.fromRGBO(48, 48, 48, 1)),
                   decoration: InputDecoration.collapsed(
-                      hintText: '나라 이름을 검색해 주세요 🤩',
+                      hintText: '나라 이름을 검색해 주세요 🧐',
                       hintStyle: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.w500,

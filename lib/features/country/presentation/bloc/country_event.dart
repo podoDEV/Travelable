@@ -22,3 +22,10 @@ class GetCountryDetail extends CountryEvent {
   @override
   List<Object> get props => [countryId];
 }
+
+class GetPinnedCountries extends CountryEvent {
+  GetPinnedCountries();
+
+  @override
+  List<Object> get props => [];
+}

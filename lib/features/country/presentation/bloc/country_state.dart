@@ -26,6 +26,20 @@ class AllLoaded extends CountryState {
   List<Object> get props => countries;
 }
 
+class PinnedLoaded extends CountryState {
+  final List<Country> countries;
+
+  PinnedLoaded({@required this.countries}) : super(countries);
+
+  @override
+  List<Object> get props => countries;
+}
+
+class NoPinned extends CountryState {
+  @override
+  List<Object> get props => [];
+}
+
 class MatchingLoaded extends CountryState {
   final List<Country> countries;
 

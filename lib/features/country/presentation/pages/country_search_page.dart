@@ -1,3 +1,4 @@
+import 'package:emergency/features/country/presentation/widgets/separator_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -84,7 +85,8 @@ class _CountrySearchResultsState extends State<CountrySearchResults> {
               return Expanded(
                   flex: 1,
                   child: Column(children: <Widget>[
-                    CountrySearchControlSeparator(height: 1),
+                    SeparatorWidget(
+                        height: 1, color: Color.fromRGBO(228, 230, 233, 1)),
                     CountrySearchMatchingCountryListWidget(
                         countries: state.countries)
                   ]));
