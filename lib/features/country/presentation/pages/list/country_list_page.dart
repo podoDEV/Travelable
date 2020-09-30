@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../../injection_container.dart';
 import '../../bloc/country_bloc.dart';
 import '../search/country_search_page.dart';
+import 'country_list_landing_page.dart';
 import 'widgets/country_list_navigation_bar.dart';
 import 'widgets/country_pinned_list_widget.dart';
 
@@ -86,21 +87,11 @@ class _CountryListPageState extends State<CountryListPage> {
               child: Text('나라 등록하러 가기',
                   style: TextStyle(fontSize: 19, fontWeight: FontWeight.w600)),
               onPressed: () =>
-                  Navigator.pushNamed(context, CountrySearchPage.routeName),
+                  Navigator.pushNamed(context, CountrySearchPage.routeName)
+                      .then((value) => BlocProvider.of<CountryBloc>(context)
+                          .add(GetPinnedCountries())),
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(27)),
             )));
-  }
-}
-
-class CountryListLandingPage extends StatelessWidget {
-  const CountryListLandingPage({
-    Key key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    BlocProvider.of<CountryBloc>(context).add(GetPinnedCountries());
-    return Container();
   }
 }

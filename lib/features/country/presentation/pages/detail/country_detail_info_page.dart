@@ -76,6 +76,7 @@ class CountryDetailInfoPage extends StatelessWidget {
   Widget _getTelWidgets(List<Tel> tels, String countryNumber) {
     return new Row(
         mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children:
             tels.map((tel) => _getBadgeWidget(tel, countryNumber)).toList());
   }
@@ -240,8 +241,7 @@ class CountryDetailInfoPage extends StatelessWidget {
 
   Widget _getBadgeWidget(Tel tel, String countryNumber) {
     return Container(
-        width: 100,
-        height: 90,
+        width: 110,
         child: FlatButton(
             splashColor: Colors.transparent,
             highlightColor: Colors.transparent,

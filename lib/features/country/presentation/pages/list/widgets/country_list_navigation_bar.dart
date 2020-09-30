@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../../app/setting_page.dart';
+import '../../../bloc/country_bloc.dart';
 import '../../search/country_search_page.dart';
 
 class CountryListNavigationBar extends StatelessWidget {
@@ -38,7 +40,9 @@ class CountryListNavigationBar extends StatelessWidget {
               splashColor: Colors.transparent,
               highlightColor: Colors.transparent,
               onPressed: () =>
-                  Navigator.pushNamed(context, CountrySearchPage.routeName),
+                  Navigator.pushNamed(context, CountrySearchPage.routeName)
+                      .then((value) => BlocProvider.of<CountryBloc>(context)
+                          .add(GetPinnedCountries())),
               child: Image.asset('images/btn_plus.png'),
             ),
           ),
