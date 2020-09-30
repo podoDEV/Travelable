@@ -1,11 +1,11 @@
-import 'package:emergency/features/country/presentation/pages/country_search_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../injection_container.dart';
-import '../bloc/country_bloc.dart';
-import '../widgets/country_list_navigation_bar.dart';
-import '../widgets/country_pinned_list_widget.dart';
+import '../../../../../injection_container.dart';
+import '../../bloc/country_bloc.dart';
+import '../search/country_search_page.dart';
+import 'widgets/country_list_navigation_bar.dart';
+import 'widgets/country_pinned_list_widget.dart';
 
 class CountryListPage extends StatefulWidget {
   static const routeName = '/country/list';

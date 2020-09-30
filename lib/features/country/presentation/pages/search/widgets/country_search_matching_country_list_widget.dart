@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../domain/entities/country.dart';
-import 'country_detail_bottom_sheet.dart';
+import '../../../../domain/entities/country.dart';
+import '../../../widgets/country_detail_bottom_sheet.dart';
 
 class CountrySearchMatchingCountryListWidget extends StatelessWidget {
   final List<Country> countries;

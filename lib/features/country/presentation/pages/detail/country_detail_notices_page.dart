@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../domain/entities/country.dart';
+import '../../../domain/entities/country.dart';
 
 class CountryDetailNoticesPage extends StatelessWidget {
   final Country country;

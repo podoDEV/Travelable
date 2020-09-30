@@ -1,8 +1,8 @@
-import 'package:emergency/features/country/presentation/pages/country_detail_page.dart';
+import 'package:emergency/features/country/presentation/pages/detail/country_detail_page.dart';
 import 'package:flutter/material.dart';
 
 import '../../../domain/entities/country.dart';
-import '../country_card_tag_bar.dart';
+import '../tag/country_card_tag_bar.dart';
 import '../separator_widget.dart';
 import 'country_card_covid_widget.dart';
 

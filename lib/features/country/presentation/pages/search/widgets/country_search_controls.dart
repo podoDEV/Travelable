@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../bloc/country_bloc.dart';
+import '../../../bloc/country_bloc.dart';
 
 class CountrySearchControls extends StatefulWidget {
   const CountrySearchControls({

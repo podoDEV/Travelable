@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../injection_container.dart';
-import '../../domain/entities/country.dart';
-import '../bloc/country_bloc.dart';
+import '../../../../../injection_container.dart';
+import '../../../domain/entities/country.dart';
+import '../../bloc/country_bloc.dart';
 import 'country_detail_info_page.dart';
 import 'country_detail_notices_page.dart';
 

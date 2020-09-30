@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../domain/entities/country.dart';
+import '../../../domain/entities/country.dart';
 import 'country_card_tag_item_widget.dart';
 
 class CountryCardTagBar extends StatelessWidget {

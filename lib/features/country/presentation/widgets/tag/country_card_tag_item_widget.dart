@@ -1,5 +1,6 @@
-import 'package:emergency/features/country/domain/entities/precaution_level.dart';
 import 'package:flutter/material.dart';
+
+import '../../../domain/entities/precaution_level.dart';
 
 class CountryCardTagItemWidget extends StatelessWidget {
   final PrecautionLevel level;

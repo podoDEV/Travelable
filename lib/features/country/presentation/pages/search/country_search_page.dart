@@ -1,15 +1,15 @@
-import 'package:emergency/features/country/presentation/widgets/separator_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../injection_container.dart';
-import '../bloc/country_bloc.dart';
-import '../widgets/country_search_all_country_list_widget.dart';
-import '../widgets/country_search_control_separator.dart';
-import '../widgets/country_search_controls.dart';
-import '../widgets/country_search_matching_country_list_widget.dart';
-import '../widgets/loading_widget.dart';
-import '../widgets/message_widget.dart';
+import '../../../../../injection_container.dart';
+import '../../bloc/country_bloc.dart';
+import '../../widgets/loading_widget.dart';
+import '../../widgets/message_widget.dart';
+import '../../widgets/separator_widget.dart';
+import 'widgets/country_search_all_country_list_widget.dart';
+import 'widgets/country_search_control_separator.dart';
+import 'widgets/country_search_controls.dart';
+import 'widgets/country_search_matching_country_list_widget.dart';
 
 class CountrySearchPage extends StatefulWidget {
   static const routeName = '/country/search';

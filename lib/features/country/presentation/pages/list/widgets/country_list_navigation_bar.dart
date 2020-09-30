@@ -1,6 +1,7 @@
-import 'package:emergency/features/app/setting_page.dart';
-import 'package:emergency/features/country/presentation/pages/country_search_page.dart';
 import 'package:flutter/material.dart';
+
+import '../../../../../app/setting_page.dart';
+import '../../search/country_search_page.dart';
 
 class CountryListNavigationBar extends StatelessWidget {
   const CountryListNavigationBar({

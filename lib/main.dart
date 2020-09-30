@@ -2,9 +2,9 @@ import 'package:emergency/features/app/setting_page.dart';
 import 'package:flutter/material.dart';
 
 import 'features/app/launch_page.dart';
-import 'features/country/presentation/pages/country_detail_page.dart';
-import 'features/country/presentation/pages/country_list_page.dart';
-import 'features/country/presentation/pages/country_search_page.dart';
+import 'features/country/presentation/pages/detail/country_detail_page.dart';
+import 'features/country/presentation/pages/list/country_list_page.dart';
+import 'features/country/presentation/pages/search/country_search_page.dart';
 import 'injection_container.dart' as di;
 
 void main() async {
