@@ -17,7 +17,7 @@ class GetCountryUseCase implements UseCase<Country, GetCountryParams> {
 }
 
 class GetCountryParams {
-  final String id;
+  final int id;
 
   GetCountryParams(this.id);
 }

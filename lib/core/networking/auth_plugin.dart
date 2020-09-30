@@ -1,3 +1,5 @@
+import 'package:emergency/core/logger.dart';
+
 import '../../features/member/domain/repositories/user_repository.dart';
 import 'http_header.dart';
 import 'http_request.dart';
@@ -12,6 +14,7 @@ class AuthPlugin implements PluginType {
   HttpRequestProtocol prepare(HttpRequestProtocol request) {
     var accessToken = _userRepository.accessToken;
     if (accessToken != null && accessToken.isNotEmpty) {
+      logger.d("AccessToken: $accessToken");
       request.putAdditionalHeader(
           HTTPHeader("Authorization", "bearer $accessToken"));
     }

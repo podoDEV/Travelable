@@ -9,6 +9,19 @@ enum PrecautionLevel {
 }
 
 class PrecautionLevelHelper {
+  static PrecautionLevel level(String value) {
+    if (value == "usual") {
+      return PrecautionLevel.usual;
+    } else if (value == "enhanced") {
+      return PrecautionLevel.enhanced;
+    } else if (value == "avoidNonessential") {
+      return PrecautionLevel.avoidNonessential;
+    } else if (value == "avoidAll") {
+      return PrecautionLevel.avoidAll;
+    }
+    return PrecautionLevel.none;
+  }
+
   static String name(PrecautionLevel level) {
     switch (level) {
       case PrecautionLevel.none:

@@ -1,5 +1,7 @@
 import 'package:data_connection_checker/data_connection_checker.dart';
 import 'package:emergency/features/country/domain/usecases/get_pinned_countries_usecase.dart';
+import 'package:emergency/features/country/domain/usecases/pin_country_usecase.dart';
+import 'package:emergency/features/country/domain/usecases/unpin_country_usecase.dart';
 import 'package:get_it/get_it.dart';
 import 'package:http/http.dart';
 
@@ -34,6 +36,8 @@ Future<void> init() async {
       pinnedCountriesUseCase: sl(),
       countryUseCase: sl(),
       searchCountriesUseCase: sl(),
+      pinCountryUseCase: sl(),
+      unpinCountryUseCase: sl(),
       indexingUseCase: sl(),
       validator: sl(),
     ),
@@ -44,6 +48,8 @@ Future<void> init() async {
   sl.registerLazySingleton(() => GetPinnedCountriesUseCase(sl()));
   sl.registerLazySingleton(() => GetCountryUseCase(sl()));
   sl.registerLazySingleton(() => SearchCountriesUseCase(sl()));
+  sl.registerLazySingleton(() => PinCountryUseCase(sl()));
+  sl.registerLazySingleton(() => UnpinCountryUseCase(sl()));
   sl.registerLazySingleton(() => GetIndexingUseCase());
 
   // Repository

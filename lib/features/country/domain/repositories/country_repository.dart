@@ -11,11 +11,11 @@ abstract class CountryRepository {
 
   Future<Either<Failure, List<Country>>> countriesBy({String name});
 
-  Future<Either<Failure, Country>> countryBy({String id});
+  Future<Either<Failure, Country>> countryBy({int id});
 
-  Future<Either<Failure, void>> pinCountry({String id});
+  Future<Either<Failure, void>> pinCountry({int id});
 
-  Future<Either<Failure, void>> unpinCountry({String id});
+  Future<Either<Failure, void>> unpinCountry({int id});
 
   Future<Either<Failure, List<Notice>>> notices();
 }

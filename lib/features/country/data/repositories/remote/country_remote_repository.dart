@@ -38,21 +38,21 @@ class CountryRemoteRepository implements CountryRemoteDataSource {
   }
 
   @override
-  Future<Country> getCountryBy(String countryId) async {
+  Future<Country> getCountryBy(int countryId) async {
     final requestModel = CountryGetRequestModel(countryId);
     final response = await provider.send(CountryGetRequest(requestModel));
     return CountryGetResponseModel.fromMap(response).country;
   }
 
   @override
-  Future<void> pinCountry(String countryId) async {
+  Future<void> pinCountry(int countryId) async {
     final requestModel = CountryPinPostRequestModel(countryId);
     final response = await provider.send(CountryPinPostRequest(requestModel));
     return null;
   }
 
   @override
-  Future<void> unpinCountry(String countryId) async {
+  Future<void> unpinCountry(int countryId) async {
     final requestModel = CountryUnpinPostRequestModel(countryId);
     final response = await provider.send(CountryUnpinPostRequest(requestModel));
     return null;

@@ -5,8 +5,8 @@ import 'precaution_level.dart';
 import 'tel.dart';
 
 class Country {
-  final String id;
-  final Map<String, String> names;
+  final int id;
+  final Map<String, dynamic> names;
   final bool pinned;
   final String countryNumber;
   final List<Tel> tels;
@@ -17,8 +17,8 @@ class Country {
   final bool alarmEnabled;
   final bool travelAdvisory;
   final PrecautionLevel precautionLevel;
-  final DateTime begin;
-  final DateTime end;
+  final String beginAt;
+  final String endAt;
 
   String get displayName {
     if (names == null) {
@@ -40,8 +40,8 @@ class Country {
       this.alarmEnabled,
       this.travelAdvisory,
       this.precautionLevel,
-      this.begin,
-      this.end});
+      this.beginAt,
+      this.endAt});
 
   Map<String, dynamic> toMap() {
     return {'id': id, 'names': names, 'pinned': pinned};
@@ -59,18 +59,21 @@ class Country {
     }
 
     return new Country(
-        id: map['id'],
-        names: map['names'],
-        pinned: map['pinned'],
-        countryNumber: map['countryNumber'],
-        tels: telsMap.map((e) => Tel.fromMap(e)).toList(),
-        embassy: Embassy.fromMap(map['embassy']),
-        link: map['link'],
-        notices: noticesMap.map((e) => Notice.fromMap(e)).toList(),
-        covid: Covid.fromMap(map['covid']),
-        alarmEnabled: map['alarmEnabled'],
-        travelAdvisory: map['travelAdvisory'],
-        precautionLevel: map['precautionLevel']);
+      id: map['id'],
+      names: map['names'],
+      pinned: map['pinned'],
+      countryNumber: map['countryNumber'],
+      tels: telsMap.map((e) => Tel.fromMap(e)).toList(),
+      embassy: Embassy.fromMap(map['embassy']),
+      link: map['link'],
+      notices: noticesMap.map((e) => Notice.fromMap(e)).toList(),
+      covid: Covid.fromMap(map['covid']),
+      alarmEnabled: map['alarmEnabled'],
+      travelAdvisory: map['travelAdvisory'],
+      precautionLevel: PrecautionLevelHelper.level(map['precautionLevel']),
+      beginAt: map['beginAt'],
+      endAt: map['endAt'],
+    );
   }
 
   static var mocks = [

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../domain/entities/country.dart';
-import '../pages/country_detail_page.dart';
+import '../bloc/country_bloc.dart';
+import 'country_detail_bottom_sheet.dart';
 
 class CountrySearchAllCountryListWidget extends StatefulWidget {
   final List<Country> countries;
@@ -59,13 +61,14 @@ class _CountrySearchAllCountryListWidgetState
           itemBuilder: (context, index) {
             return GestureDetector(
               onTap: () {
-                Navigator.pushNamed(context, CountryDetailPage.routeName,
-                    arguments: CountryDetailPageArguments(countries[index]));
-                // showModalBottomSheet(
-                //     context: context,
-                //     builder: (BuildContext bc) {
-                //       return CountryDetailBottomSheet();
-                //     });
+                // ignore: close_sinks
+                final bloc = BlocProvider.of<CountryBloc>(context);
+                showModalBottomSheet(
+                    context: context,
+                    builder: (BuildContext bc) {
+                      return CountryDetailBottomSheet(
+                          bloc: bloc, country: countries[index]);
+                    });
               },
               child: Container(
                 height: _rowHeight,

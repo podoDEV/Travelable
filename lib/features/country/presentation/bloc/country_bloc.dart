@@ -4,6 +4,8 @@ import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
 import 'package:emergency/features/country/domain/usecases/get_country_usecase.dart';
 import 'package:emergency/features/country/domain/usecases/get_pinned_countries_usecase.dart';
+import 'package:emergency/features/country/domain/usecases/pin_country_usecase.dart';
+import 'package:emergency/features/country/domain/usecases/unpin_country_usecase.dart';
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 
@@ -27,6 +29,8 @@ class CountryBloc extends Bloc<CountryEvent, CountryState> {
   final GetPinnedCountriesUseCase pinnedCountriesUseCase;
   final GetCountryUseCase countryUseCase;
   final SearchCountriesUseCase searchCountriesUseCase;
+  final PinCountryUseCase pinCountryUseCase;
+  final UnpinCountryUseCase unpinCountryUseCase;
   final GetIndexingUseCase indexing;
   final KeywordValidator validator;
 
@@ -35,12 +39,16 @@ class CountryBloc extends Bloc<CountryEvent, CountryState> {
       @required this.pinnedCountriesUseCase,
       @required this.countryUseCase,
       @required this.searchCountriesUseCase,
+      @required this.pinCountryUseCase,
+      @required this.unpinCountryUseCase,
       @required GetIndexingUseCase indexingUseCase,
       @required this.validator})
       : assert(allCountriesUseCase != null),
         assert(pinnedCountriesUseCase != null),
         assert(countryUseCase != null),
         assert(searchCountriesUseCase != null),
+        assert(pinCountryUseCase != null),
+        assert(unpinCountryUseCase != null),
         assert(indexingUseCase != null),
         assert(validator != null),
         indexing = indexingUseCase;
@@ -79,6 +87,14 @@ class CountryBloc extends Bloc<CountryEvent, CountryState> {
     } else if (event is GetPinnedCountries) {
       final failureOrCountries = await pinnedCountriesUseCase(NoParams());
       yield* _eitherPinnedOrErrorState(failureOrCountries);
+    } else if (event is PinCountry) {
+      final failureOrResult =
+          await pinCountryUseCase(PinCountryParams(event.countryId));
+      yield* _eitherPinResultOrErrorState(failureOrResult);
+    } else if (event is UnpinCountry) {
+      final failureOrResult =
+          await unpinCountryUseCase(UnpinCountryParams(event.countryId));
+      yield* _eitherUnpinResultOrErrorState(failureOrResult);
     }
   }
 
@@ -126,6 +142,20 @@ class CountryBloc extends Bloc<CountryEvent, CountryState> {
     yield failureOrCountry.fold(
         (failure) => Error(message: _mapFailureToMessage(failure)),
         (country) => DetailSheet(country: country));
+  }
+
+  Stream<CountryState> _eitherPinResultOrErrorState(
+    Either<Failure, void> failureOrResult,
+  ) async* {
+    yield failureOrResult.fold(
+        (failure) => Error(message: ""), (result) => DetailSheetClosed());
+  }
+
+  Stream<CountryState> _eitherUnpinResultOrErrorState(
+    Either<Failure, void> failureOrResult,
+  ) async* {
+    yield failureOrResult.fold(
+        (failure) => Error(message: ""), (result) => DetailSheetClosed());
   }
 
   String _mapFailureToMessage(Failure failure) {

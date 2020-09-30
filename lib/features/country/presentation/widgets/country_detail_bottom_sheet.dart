@@ -1,9 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-class CountryDetailBottomSheet extends StatelessWidget {
-  const CountryDetailBottomSheet({
-    Key key,
-  }) : super(key: key);
+import '../../../../core/logger.dart';
+import '../../domain/entities/country.dart';
+import '../bloc/country_bloc.dart';
+
+class CountryDetailBottomSheet extends StatefulWidget {
+  final CountryBloc bloc;
+  final Country country;
+
+  const CountryDetailBottomSheet({Key key, this.bloc, this.country})
+      : super(key: key);
+
+  @override
+  _CountryDetailBottomSheetState createState() =>
+      _CountryDetailBottomSheetState(bloc: bloc, country: country);
+}
+
+class _CountryDetailBottomSheetState extends State<CountryDetailBottomSheet> {
+  final CountryBloc bloc;
+  final Country country;
+
+  _CountryDetailBottomSheetState({this.bloc, this.country});
 
   @override
   Widget build(BuildContext context) {
@@ -21,25 +39,9 @@ class CountryDetailBottomSheet extends StatelessWidget {
         SizedBox(height: 17),
         _getCountryDetailBottomSheetSeparator(),
         SizedBox(height: 19),
-        _getCountryDetailBottomSheetRegistWidget()
+        _getCountryDetailBottomSheetRegistWidget(context)
       ]),
     );
-  }
-
-  Widget _getCountryDetailBottomSheetRegistWidget() {
-    return Container(
-        padding: EdgeInsets.only(left: 44, right: 44),
-        width: double.infinity,
-        height: 56,
-        child: RaisedButton(
-          textColor: Color.fromRGBO(228, 230, 233, 1),
-          color: Color.fromRGBO(11, 133, 255, 1),
-          child: Text('등록',
-              style: TextStyle(fontSize: 19, fontWeight: FontWeight.w600)),
-          onPressed: () {},
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(27)),
-        ));
   }
 
   Widget _getCountryDetailBottomSheetHandlerWidget() {
@@ -96,7 +98,7 @@ class CountryDetailBottomSheet extends StatelessWidget {
             child: Row(
               children: <Widget>[
                 Text(
-                  '라오스',
+                  country.displayName,
                   style: TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
@@ -122,5 +124,33 @@ class CountryDetailBottomSheet extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  Widget _getCountryDetailBottomSheetRegistWidget(BuildContext context) {
+    return Container(
+        padding: EdgeInsets.only(left: 44, right: 44),
+        width: double.infinity,
+        height: 56,
+        child: RaisedButton(
+          textColor: Color.fromRGBO(228, 230, 233, 1),
+          color: Color.fromRGBO(11, 133, 255, 1),
+          child: Text('등록',
+              style: TextStyle(fontSize: 19, fontWeight: FontWeight.w600)),
+          onPressed: () {
+            bloc.add(PinCountry(country.id));
+
+            // BlocProvider.of<CountryBloc>(context).add(PinCountry(country.id));
+            // bloc.state.listen((state) {
+
+            // });
+            BlocListener<CountryBloc, CountryState>(listener: (context, state) {
+              if (state is DetailSheetClosed) {
+                Navigator.pop(context);
+              }
+            });
+          },
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(27)),
+        ));
   }
 }

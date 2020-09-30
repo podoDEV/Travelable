@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../domain/entities/country.dart';
-import 'country_card_widget.dart';
+import 'card/country_card_widget.dart';
 
 class CountryPinnedListWidget extends StatelessWidget {
   List<Country> countries = [];

@@ -7,9 +7,14 @@ import '../bloc/country_bloc.dart';
 import '../widgets/country_list_navigation_bar.dart';
 import '../widgets/country_pinned_list_widget.dart';
 
-class CountryListPage extends StatelessWidget {
+class CountryListPage extends StatefulWidget {
   static const routeName = '/country/list';
 
+  @override
+  _CountryListPageState createState() => _CountryListPageState();
+}
+
+class _CountryListPageState extends State<CountryListPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(body: buildBody(context));

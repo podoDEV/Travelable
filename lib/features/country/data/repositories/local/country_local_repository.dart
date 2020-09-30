@@ -40,7 +40,7 @@ class CountryLocalRepository implements CountryLocalDataSource {
   }
 
   @override
-  Future<Country> getCountryBy(String countryId) async {
+  Future<Country> getCountryBy(int countryId) async {
     final Database db = await database;
     final List<Map> maps =
         await db.query("countries", where: 'id = ?', whereArgs: [countryId]);

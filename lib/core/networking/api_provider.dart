@@ -1,9 +1,10 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:emergency/core/error/exceptions.dart';
 import 'package:http/http.dart';
 
+import '../error/exceptions.dart';
 import '../logger.dart';
 import 'api_exception.dart';
 import 'http_request.dart';
@@ -21,6 +22,7 @@ class EGApiProvider implements ApiProviderProtocol {
 
   Future<Map<String, dynamic>> send(HttpRequestProtocol req) async {
     final request = HttpRequest(req, _plugins);
+
     logger.d("REQUEST: $request");
     try {
       final response = await client.send(request);
@@ -31,8 +33,11 @@ class EGApiProvider implements ApiProviderProtocol {
         return mappingData;
       } else {
         logger.d("FAILURE: $request");
-        throw EGApiException("${response.statusCode}", "Error retrieving data from the server.");
+        throw EGApiException(
+            "${response.statusCode}", "Error retrieving data from the server.");
       }
+    } on TimeoutException {
+      throw ServerException();
     } on SocketException {
       throw ServerException();
     }

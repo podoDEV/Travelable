@@ -26,14 +26,14 @@ void main() {
     mockRemoteDataSource = MockRemoteDataSource();
     mockNetworkInfo = MockNetworkInfo();
     repository = CountryRepositoryImpl(
-      localDataSource: mockLocalDataSource, 
+      localDataSource: mockLocalDataSource,
       remoteDataSource: mockRemoteDataSource,
       networkInfo: mockNetworkInfo,
     );
   });
 
   void runTestsOnline(Function body) {
-    group("device is online", (){
+    group("device is online", () {
       setUp(() {
         when(mockNetworkInfo.isConnected).thenAnswer((_) async => true);
       });
@@ -43,7 +43,7 @@ void main() {
   }
 
   void runTestsOffline(Function body) {
-    group("device is offline", (){
+    group("device is offline", () {
       setUp(() {
         when(mockNetworkInfo.isConnected).thenAnswer((_) async => false);
       });
@@ -54,75 +54,68 @@ void main() {
 
   group("countries", () {
     final tCountries = [Country(), Country()];
-    
-    test(
-      'should check if the device is online', 
-      () async {
-        // arrange
-        when(mockNetworkInfo.isConnected).thenAnswer((_) async => true);
 
-        // act
-        repository.countries();
+    test('should check if the device is online', () async {
+      // arrange
+      when(mockNetworkInfo.isConnected).thenAnswer((_) async => true);
 
-        // assert
-        verify(mockNetworkInfo.isConnected);
-      }
-    );
+      // act
+      repository.countries();
+
+      // assert
+      verify(mockNetworkInfo.isConnected);
+    });
 
     runTestsOnline(() {
       test(
-        'should return remote data when the call to remote data source is successful', 
-        () async {
-          // arrange
-          when(mockRemoteDataSource.getCountries())
-              .thenAnswer((_) async => tCountries);
+          'should return remote data when the call to remote data source is successful',
+          () async {
+        // arrange
+        when(mockRemoteDataSource.getCountries())
+            .thenAnswer((_) async => tCountries);
 
-          // act
-          final result = await repository.countries();
+        // act
+        final result = await repository.countries();
 
-          // assert
-          verify(mockRemoteDataSource.getCountries());
-          expect(result, equals(Right(tCountries)));
-        }
-      );
-
-      test(
-        'should cache the data locally when the call to remote data source is successful', 
-        () async {
-          // arrange
-          when(mockRemoteDataSource.getCountries())
-              .thenAnswer((_) async => tCountries);
-
-          // act
-          await repository.countries();
-
-          // assert
-          verify(mockRemoteDataSource.getCountries());
-          verify(mockLocalDataSource.insertCountries(tCountries));
-        }
-      );
+        // assert
+        verify(mockRemoteDataSource.getCountries());
+        expect(result, equals(Right(tCountries)));
+      });
 
       test(
-        'should return server failure when the call to remote data source is unsuccessful', 
-        () async {
-          // arrange
-          when(mockRemoteDataSource.getCountries())
-              .thenThrow(ServerException());
+          'should cache the data locally when the call to remote data source is successful',
+          () async {
+        // arrange
+        when(mockRemoteDataSource.getCountries())
+            .thenAnswer((_) async => tCountries);
 
-          // act
-          final result = await repository.countries();
+        // act
+        await repository.countries();
 
-          // assert
-          verify(mockRemoteDataSource.getCountries());
-          verifyZeroInteractions(mockLocalDataSource);
-          expect(result, equals(Left(ServerFailure())));
-        }
-      );
+        // assert
+        verify(mockRemoteDataSource.getCountries());
+        verify(mockLocalDataSource.insertCountries(tCountries));
+      });
+
+      test(
+          'should return server failure when the call to remote data source is unsuccessful',
+          () async {
+        // arrange
+        when(mockRemoteDataSource.getCountries()).thenThrow(ServerException());
+
+        // act
+        final result = await repository.countries();
+
+        // assert
+        verify(mockRemoteDataSource.getCountries());
+        verifyZeroInteractions(mockLocalDataSource);
+        expect(result, equals(Left(ServerFailure())));
+      });
     });
 
     runTestsOffline(() {
       test(
-        'should return last locally cached data when the cached data is present', 
+        'should return last locally cached data when the cached data is present',
         () async {
           // arrange
           when(mockLocalDataSource.getCountries())
@@ -139,11 +132,10 @@ void main() {
       );
 
       test(
-        'should return CacheFailure data when there is no cached data present', 
+        'should return CacheFailure data when there is no cached data present',
         () async {
           // arrange
-          when(mockLocalDataSource.getCountries())
-              .thenThrow(CacheException());
+          when(mockLocalDataSource.getCountries()).thenThrow(CacheException());
 
           // act
           final result = await repository.countries();
@@ -159,77 +151,71 @@ void main() {
 
   group("countryById", () {
     final id = '12';
-    final tCountry = Country(id: '12');
+    final tCountry = Country(id: 12);
     // final tCountries = [, Country(id: '23')];
-    
-    test(
-      'should check if the device is online', 
-      () async {
-        // arrange
-        when(mockNetworkInfo.isConnected).thenAnswer((_) async => true);
 
-        // act
-        repository.countryBy(id: id);
+    test('should check if the device is online', () async {
+      // arrange
+      when(mockNetworkInfo.isConnected).thenAnswer((_) async => true);
 
-        // assert
-        verify(mockNetworkInfo.isConnected);
-      }
-    );
+      // act
+      repository.countryBy(id: id);
+
+      // assert
+      verify(mockNetworkInfo.isConnected);
+    });
 
     runTestsOnline(() {
       test(
-        'should return remote data when the call to remote data source is successful', 
-        () async {
-          // arrange
-          when(mockRemoteDataSource.getCountryBy(id))
-              .thenAnswer((_) async => tCountry);
+          'should return remote data when the call to remote data source is successful',
+          () async {
+        // arrange
+        when(mockRemoteDataSource.getCountryBy(id))
+            .thenAnswer((_) async => tCountry);
 
-          // act
-          final result = await repository.countryBy(id: id);
+        // act
+        final result = await repository.countryBy(id: id);
 
-          // assert
-          verify(mockRemoteDataSource.getCountryBy(id));
-          expect(result, equals(Right(tCountry)));
-        }
-      );
-
-      test(
-        'should cache the data locally when the call to remote data source is successful', 
-        () async {
-          // arrange
-          when(mockRemoteDataSource.getCountryBy(id))
-              .thenAnswer((_) async => tCountry);
-
-          // act
-          await repository.countryBy(id: id);
-
-          // assert
-          verify(mockRemoteDataSource.getCountryBy(id));
-          verify(mockLocalDataSource.updateCountry(tCountry));
-        }
-      );
+        // assert
+        verify(mockRemoteDataSource.getCountryBy(id));
+        expect(result, equals(Right(tCountry)));
+      });
 
       test(
-        'should return server failure when the call to remote data source is unsuccessful', 
-        () async {
-          // arrange
-          when(mockRemoteDataSource.getCountryBy(id))
-              .thenThrow(ServerException());
+          'should cache the data locally when the call to remote data source is successful',
+          () async {
+        // arrange
+        when(mockRemoteDataSource.getCountryBy(id))
+            .thenAnswer((_) async => tCountry);
 
-          // act
-          final result = await repository.countryBy(id: id);
+        // act
+        await repository.countryBy(id: id);
 
-          // assert
-          verify(mockRemoteDataSource.getCountryBy(id));
-          verifyZeroInteractions(mockLocalDataSource);
-          expect(result, equals(Left(ServerFailure())));
-        }
-      );
+        // assert
+        verify(mockRemoteDataSource.getCountryBy(id));
+        verify(mockLocalDataSource.updateCountry(tCountry));
+      });
+
+      test(
+          'should return server failure when the call to remote data source is unsuccessful',
+          () async {
+        // arrange
+        when(mockRemoteDataSource.getCountryBy(id))
+            .thenThrow(ServerException());
+
+        // act
+        final result = await repository.countryBy(id: id);
+
+        // assert
+        verify(mockRemoteDataSource.getCountryBy(id));
+        verifyZeroInteractions(mockLocalDataSource);
+        expect(result, equals(Left(ServerFailure())));
+      });
     });
 
     runTestsOffline(() {
       test(
-        'should return last locally cached data when the cached data is present', 
+        'should return last locally cached data when the cached data is present',
         () async {
           // arrange
           when(mockLocalDataSource.getCountryBy(id))
@@ -246,7 +232,7 @@ void main() {
       );
 
       test(
-        'should return CacheFailure data when there is no cached data present', 
+        'should return CacheFailure data when there is no cached data present',
         () async {
           // arrange
           when(mockLocalDataSource.getCountryBy(id))

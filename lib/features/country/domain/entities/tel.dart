@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class Tel {
   final String key;
   final String value;
-  final Map<String, String> names;
+  final Map<String, dynamic> names;
 
   Tel({this.key, this.value, this.names});
 
@@ -16,6 +16,9 @@ class Tel {
   }
 
   String displayNumber() {
+    if (value == null || value == "") {
+      return "n/a";
+    }
     return value;
   }
 
@@ -27,7 +30,7 @@ class Tel {
     } else if (key == 'ambulance') {
       return Image.asset('images/ic_hospital.png');
     }
-    return Image.asset('');
+    return Image.asset('images/ic_hospital.png');
   }
 
   String callNumber(String countryNumber) {

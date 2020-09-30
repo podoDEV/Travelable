@@ -17,7 +17,7 @@ void main() {
   });
 
   final id = "12";
-  final tCountries = [Country(id: "12"), Country(id: "23")];
+  final tCountries = [Country(id: 12), Country(id: 23)];
 
   test(
     'should get the country from the repository',

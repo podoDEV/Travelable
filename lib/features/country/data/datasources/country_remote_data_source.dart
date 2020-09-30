@@ -12,11 +12,11 @@ abstract class CountryRemoteDataSource {
   /// Calls the /api/countries/{countryId} endpoint.
   ///
   /// Throws a [ServerException] for all error codes.
-  Future<Country> getCountryBy(String countryId);
+  Future<Country> getCountryBy(int countryId);
 
-  Future<void> pinCountry(String countryId);
+  Future<void> pinCountry(int countryId);
 
-  Future<void> unpinCountry(String countryId);
+  Future<void> unpinCountry(int countryId);
 
   Future<List<Notice>> getNotices();
 }

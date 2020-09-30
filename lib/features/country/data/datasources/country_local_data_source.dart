@@ -14,7 +14,7 @@ abstract class CountryLocalDataSource {
 
   Future<void> updateCountry(Country country);
 
-  Future<Country> getCountryBy(String countryId);
+  Future<Country> getCountryBy(int countryId);
 
   Future<List<Notice>> getNotices();
 

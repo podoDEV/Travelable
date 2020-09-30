@@ -240,7 +240,7 @@ class CountryDetailInfoPage extends StatelessWidget {
 
   Widget _getBadgeWidget(Tel tel, String countryNumber) {
     return Container(
-        width: 120,
+        width: 100,
         height: 90,
         child: FlatButton(
             splashColor: Colors.transparent,

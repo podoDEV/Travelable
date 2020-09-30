@@ -26,7 +26,7 @@ class CountryRepositoryImpl implements CountryRepository {
 
   @override
   Future<Either<Failure, List<Country>>> countries() async {
-    return Right(Country.mocks);
+    // return Right(Country.mocks);
     if (await networkInfo.isConnected) {
       try {
         final countries = await remoteDataSource.getCountries();
@@ -51,7 +51,7 @@ class CountryRepositoryImpl implements CountryRepository {
 
   @override
   Future<Either<Failure, List<Country>>> pinnedCountries() async {
-    return Right(Country.mocks);
+    // return Right(Country.mocks);
     if (await networkInfo.isConnected) {
       try {
         final countries = await remoteDataSource.getPinnedCountries();
@@ -77,7 +77,7 @@ class CountryRepositoryImpl implements CountryRepository {
   @override
   Future<Either<Failure, List<Country>>> countriesBy({String name}) async {
     // TODO: - Search 고도화
-    return Right(Country.mocks);
+    // return Right(Country.mocks);
     if (cachedCountries.isNotEmpty) {
       return Right(
           cachedCountries.where((e) => e.displayName.contains(name)).toList());
@@ -106,7 +106,7 @@ class CountryRepositoryImpl implements CountryRepository {
   }
 
   @override
-  Future<Either<Failure, Country>> countryBy({String id}) async {
+  Future<Either<Failure, Country>> countryBy({int id}) async {
     return Right(Country.mocks.first);
     if (await networkInfo.isConnected) {
       try {
@@ -132,12 +132,21 @@ class CountryRepositoryImpl implements CountryRepository {
   }
 
   @override
-  Future<Either<Failure, void>> pinCountry({String id}) {
-    return remoteDataSource.pinCountry(id);
+  Future<Either<Failure, void>> pinCountry({int id}) async {
+    if (await networkInfo.isConnected) {
+      try {
+        await remoteDataSource.pinCountry(id);
+        return Right(null);
+      } on ServerException {
+        return Left(ServerFailure());
+      }
+    } else {
+      return Left(CacheFailure());
+    }
   }
 
   @override
-  Future<Either<Failure, void>> unpinCountry({String id}) {
+  Future<Either<Failure, void>> unpinCountry({int id}) {
     return remoteDataSource.unpinCountry(id);
   }
 

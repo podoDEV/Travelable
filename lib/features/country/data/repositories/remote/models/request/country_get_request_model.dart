@@ -1,7 +1,7 @@
 import '../../../../../../../core/networking/mappable.dart';
 
 class CountryGetRequestModel extends RequestMappable {
-  final String countryId;
+  final int countryId;
 
   CountryGetRequestModel(this.countryId);
 

@@ -1,7 +1,7 @@
 import '../../../../../../../core/networking/mappable.dart';
 
 class CountryUnpinPostRequestModel extends RequestMappable {
-  final String countryId;
+  final int countryId;
 
   CountryUnpinPostRequestModel(this.countryId);
 
