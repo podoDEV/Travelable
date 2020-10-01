@@ -25,7 +25,7 @@ class Tel {
   Image displayImage() {
     if (key == 'police') {
       return Image.asset('images/ic_police.png');
-    } else if (key == 'fire') {
+    } else if (key == 'fireStation') {
       return Image.asset('images/ic_fire.png');
     } else if (key == 'ambulance') {
       return Image.asset('images/ic_hospital.png');
@@ -39,7 +39,7 @@ class Tel {
 
   static var mocks = [
     Tel(key: 'police', value: '112', names: {'ko': '경찰'}),
-    Tel(key: 'fire', value: '119', names: {'ko': '소방서'}),
+    Tel(key: 'fireStation', value: '119', names: {'ko': '소방서'}),
     Tel(key: 'ambulance', value: '119', names: {'ko': '앰뷸런스'}),
   ];
 }

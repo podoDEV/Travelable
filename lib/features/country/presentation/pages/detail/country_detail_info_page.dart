@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:maps_launcher/maps_launcher.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../../../../core/logger.dart';
 import '../../../domain/entities/country.dart';
 import '../../../domain/entities/tel.dart';
 import '../../widgets/separator_widget.dart';
@@ -230,7 +231,11 @@ class CountryDetailInfoPage extends StatelessWidget {
           child: Text('더 자세한 정보 알아보기',
               style: TextStyle(fontSize: 19, fontWeight: FontWeight.w600)),
           onPressed: () async {
-            if (await canLaunch(country.link)) {
+            logger.d('exists country link: ${country.link != null}');
+            var canLinkLaunch = await canLaunch(country.link);
+            logger.d('can launch country link: $canLinkLaunch');
+            if (canLinkLaunch) {
+              logger.d('country more link: ' + country.link);
               await launch(country.link, forceSafariVC: false);
             }
           },

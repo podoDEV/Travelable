@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 
 import '../../../domain/entities/covid.dart';
 
-class CountryCardCovidWidget extends StatelessWidget {
+class CountryCovidWidget extends StatelessWidget {
   final Covid covid;
-  const CountryCardCovidWidget({this.covid});
+  const CountryCovidWidget({this.covid});
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +44,7 @@ class CountryCardCovidWidget extends StatelessWidget {
                   fontSize: 13,
                   fontWeight: FontWeight.w600,
                   color: Color.fromRGBO(255, 58, 49, 1)),
-            )
+            ),
           ],
         ),
         SizedBox(height: 2),

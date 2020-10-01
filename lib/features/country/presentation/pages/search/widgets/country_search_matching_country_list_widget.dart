@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../domain/entities/country.dart';
-import '../../../widgets/country_detail_bottom_sheet.dart';
+import 'country_search_bottom_sheet.dart';
 
 class CountrySearchMatchingCountryListWidget extends StatelessWidget {
   final List<Country> countries;
@@ -20,7 +20,7 @@ class CountrySearchMatchingCountryListWidget extends StatelessWidget {
               showModalBottomSheet(
                   context: context,
                   builder: (BuildContext bc) {
-                    return CountryDetailBottomSheet();
+                    return CountrySearchBottomSheet();
                   });
             },
             child: Container(

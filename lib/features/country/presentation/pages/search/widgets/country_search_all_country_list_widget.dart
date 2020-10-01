@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../domain/entities/country.dart';
 import '../../../bloc/country_bloc.dart';
-import '../../../widgets/country_detail_bottom_sheet.dart';
+import 'country_search_bottom_sheet.dart';
 
 class CountrySearchAllCountryListWidget extends StatefulWidget {
   final List<Country> countries;
@@ -66,7 +66,7 @@ class _CountrySearchAllCountryListWidgetState
                 showModalBottomSheet(
                     context: context,
                     builder: (BuildContext bc) {
-                      return CountryDetailBottomSheet(
+                      return CountrySearchBottomSheet(
                           bloc: bloc, country: countries[index]);
                     });
               },

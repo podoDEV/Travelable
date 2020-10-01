@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 
 import '../../../domain/entities/precaution_level.dart';
 
-class CountryCardTagItemWidget extends StatelessWidget {
+class CountryPrecautionLevelTag extends StatelessWidget {
   final PrecautionLevel level;
-  CountryCardTagItemWidget({this.level});
+  CountryPrecautionLevelTag({this.level});
 
   @override
   Widget build(BuildContext context) {

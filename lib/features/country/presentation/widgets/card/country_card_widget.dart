@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import '../../../domain/entities/country.dart';
 import '../../pages/detail/country_detail_page.dart';
 import '../separator_widget.dart';
-import '../tag/country_card_tag_bar.dart';
-import 'country_card_covid_widget.dart';
+import '../tag/country_precaution_level_tag_bar.dart';
+import 'country_covid_widget.dart';
 
 class CountryCardWidget extends StatelessWidget {
   final Country country;
@@ -33,7 +33,7 @@ class CountryCardWidget extends StatelessWidget {
                   child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
-                        CountryCardTagBar(country: country),
+                        CountryPrecautionLevelTagBar(country: country),
                         SizedBox(height: 14),
                         Container(
                             child: Column(
@@ -59,7 +59,7 @@ class CountryCardWidget extends StatelessWidget {
                         SeparatorWidget(
                             height: 2, color: Color.fromRGBO(236, 236, 236, 1)),
                         SizedBox(height: 16),
-                        CountryCardCovidWidget(covid: country.covid)
+                        CountryCovidWidget(covid: country.covid)
                         // CountryCardWidget()
                       ])))),
     );

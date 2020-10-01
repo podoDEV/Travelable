@@ -1,31 +1,33 @@
+import 'package:emergency/features/country/presentation/widgets/card/country_covid_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../domain/entities/country.dart';
-import '../bloc/country_bloc.dart';
+import '../../../../domain/entities/country.dart';
+import '../../../bloc/country_bloc.dart';
+import '../../../widgets/tag/country_precaution_level_tag_bar.dart';
 
-class CountryDetailBottomSheet extends StatefulWidget {
+class CountrySearchBottomSheet extends StatefulWidget {
   final CountryBloc bloc;
   final Country country;
 
-  const CountryDetailBottomSheet({Key key, this.bloc, this.country})
+  const CountrySearchBottomSheet({Key key, this.bloc, this.country})
       : super(key: key);
 
   @override
-  _CountryDetailBottomSheetState createState() =>
-      _CountryDetailBottomSheetState(bloc: bloc, country: country);
+  _CountrySearchBottomSheetState createState() =>
+      _CountrySearchBottomSheetState(bloc: bloc, country: country);
 }
 
-class _CountryDetailBottomSheetState extends State<CountryDetailBottomSheet> {
+class _CountrySearchBottomSheetState extends State<CountrySearchBottomSheet> {
   final CountryBloc bloc;
   final Country country;
 
-  _CountryDetailBottomSheetState({this.bloc, this.country});
+  _CountrySearchBottomSheetState({this.bloc, this.country});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 380,
+      height: 390,
       padding: EdgeInsets.only(top: 13, left: 17, right: 17, bottom: 39),
       child: Column(children: <Widget>[
         _getCountryDetailBottomSheetHandlerWidget(),
@@ -95,6 +97,7 @@ class _CountryDetailBottomSheetState extends State<CountryDetailBottomSheet> {
           Container(
             height: 30,
             child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Text(
                   country.displayName,
@@ -102,24 +105,18 @@ class _CountryDetailBottomSheetState extends State<CountryDetailBottomSheet> {
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
                       color: Color.fromRGBO(11, 133, 255, 1)),
-                )
+                ),
+                SizedBox(
+                  width: 11,
+                ),
+                CountryPrecautionLevelTagBar(country: country)
               ],
             ),
           ),
           SizedBox(
             height: 10,
           ),
-          Row(
-            children: <Widget>[
-              Text(
-                '코로나 현황',
-                style: TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.bold,
-                    color: Color.fromRGBO(48, 48, 48, 1)),
-              )
-            ],
-          )
+          CountryCovidWidget(covid: country.covid)
         ],
       ),
     );
