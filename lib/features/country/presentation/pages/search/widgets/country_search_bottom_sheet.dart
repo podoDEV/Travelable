@@ -1,9 +1,9 @@
-import 'package:emergency/features/country/presentation/widgets/card/country_covid_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../domain/entities/country.dart';
 import '../../../bloc/country_bloc.dart';
+import '../../../widgets/card/country_covid_widget.dart';
 import '../../../widgets/tag/country_precaution_level_tag_bar.dart';
 
 class CountrySearchBottomSheet extends StatefulWidget {

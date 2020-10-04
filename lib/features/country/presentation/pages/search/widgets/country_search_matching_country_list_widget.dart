@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../domain/entities/country.dart';
+import '../../../bloc/country_bloc.dart';
 import 'country_search_bottom_sheet.dart';
 
 class CountrySearchMatchingCountryListWidget extends StatelessWidget {
@@ -17,10 +19,13 @@ class CountrySearchMatchingCountryListWidget extends StatelessWidget {
       itemBuilder: (BuildContext context, int index) {
         return GestureDetector(
             onTap: () {
+              // ignore: close_sinks
+              final bloc = BlocProvider.of<CountryBloc>(context);
               showModalBottomSheet(
                   context: context,
                   builder: (BuildContext bc) {
-                    return CountrySearchBottomSheet();
+                    return CountrySearchBottomSheet(
+                        bloc: bloc, country: countries[index]);
                   });
             },
             child: Container(

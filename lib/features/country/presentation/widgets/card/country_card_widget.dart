@@ -1,3 +1,4 @@
+import 'package:emergency/features/country/presentation/pages/list/widgets/country_edit_bottom_sheet.dart';
 import 'package:flutter/material.dart';
 
 import '../../../domain/entities/country.dart';
@@ -59,7 +60,32 @@ class CountryCardWidget extends StatelessWidget {
                         SeparatorWidget(
                             height: 2, color: Color.fromRGBO(236, 236, 236, 1)),
                         SizedBox(height: 16),
-                        CountryCovidWidget(covid: country.covid)
+                        Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              Expanded(
+                                  child:
+                                      CountryCovidWidget(covid: country.covid)),
+                              Container(
+                                  width: 24,
+                                  height: 24,
+                                  child: FlatButton(
+                                      padding: EdgeInsets.zero,
+                                      splashColor: Colors.transparent,
+                                      highlightColor: Colors.transparent,
+                                      onPressed: () {
+                                        showModalBottomSheet(
+                                            context: context,
+                                            builder: (BuildContext bc) {
+                                              return CountryEditBottomSheet(
+                                                  country: country);
+                                            });
+                                      },
+                                      child:
+                                          Image.asset('images/btn_more.png')))
+                            ])
+
                         // CountryCardWidget()
                       ])))),
     );

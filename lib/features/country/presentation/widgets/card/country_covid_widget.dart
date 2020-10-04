@@ -13,6 +13,7 @@ class CountryCovidWidget extends StatelessWidget {
     }
     return Container(
         child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Row(
           children: <Widget>[

@@ -56,7 +56,7 @@ class CountryRepositoryImpl implements CountryRepository {
       try {
         final countries = await remoteDataSource.getPinnedCountries();
         localDataSource.insertCountries(countries);
-        cachedCountries = countries;
+        // cachedCountries = countries;
         return Right(countries);
       } on ServerException {
         return Left(ServerFailure());
@@ -64,9 +64,9 @@ class CountryRepositoryImpl implements CountryRepository {
     } else {
       try {
         final countries = await localDataSource.getCountries();
-        if (cachedCountries.isEmpty) {
-          cachedCountries = countries;
-        }
+        // if (cachedCountries.isEmpty) {
+        //   cachedCountries = countries;
+        // }
         return Right(countries);
       } on CacheException {
         return Left(CacheFailure());
@@ -81,26 +81,26 @@ class CountryRepositoryImpl implements CountryRepository {
     if (cachedCountries.isNotEmpty) {
       return Right(
           cachedCountries.where((e) => e.displayName.contains(name)).toList());
-    }
-
-    if (await networkInfo.isConnected) {
-      try {
-        final countries = await remoteDataSource.getCountries();
-        localDataSource.insertCountries(countries);
-        cachedCountries = countries;
-        return Right(countries.where((e) => e.displayName.contains(name)));
-      } on ServerException {
-        return Left(ServerFailure());
-      }
     } else {
-      try {
-        final countries = await localDataSource.getCountries();
-        if (cachedCountries.isEmpty) {
+      if (await networkInfo.isConnected) {
+        try {
+          final countries = await remoteDataSource.getCountries();
+          localDataSource.insertCountries(countries);
           cachedCountries = countries;
+          return Right(countries.where((e) => e.displayName.contains(name)));
+        } on ServerException {
+          return Left(ServerFailure());
         }
-        return Right(countries.where((e) => e.displayName.contains(name)));
-      } on CacheException {
-        return Left(CacheFailure());
+      } else {
+        try {
+          final countries = await localDataSource.getCountries();
+          if (cachedCountries.isEmpty) {
+            cachedCountries = countries;
+          }
+          return Right(countries.where((e) => e.displayName.contains(name)));
+        } on CacheException {
+          return Left(CacheFailure());
+        }
       }
     }
   }

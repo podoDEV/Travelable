@@ -24,8 +24,12 @@ class PinnedCountriesGetRequest extends BaseRequest {
   HttpMethod get method => HttpMethod.GET;
 
   @override
-  Map<String, dynamic> get parameters => requestModel.toJson();
+  Map<String, dynamic> get parameters {
+    Map<String, dynamic> params = requestModel.toJson();
+    params.putIfAbsent('pinned', () => 'true');
+    return params;
+  }
 
   @override
-  String get path => '/countries?pinned=true';
+  String get path => '/countries';
 }

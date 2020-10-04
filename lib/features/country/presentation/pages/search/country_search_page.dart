@@ -7,7 +7,6 @@ import '../../widgets/loading_widget.dart';
 import '../../widgets/message_widget.dart';
 import '../../widgets/separator_widget.dart';
 import 'widgets/country_search_all_country_list_widget.dart';
-import 'widgets/country_search_control_separator.dart';
 import 'widgets/country_search_controls.dart';
 import 'widgets/country_search_matching_country_list_widget.dart';
 
@@ -32,10 +31,7 @@ class _CountrySearchPageState extends State<CountrySearchPage> {
     return BlocProvider(
       create: (_) => sl<CountryBloc>(),
       child: Column(children: <Widget>[
-        SizedBox(
-          height: 44,
-          child: Container(color: Colors.white),
-        ),
+        SeparatorWidget(height: 44, color: Colors.white),
         CountrySearchControls(),
         Expanded(flex: 1, child: CountrySearchResults())
       ]),
@@ -76,13 +72,9 @@ class _CountrySearchResultsState extends State<CountrySearchResults> {
               return Expanded(
                   flex: 1,
                   child: Column(children: <Widget>[
-                    CountrySearchControlSeparator(height: 11),
-                    SizedBox(
-                      height: 21,
-                      child: Container(
-                        color: Colors.white,
-                      ),
-                    ),
+                    SeparatorWidget(
+                        height: 11, color: Color.fromRGBO(228, 230, 233, 1)),
+                    SeparatorWidget(height: 21, color: Colors.white),
                     CountrySearchAllCountryListWidget(
                       countries: state.countries,
                       indexing: state.indexing,
