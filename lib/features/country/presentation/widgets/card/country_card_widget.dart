@@ -75,15 +75,16 @@ class CountryCardWidget extends StatelessWidget {
                                       splashColor: Colors.transparent,
                                       highlightColor: Colors.transparent,
                                       onPressed: () {
-                                        showModalBottomSheet(
-                                            context: context,
-                                            builder: (BuildContext bc) {
-                                              return CountryEditBottomSheet(
-                                                  country: country);
-                                            });
+                                        // showModalBottomSheet(
+                                        //     context: context,
+                                        //     builder: (BuildContext bc) {
+                                        //       return CountryEditBottomSheet(
+                                        //           country: country);
+                                        //     });
                                       },
                                       child:
-                                          Image.asset('images/btn_more.png')))
+                                          SizedBox(height: 1,)))
+                                          // Image.asset('images/btn_more.png')
                             ])
 
                         // CountryCardWidget()

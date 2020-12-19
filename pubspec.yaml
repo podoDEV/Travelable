@@ -29,10 +29,10 @@ dependencies:
   path:
 
   # Firebase
-  firebase_core: 0.4.4
-  firebase_analytics: ^1.0.4
-  firebase_messaging: ^5.0.2
-  cloud_firestore: ^0.12.10
+  firebase_core:
+  firebase_analytics:
+  firebase_messaging:
+  cloud_firestore:
 
   # Launcher
   url_launcher:

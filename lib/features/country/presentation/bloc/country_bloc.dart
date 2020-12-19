@@ -18,6 +18,7 @@ import '../../domain/usecases/get_indexing_usecase.dart';
 import '../../domain/usecases/search_countries_usecase.dart';
 
 part 'country_event.dart';
+
 part 'country_state.dart';
 
 const String SERVER_FAILURE_MESSAGE = 'Server Failure';
@@ -51,10 +52,9 @@ class CountryBloc extends Bloc<CountryEvent, CountryState> {
         assert(unpinCountryUseCase != null),
         assert(indexingUseCase != null),
         assert(validator != null),
-        indexing = indexingUseCase;
+        indexing = indexingUseCase, super(Empty());
 
-  @override
-  CountryState get initialState => Empty();
+  // CountryState get initialState => Empty();
 
   @override
   Stream<CountryState> mapEventToState(

@@ -54,7 +54,7 @@ class _CountrySearchResultsState extends State<CountrySearchResults> {
     return Container(
       child: Column(children: <Widget>[
         BlocBuilder<CountryBloc, CountryState>(
-          condition: (previousState, state) {
+          buildWhen: (previousState, state) {
             if (state is DetailSheetClosed) {
               Navigator.pop(context);
               return false;
