@@ -1,5 +1,7 @@
+import 'package:emergency/features/country/presentation/bloc/country_bloc.dart';
 import 'package:emergency/features/country/presentation/pages/list/widgets/country_edit_bottom_sheet.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../domain/entities/country.dart';
 import '../../pages/detail/country_detail_page.dart';
@@ -9,6 +11,7 @@ import 'country_covid_widget.dart';
 
 class CountryCardWidget extends StatelessWidget {
   final Country country;
+
   const CountryCardWidget({this.country});
 
   @override
@@ -75,19 +78,19 @@ class CountryCardWidget extends StatelessWidget {
                                       splashColor: Colors.transparent,
                                       highlightColor: Colors.transparent,
                                       onPressed: () {
-                                        // showModalBottomSheet(
-                                        //     context: context,
-                                        //     builder: (BuildContext bc) {
-                                        //       return CountryEditBottomSheet(
-                                        //           country: country);
-                                        //     });
+                                        final bloc =
+                                            BlocProvider.of<CountryBloc>(
+                                                context);
+                                        showModalBottomSheet(
+                                            context: context,
+                                            builder: (BuildContext bc) {
+                                              return CountryEditBottomSheet(
+                                                  bloc: bloc, country: country);
+                                            });
                                       },
                                       child:
-                                          SizedBox(height: 1,)))
-                                          // Image.asset('images/btn_more.png')
+                                          Image.asset('images/btn_more.png'))),
                             ])
-
-                        // CountryCardWidget()
                       ])))),
     );
   }

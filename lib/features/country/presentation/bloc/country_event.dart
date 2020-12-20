@@ -47,3 +47,13 @@ class UnpinCountry extends CountryEvent {
   @override
   List<Object> get props => [countryId];
 }
+
+class SetAlarmCountry extends CountryEvent {
+  final int countryId;
+  final bool enabled;
+
+  SetAlarmCountry(this.countryId, this.enabled);
+
+  @override
+  List<Object> get props => [countryId];
+}

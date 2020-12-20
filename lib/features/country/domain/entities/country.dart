@@ -14,7 +14,7 @@ class Country {
   final String link;
   final List<Notice> notices;
   final Covid covid;
-  final bool alarmEnabled;
+  bool alarmEnabled;
   final bool travelAdvisory;
   final PrecautionLevel precautionLevel;
   final String beginAt;

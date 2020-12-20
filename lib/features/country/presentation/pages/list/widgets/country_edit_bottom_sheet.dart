@@ -1,4 +1,6 @@
+import 'package:emergency/features/country/presentation/pages/detail/country_detail_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../domain/entities/country.dart';
 import '../../../bloc/country_bloc.dart';
@@ -20,6 +22,8 @@ class _CountryEditBottomSheetState extends State<CountryEditBottomSheet> {
   final CountryBloc bloc;
   final Country country;
 
+  var isSwitched = false;
+
   _CountryEditBottomSheetState({this.bloc, this.country});
 
   @override
@@ -39,19 +43,14 @@ class _CountryEditBottomSheetState extends State<CountryEditBottomSheet> {
                         fontSize: 18,
                         fontWeight: FontWeight.w500,
                         color: Color.fromRGBO(48, 48, 48, 1)))),
-            Text(
-              '일정을 먼저 등록해주세요.',
-              style: TextStyle(
-                  fontSize: 15,
-                  fontWeight: FontWeight.w500,
-                  color: Color.fromRGBO(116, 116, 116, 1)),
-            ),
             Switch(
-              value: false,
+              value: country.alarmEnabled,
               onChanged: (value) {
                 setState(() {
-                  // isSwitched=value;
-                  // print(isSwitched);
+                  bloc.add(SetAlarmCountry(country.id, value));
+                  // BlocProvider.of<CountryBloc>(context).add();
+                  country.alarmEnabled = value;
+                  print(value);
                 });
               },
               activeTrackColor: Colors.lightGreenAccent,
@@ -59,35 +58,50 @@ class _CountryEditBottomSheetState extends State<CountryEditBottomSheet> {
             )
           ]),
         ),
-        Container(
-            padding: EdgeInsets.only(right: 10),
-            height: 46,
-            child: Row(
-              children: [
-                Expanded(
-                    child: Text('일정 수정',
-                        style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.w500,
-                            color: Color.fromRGBO(48, 48, 48, 1)))),
-                Image.asset('images/btn_right.png')
-              ],
-            )),
+        // Container(
+        //     padding: EdgeInsets.only(right: 10),
+        //     height: 46,
+        //     child: Row(
+        //       children: [
+        //         Expanded(
+        //             child: Text('일정 수정',
+        //                 style: TextStyle(
+        //                     fontSize: 18,
+        //                     fontWeight: FontWeight.w500,
+        //                     color: Color.fromRGBO(48, 48, 48, 1)))),
+        //         Text(
+        //           '일정을 먼저 등록해주세요',
+        //           style: TextStyle(
+        //               fontSize: 15,
+        //               fontWeight: FontWeight.w500,
+        //               color: Color.fromRGBO(116, 116, 116, 1)),
+        //         ),
+        //         SizedBox(width: 10,),
+        //         Image.asset('images/btn_right.png')
+        //       ],
+        //     )),
         Container(
           padding: EdgeInsets.only(right: 10),
           height: 46,
-          child: Row(
-            children: [
-              Expanded(
-                child: Text('자세히 보기',
-                    style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w500,
-                        color: Color.fromRGBO(48, 48, 48, 1))),
-              ),
-              Image.asset('images/btn_right.png')
-            ],
-          ),
+          child: FlatButton(
+              padding: EdgeInsets.zero,
+              splashColor: Colors.transparent,
+              highlightColor: Colors.transparent,
+              onPressed: () => Navigator.popAndPushNamed(
+                  context, CountryDetailPage.routeName,
+                  arguments: CountryDetailPageArguments(country)),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Text('자세히 보기',
+                        style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w500,
+                            color: Color.fromRGBO(48, 48, 48, 1))),
+                  ),
+                  Image.asset('images/btn_right.png')
+                ],
+              )),
         )
       ]),
     );

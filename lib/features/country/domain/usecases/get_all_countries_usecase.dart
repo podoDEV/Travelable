@@ -12,6 +12,9 @@ class GetAllCountriesUseCase implements UseCase<List<Country>, NoParams> {
 
   @override
   Future<Either<Failure, List<Country>>> call(NoParams params) async {
-    return await repository.countries();
+    return await repository.countries().then((value) => value.fold((failure) => Left(failure), (countries) {
+          countries.sort((a, b) => a.displayName.compareTo(b.displayName));
+          return Right(countries);
+        }));
   }
 }

@@ -68,6 +68,11 @@ class DetailSheetClosed extends CountryState {
   List<Object> get props => [];
 }
 
+class SetAlarmFinished extends CountryState {
+  @override
+  List<Object> get props => [];
+}
+
 class Error extends CountryState {
   final String message;
 

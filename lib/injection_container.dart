@@ -20,6 +20,7 @@ import 'features/country/domain/usecases/get_all_countries_usecase.dart';
 import 'features/country/domain/usecases/get_country_usecase.dart';
 import 'features/country/domain/usecases/get_indexing_usecase.dart';
 import 'features/country/domain/usecases/search_countries_usecase.dart';
+import 'features/country/domain/usecases/set_alarm_usecase.dart';
 import 'features/country/presentation/bloc/country_bloc.dart';
 import 'features/member/data/repositories/user_repository_impl.dart';
 import 'features/member/domain/repositories/user_repository.dart';
@@ -38,6 +39,7 @@ Future<void> init() async {
       searchCountriesUseCase: sl(),
       pinCountryUseCase: sl(),
       unpinCountryUseCase: sl(),
+      setAlarmUseCase: sl(),
       indexingUseCase: sl(),
       validator: sl(),
     ),
@@ -50,6 +52,7 @@ Future<void> init() async {
   sl.registerLazySingleton(() => SearchCountriesUseCase(sl()));
   sl.registerLazySingleton(() => PinCountryUseCase(sl()));
   sl.registerLazySingleton(() => UnpinCountryUseCase(sl()));
+  sl.registerLazySingleton(() => SetAlarmUseCase(sl()));
   sl.registerLazySingleton(() => GetIndexingUseCase());
 
   // Repository

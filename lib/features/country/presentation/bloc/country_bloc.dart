@@ -5,6 +5,7 @@ import 'package:dartz/dartz.dart';
 import 'package:emergency/features/country/domain/usecases/get_country_usecase.dart';
 import 'package:emergency/features/country/domain/usecases/get_pinned_countries_usecase.dart';
 import 'package:emergency/features/country/domain/usecases/pin_country_usecase.dart';
+import 'package:emergency/features/country/domain/usecases/set_alarm_usecase.dart';
 import 'package:emergency/features/country/domain/usecases/unpin_country_usecase.dart';
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
@@ -32,6 +33,7 @@ class CountryBloc extends Bloc<CountryEvent, CountryState> {
   final SearchCountriesUseCase searchCountriesUseCase;
   final PinCountryUseCase pinCountryUseCase;
   final UnpinCountryUseCase unpinCountryUseCase;
+  final SetAlarmUseCase setAlarmUseCase;
   final GetIndexingUseCase indexing;
   final KeywordValidator validator;
 
@@ -42,6 +44,7 @@ class CountryBloc extends Bloc<CountryEvent, CountryState> {
       @required this.searchCountriesUseCase,
       @required this.pinCountryUseCase,
       @required this.unpinCountryUseCase,
+      @required this.setAlarmUseCase,
       @required GetIndexingUseCase indexingUseCase,
       @required this.validator})
       : assert(allCountriesUseCase != null),
@@ -50,9 +53,11 @@ class CountryBloc extends Bloc<CountryEvent, CountryState> {
         assert(searchCountriesUseCase != null),
         assert(pinCountryUseCase != null),
         assert(unpinCountryUseCase != null),
+        assert(setAlarmUseCase != null),
         assert(indexingUseCase != null),
         assert(validator != null),
-        indexing = indexingUseCase, super(Empty());
+        indexing = indexingUseCase,
+        super(Empty());
 
   // CountryState get initialState => Empty();
 
@@ -71,30 +76,28 @@ class CountryBloc extends Bloc<CountryEvent, CountryState> {
           if (keyword.isEmpty) {
             final failureOrCountries = await allCountriesUseCase(NoParams());
             final failureOrIndexing = await indexing(NoParams());
-            yield* _eitherAllLoadedOrErrorState(
-                failureOrCountries, failureOrIndexing);
+            yield* _eitherAllLoadedOrErrorState(failureOrCountries, failureOrIndexing);
           } else {
-            final failureOrCountries =
-                await searchCountriesUseCase(SearchParams(keyword));
+            final failureOrCountries = await searchCountriesUseCase(SearchParams(keyword));
             yield* _eitherMatchingLoadedOrErrorState(failureOrCountries);
           }
         },
       );
     } else if (event is GetCountryDetail) {
-      final failureOrCountry =
-          await countryUseCase(GetCountryParams(event.countryId));
+      final failureOrCountry = await countryUseCase(GetCountryParams(event.countryId));
       yield* _eitherDetailSheetOrErrorState(failureOrCountry);
     } else if (event is GetPinnedCountries) {
       final failureOrCountries = await pinnedCountriesUseCase(NoParams());
       yield* _eitherPinnedOrErrorState(failureOrCountries);
     } else if (event is PinCountry) {
-      final failureOrResult =
-          await pinCountryUseCase(PinCountryParams(event.countryId));
+      final failureOrResult = await pinCountryUseCase(PinCountryParams(event.countryId));
       yield* _eitherPinResultOrErrorState(failureOrResult);
     } else if (event is UnpinCountry) {
-      final failureOrResult =
-          await unpinCountryUseCase(UnpinCountryParams(event.countryId));
+      final failureOrResult = await unpinCountryUseCase(UnpinCountryParams(event.countryId));
       yield* _eitherUnpinResultOrErrorState(failureOrResult);
+    } else if (event is SetAlarmCountry) {
+      final failureOrResult = await setAlarmUseCase(SetAlarmParams(event.countryId, event.enabled));
+      yield* _eitherSetAlarmResultOrErrorState(failureOrResult);
     }
   }
 
@@ -107,7 +110,7 @@ class CountryBloc extends Bloc<CountryEvent, CountryState> {
         yield Error(message: _mapFailureToMessage(failure));
       },
       (countries) async* {
-        yield* failureOrIndexing.fold((faliure) async* {}, (indexing) async* {
+        yield* failureOrIndexing.fold((failure) async* {}, (indexing) async* {
           yield AllLoaded(countries: countries, indexing: indexing);
         });
       },
@@ -117,17 +120,14 @@ class CountryBloc extends Bloc<CountryEvent, CountryState> {
   Stream<CountryState> _eitherMatchingLoadedOrErrorState(
     Either<Failure, List<Country>> failureOrCountries,
   ) async* {
-    yield failureOrCountries.fold(
-        (failure) => Error(message: _mapFailureToMessage(failure)),
+    yield failureOrCountries.fold((failure) => Error(message: _mapFailureToMessage(failure)),
         (countries) => MatchingLoaded(countries: countries));
   }
 
   Stream<CountryState> _eitherPinnedOrErrorState(
     Either<Failure, List<Country>> failureOrCountries,
   ) async* {
-    yield failureOrCountries
-        .fold((failure) => Error(message: _mapFailureToMessage(failure)),
-            (countries) {
+    yield failureOrCountries.fold((failure) => Error(message: _mapFailureToMessage(failure)), (countries) {
       if (countries.isEmpty) {
         return NoPinned();
       } else {
@@ -140,22 +140,25 @@ class CountryBloc extends Bloc<CountryEvent, CountryState> {
     Either<Failure, Country> failureOrCountry,
   ) async* {
     yield failureOrCountry.fold(
-        (failure) => Error(message: _mapFailureToMessage(failure)),
-        (country) => DetailSheet(country: country));
+        (failure) => Error(message: _mapFailureToMessage(failure)), (country) => DetailSheet(country: country));
   }
 
   Stream<CountryState> _eitherPinResultOrErrorState(
     Either<Failure, void> failureOrResult,
   ) async* {
-    yield failureOrResult.fold(
-        (failure) => Error(message: ""), (result) => DetailSheetClosed());
+    yield failureOrResult.fold((failure) => Error(message: ""), (result) => DetailSheetClosed());
   }
 
   Stream<CountryState> _eitherUnpinResultOrErrorState(
     Either<Failure, void> failureOrResult,
   ) async* {
-    yield failureOrResult.fold(
-        (failure) => Error(message: ""), (result) => DetailSheetClosed());
+    yield failureOrResult.fold((failure) => Error(message: ""), (result) => DetailSheetClosed());
+  }
+
+  Stream<CountryState> _eitherSetAlarmResultOrErrorState(
+    Either<Failure, void> failureOrResult,
+  ) async* {
+    yield failureOrResult.fold((failure) => Error(message: ""), (result) => SetAlarmFinished());
   }
 
   String _mapFailureToMessage(Failure failure) {

@@ -1,3 +1,6 @@
+import 'package:emergency/features/country/data/repositories/remote/models/request/country_alarm_post_request_model.dart';
+import 'package:emergency/features/country/data/repositories/remote/requests/country_alarm_post_request.dart';
+
 import '../../../../../core/networking/api_provider.dart';
 import '../../../domain/entities/country.dart';
 import '../../../domain/entities/notice.dart';
@@ -63,5 +66,12 @@ class CountryRemoteRepository implements CountryRemoteDataSource {
     final requestModel = NoticesGetRequestModel();
     final response = await provider.send(NoticesGetRequest(requestModel));
     return NoticesGetResponseModel.fromMap(response).notices;
+  }
+
+  @override
+  Future<void> setAlarm(int countryId, bool enabled) async {
+    final requestModel = CountryAlarmPostRequestModel(countryId, enabled);
+    final response = await provider.send(CountryAlarmPostRequest(requestModel));
+    return null;
   }
 }

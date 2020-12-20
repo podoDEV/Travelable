@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:emergency/features/country/presentation/pages/list/country_list_page.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 
@@ -31,7 +32,6 @@ class _LaunchPageState extends State<LaunchPage> {
       });
 
       fcm.requestNotificationPermissions(IosNotificationSettings());
-
       fcm.configure(
         onMessage: (Map<String, dynamic> message) async {
           print("onMessage: $message");
@@ -58,19 +58,19 @@ class _LaunchPageState extends State<LaunchPage> {
           print("onResume: $message");
         },
       );
+      Future(() async {
+        try {
+          await sl<LoginUseCase>()(NoParams());
+          Navigator.popAndPushNamed(context, CountryListPage.routeName);
+        } on ServerException {
+          logger.e(SERVER_FAILURE_MESSAGE);
+        }
+      });
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    Future.delayed(Duration(seconds: 2), () async {
-      try {
-        await sl<LoginUseCase>()(NoParams());
-        Navigator.popAndPushNamed(context, '/country/list');
-      } on ServerException {
-        logger.e(SERVER_FAILURE_MESSAGE);
-      }
-    });
     return Material(
         type: MaterialType.transparency,
         child: Container(
@@ -81,10 +81,7 @@ class _LaunchPageState extends State<LaunchPage> {
             child: Center(
                 child: Text(
               "travelable",
-              style: TextStyle(
-                  color: Color.fromRGBO(245, 245, 245, 1),
-                  fontSize: 34,
-                  fontStyle: FontStyle.normal),
+              style: TextStyle(color: Color.fromRGBO(245, 245, 245, 1), fontSize: 34, fontStyle: FontStyle.normal),
             )),
           ),
         )));

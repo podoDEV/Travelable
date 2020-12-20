@@ -14,7 +14,7 @@ class LoginUseCase implements UseCase<void, NoParams> {
   final UserRepository repository;
 
   LoginUseCase(this.repository);
-  
+
   @override
   Future<Either<Failure, void>> call(NoParams params) async {
     return await repository.login();

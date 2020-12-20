@@ -18,4 +18,6 @@ abstract class CountryRepository {
   Future<Either<Failure, void>> unpinCountry({int id});
 
   Future<Either<Failure, List<Notice>>> notices();
+
+  Future<Either<Failure, void>> setAlarm({int id, bool enabled});
 }

@@ -173,4 +173,18 @@ class CountryRepositoryImpl implements CountryRepository {
       }
     }
   }
+
+  @override
+  Future<Either<Failure, void>> setAlarm({int id, bool enabled}) async {
+    if (await networkInfo.isConnected) {
+      try {
+        await remoteDataSource.setAlarm(id, enabled);
+        return Right(null);
+      } on ServerException {
+        return Left(ServerFailure());
+      }
+    } else {
+      return Left(CacheFailure());
+    }
+  }
 }

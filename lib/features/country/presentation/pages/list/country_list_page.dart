@@ -24,8 +24,13 @@ class _CountryListPageState extends State<CountryListPage> {
   BlocProvider<CountryBloc> buildBody(BuildContext context) {
     return BlocProvider(
         create: (_) => sl<CountryBloc>(),
-        child:
-            BlocBuilder<CountryBloc, CountryState>(builder: (context, state) {
+        child: BlocBuilder<CountryBloc, CountryState>(
+            buildWhen: (previousState, state) {
+          if (state is SetAlarmFinished) {
+            return false;
+          }
+          return true;
+        }, builder: (context, state) {
           if (state is Empty) {
             return CountryListLandingPage();
           } else if (state is PinnedLoaded) {

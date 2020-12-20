@@ -19,4 +19,6 @@ abstract class CountryRemoteDataSource {
   Future<void> unpinCountry(int countryId);
 
   Future<List<Notice>> getNotices();
+
+  Future<void> setAlarm(int countryId, bool enabled);
 }
