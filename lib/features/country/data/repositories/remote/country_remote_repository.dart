@@ -62,16 +62,16 @@ class CountryRemoteRepository implements CountryRemoteDataSource {
   }
 
   @override
-  Future<List<Notice>> getNotices() async {
-    final requestModel = NoticesGetRequestModel();
-    final response = await provider.send(NoticesGetRequest(requestModel));
-    return NoticesGetResponseModel.fromMap(response).notices;
-  }
-
-  @override
   Future<void> setAlarm(int countryId, bool enabled) async {
     final requestModel = CountryAlarmPostRequestModel(countryId, enabled);
     final response = await provider.send(CountryAlarmPostRequest(requestModel));
     return null;
+  }
+
+  @override
+  Future<List<Notice>> getNotices() async {
+    final requestModel = NoticesGetRequestModel();
+    final response = await provider.send(NoticesGetRequest(requestModel));
+    return NoticesGetResponseModel.fromMap(response).notices;
   }
 }

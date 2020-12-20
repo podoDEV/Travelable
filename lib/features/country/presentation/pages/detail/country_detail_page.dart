@@ -1,11 +1,11 @@
+import 'package:emergency/features/country/presentation/pages/detail/widgets/country_detail_info_widget.dart';
+import 'package:emergency/features/country/presentation/pages/detail/widgets/country_detail_notices_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../../injection_container.dart';
 import '../../../domain/entities/country.dart';
 import '../../bloc/country_bloc.dart';
-import 'country_detail_info_page.dart';
-import 'country_detail_notices_page.dart';
 
 class CountryDetailPageArguments {
   final Country country;
@@ -160,8 +160,8 @@ class _CountryDetailPageState extends State<CountryDetailPage> {
           });
         },
         children: <Widget>[
-          CountryDetailInfoPage(country: country),
-          CountryDetailNoticesPage(country: country)
+          CountryDetailInfoWidget(country: country),
+          CountryDetailNoticesWidget(country: country)
         ],
       ),
     );

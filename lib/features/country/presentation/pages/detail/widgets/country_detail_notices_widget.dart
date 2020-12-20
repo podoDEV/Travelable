@@ -1,11 +1,10 @@
+import 'package:emergency/features/country/domain/entities/country.dart';
 import 'package:flutter/material.dart';
 
-import '../../../domain/entities/country.dart';
-
-class CountryDetailNoticesPage extends StatelessWidget {
+class CountryDetailNoticesWidget extends StatelessWidget {
   final Country country;
 
-  const CountryDetailNoticesPage({@required this.country});
+  const CountryDetailNoticesWidget({@required this.country});
 
   @override
   Widget build(BuildContext context) {
