@@ -14,15 +14,6 @@ class GetCountrySearchResult extends CountryEvent {
   List<Object> get props => [keyword];
 }
 
-class GetCountryDetail extends CountryEvent {
-  final int countryId;
-
-  GetCountryDetail(this.countryId);
-
-  @override
-  List<Object> get props => [countryId];
-}
-
 class GetPinnedCountries extends CountryEvent {
   GetPinnedCountries();
 

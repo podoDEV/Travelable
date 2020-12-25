@@ -1,7 +1,4 @@
 import 'package:data_connection_checker/data_connection_checker.dart';
-import 'package:emergency/features/country/domain/usecases/get_pinned_countries_usecase.dart';
-import 'package:emergency/features/country/domain/usecases/pin_country_usecase.dart';
-import 'package:emergency/features/country/domain/usecases/unpin_country_usecase.dart';
 import 'package:get_it/get_it.dart';
 import 'package:http/http.dart';
 
@@ -17,10 +14,12 @@ import 'features/country/data/repositories/local/country_local_repository.dart';
 import 'features/country/data/repositories/remote/country_remote_repository.dart';
 import 'features/country/domain/repositories/country_repository.dart';
 import 'features/country/domain/usecases/get_all_countries_usecase.dart';
-import 'features/country/domain/usecases/get_country_usecase.dart';
 import 'features/country/domain/usecases/get_indexing_usecase.dart';
+import 'features/country/domain/usecases/get_pinned_countries_usecase.dart';
+import 'features/country/domain/usecases/pin_country_usecase.dart';
 import 'features/country/domain/usecases/search_countries_usecase.dart';
 import 'features/country/domain/usecases/set_alarm_usecase.dart';
+import 'features/country/domain/usecases/unpin_country_usecase.dart';
 import 'features/country/presentation/bloc/country_bloc.dart';
 import 'features/member/data/repositories/user_repository_impl.dart';
 import 'features/member/domain/repositories/user_repository.dart';
@@ -35,7 +34,6 @@ Future<void> init() async {
     () => CountryBloc(
       allCountriesUseCase: sl(),
       pinnedCountriesUseCase: sl(),
-      countryUseCase: sl(),
       searchCountriesUseCase: sl(),
       pinCountryUseCase: sl(),
       unpinCountryUseCase: sl(),
@@ -48,7 +46,6 @@ Future<void> init() async {
   // Use cases
   sl.registerLazySingleton(() => GetAllCountriesUseCase(sl()));
   sl.registerLazySingleton(() => GetPinnedCountriesUseCase(sl()));
-  sl.registerLazySingleton(() => GetCountryUseCase(sl()));
   sl.registerLazySingleton(() => SearchCountriesUseCase(sl()));
   sl.registerLazySingleton(() => PinCountryUseCase(sl()));
   sl.registerLazySingleton(() => UnpinCountryUseCase(sl()));

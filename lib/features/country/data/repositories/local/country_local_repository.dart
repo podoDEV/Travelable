@@ -1,3 +1,4 @@
+import 'package:emergency/core/logger.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -11,7 +12,7 @@ class CountryLocalRepository implements CountryLocalDataSource {
     return openDatabase(join(path, 'emergence_database.db'),
         onCreate: (db, version) {
       return db.execute(NewCountriesCommand().query);
-    }, version: 1);
+    }, version: 2);
   });
 
   @override
@@ -30,8 +31,15 @@ class CountryLocalRepository implements CountryLocalDataSource {
 
   @override
   Future<void> insertCountries(List<Country> countries) async {
-    final Database db = await database;
-    // await db.insert('countries', countries)
+    // final Database db = await database;
+    // var batch = db.batch();
+    // countries.forEach((country) {
+    //   batch.insert('countries', country.toMap(),
+    //       conflictAlgorithm: ConflictAlgorithm.replace);
+    // });
+    // var results = batch.commit();
+    // logger.d(results);
+    return null;
   }
 
   @override

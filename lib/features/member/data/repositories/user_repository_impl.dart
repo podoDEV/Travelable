@@ -54,7 +54,7 @@ class UserRepositoryImpl implements UserRepository {
 
   Future<String> getFcmToken() async {
     String fcmToken = await fcm.getToken();
-
+    logger.d(fcmToken);
     return fcmToken;
   }
 

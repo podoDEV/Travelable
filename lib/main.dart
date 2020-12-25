@@ -1,7 +1,7 @@
-import 'package:emergency/features/app/setting_page.dart';
 import 'package:flutter/material.dart';
 
 import 'features/app/launch_page.dart';
+import 'features/app/setting_page.dart';
 import 'features/country/presentation/pages/detail/country_detail_page.dart';
 import 'features/country/presentation/pages/list/country_list_page.dart';
 import 'features/country/presentation/pages/search/country_search_page.dart';
@@ -23,7 +23,6 @@ class MyApp extends StatelessWidget {
       SettingPage.routeName: (context) => SettingPage()
     };
     return MaterialApp(
-      title: 'Flutter Demo',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),

@@ -3,21 +3,21 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>1046767576236-18ncp39hv34lce20hhsd2m3p1puh6v8l.apps.googleusercontent.com</string>
+	<string>469567688242-tvrlmtsnh8mhh15tafq2fckhipaqgjvs.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.1046767576236-18ncp39hv34lce20hhsd2m3p1puh6v8l</string>
+	<string>com.googleusercontent.apps.469567688242-tvrlmtsnh8mhh15tafq2fckhipaqgjvs</string>
 	<key>API_KEY</key>
-	<string>AIzaSyCvoYPUiiSc2Dmj1KiZvt93JZmnckETj2M</string>
+	<string>AIzaSyCIfrPqiDfbbHVwzzLHEy3WzetO3k4C7Fg</string>
 	<key>GCM_SENDER_ID</key>
-	<string>1046767576236</string>
+	<string>469567688242</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.podo.emergency</string>
+	<string>com.podo.travelable</string>
 	<key>PROJECT_ID</key>
-	<string>emergency-aacad</string>
+	<string>travelable-607c2</string>
 	<key>STORAGE_BUCKET</key>
-	<string>emergency-aacad.appspot.com</string>
+	<string>travelable-607c2.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -29,8 +29,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:1046767576236:ios:7eb9c56d0e45c0e987eb09</string>
-	<key>DATABASE_URL</key>
-	<string>https://emergency-aacad.firebaseio.com</string>
+	<string>1:469567688242:ios:c43bcff2d74194a3d4362b</string>
 </dict>
 </plist>

@@ -44,7 +44,7 @@ class Country {
       this.endAt});
 
   Map<String, dynamic> toMap() {
-    return {'id': id, 'names': names, 'pinned': pinned};
+    return {'id': id, 'pinned': pinned};
   }
 
   factory Country.fromMap(Map<String, dynamic> map) {

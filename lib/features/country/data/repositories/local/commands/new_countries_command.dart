@@ -6,5 +6,5 @@ class NewCountriesCommand extends DatabaseCommand {
 
   @override
   String get query =>
-      "CREATE TABLE countries(id INTEGER PRIMARY KEY, name TEXT)";
+      "CREATE TABLE countries(id INTEGER PRIMARY KEY, pinned INTEGER)";
 }

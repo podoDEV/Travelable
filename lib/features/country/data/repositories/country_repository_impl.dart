@@ -26,7 +26,6 @@ class CountryRepositoryImpl implements CountryRepository {
 
   @override
   Future<Either<Failure, List<Country>>> countries() async {
-    // return Right(Country.mocks);
     if (await networkInfo.isConnected) {
       try {
         final countries = await remoteDataSource.getCountries();
@@ -101,32 +100,6 @@ class CountryRepositoryImpl implements CountryRepository {
         } on CacheException {
           return Left(CacheFailure());
         }
-      }
-    }
-  }
-
-  @override
-  Future<Either<Failure, Country>> countryBy({int id}) async {
-    return Right(Country.mocks.first);
-    if (await networkInfo.isConnected) {
-      try {
-        final country = await remoteDataSource.getCountryBy(id);
-        localDataSource.updateCountry(country);
-        if (cachedCountries.isNotEmpty) {
-          var replaceIndex =
-              cachedCountries.indexWhere((e) => e.id == country.id);
-          if (replaceIndex >= 0) cachedCountries[replaceIndex] = country;
-        }
-        return Right(country);
-      } on ServerException {
-        return Left(ServerFailure());
-      }
-    } else {
-      try {
-        final country = await localDataSource.getCountryBy(id);
-        return Right(country);
-      } on CacheException {
-        return Left(CacheFailure());
       }
     }
   }

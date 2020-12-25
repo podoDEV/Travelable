@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:emergency/features/country/presentation/pages/list/country_list_page.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 
@@ -11,6 +10,7 @@ import '../../core/logger.dart';
 import '../../core/usecases/usecase.dart';
 import '../../injection_container.dart';
 import '../country/presentation/bloc/country_bloc.dart';
+import '../country/presentation/pages/list/country_list_page.dart';
 import '../member/domain/usecases/login_usecase.dart';
 
 class LaunchPage extends StatefulWidget {
@@ -26,47 +26,7 @@ class _LaunchPageState extends State<LaunchPage> {
   @override
   void initState() {
     super.initState();
-    if (Platform.isIOS) {
-      iosSubscription = fcm.onIosSettingsRegistered.listen((data) {
-        // save the token
-      });
-
-      fcm.requestNotificationPermissions(IosNotificationSettings());
-      fcm.configure(
-        onMessage: (Map<String, dynamic> message) async {
-          print("onMessage: $message");
-          showDialog(
-            context: context,
-            builder: (context) => AlertDialog(
-              content: ListTile(
-                title: Text(message['notification']['title']),
-                subtitle: Text(message['notification']['body']),
-              ),
-              actions: <Widget>[
-                FlatButton(
-                  child: Text('Ok'),
-                  onPressed: () => Navigator.of(context).pop(),
-                ),
-              ],
-            ),
-          );
-        },
-        onLaunch: (Map<String, dynamic> message) async {
-          print("onLaunch: $message");
-        },
-        onResume: (Map<String, dynamic> message) async {
-          print("onResume: $message");
-        },
-      );
-      Future(() async {
-        try {
-          await sl<LoginUseCase>()(NoParams());
-          Navigator.popAndPushNamed(context, CountryListPage.routeName);
-        } on ServerException {
-          logger.e(SERVER_FAILURE_MESSAGE);
-        }
-      });
-    }
+    firebaseCloudMessagingListeners();
   }
 
   @override
@@ -81,9 +41,61 @@ class _LaunchPageState extends State<LaunchPage> {
             child: Center(
                 child: Text(
               "travelable",
-              style: TextStyle(color: Color.fromRGBO(245, 245, 245, 1), fontSize: 34, fontStyle: FontStyle.normal),
+              style: TextStyle(
+                  color: Color.fromRGBO(245, 245, 245, 1),
+                  fontSize: 34,
+                  fontStyle: FontStyle.normal),
             )),
           ),
         )));
+  }
+
+  void firebaseCloudMessagingListeners() {
+    if (Platform.isIOS) iosPermission();
+
+    fcm.requestNotificationPermissions(IosNotificationSettings());
+    fcm.configure(
+      onMessage: (Map<String, dynamic> message) async {
+        print("onMessage: $message");
+        showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            content: ListTile(
+              title: Text(message['notification']['title']),
+              subtitle: Text(message['notification']['body']),
+            ),
+            actions: <Widget>[
+              FlatButton(
+                child: Text('Ok'),
+                onPressed: () => Navigator.of(context).pop(),
+              ),
+            ],
+          ),
+        );
+      },
+      onLaunch: (Map<String, dynamic> message) async {
+        print("onLaunch: $message");
+      },
+      onResume: (Map<String, dynamic> message) async {
+        print("onResume: $message");
+      },
+    );
+    Future(() async {
+      try {
+        await sl<LoginUseCase>()(NoParams());
+        Navigator.popAndPushNamed(context, CountryListPage.routeName);
+      } on ServerException {
+        logger.e(SERVER_FAILURE_MESSAGE);
+      }
+    });
+    // }
+  }
+
+  void iosPermission() {
+    fcm.requestNotificationPermissions(
+        IosNotificationSettings(sound: true, badge: true, alert: true));
+    fcm.onIosSettingsRegistered.listen((IosNotificationSettings settings) {
+      print("Settings registered: $settings");
+    });
   }
 }

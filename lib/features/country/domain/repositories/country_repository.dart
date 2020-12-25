@@ -11,8 +11,6 @@ abstract class CountryRepository {
 
   Future<Either<Failure, List<Country>>> countriesBy({String name});
 
-  Future<Either<Failure, Country>> countryBy({int id});
-
   Future<Either<Failure, void>> pinCountry({int id});
 
   Future<Either<Failure, void>> unpinCountry({int id});

@@ -38,8 +38,8 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.podo.emergency"
-        minSdkVersion 16
+        applicationId "com.podo.travelable"
+        minSdkVersion 21
         targetSdkVersion 28
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName

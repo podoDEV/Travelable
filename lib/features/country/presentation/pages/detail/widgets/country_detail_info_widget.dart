@@ -101,7 +101,7 @@ class CountryDetailInfoWidget extends StatelessWidget {
           _getCountryDetailEmbassyAddressInfoWidget(country),
           SizedBox(height: 30),
           _getCountryDetailEmbassyEmailInfoWidget(country),
-          SizedBox(height: 90),
+          SizedBox(height: 60),
           _getCountryDetailEmbassyMoreInfoWidget(country),
           SizedBox(height: 50)
         ],
@@ -219,7 +219,7 @@ class CountryDetailInfoWidget extends StatelessWidget {
 
   Widget _getCountryDetailEmbassyMoreInfoWidget(Country country) {
     return Container(
-        padding: EdgeInsets.only(left: 51, right: 51),
+        padding: EdgeInsets.only(left: 31, right: 31),
         width: double.infinity,
         height: 56,
         child: OutlineButton(

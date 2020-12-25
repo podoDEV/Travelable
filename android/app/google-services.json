@@ -1,41 +1,40 @@
 {
   "project_info": {
-    "project_number": "1046767576236",
-    "firebase_url": "https://emergency-aacad.firebaseio.com",
-    "project_id": "emergency-aacad",
-    "storage_bucket": "emergency-aacad.appspot.com"
+    "project_number": "469567688242",
+    "project_id": "travelable-607c2",
+    "storage_bucket": "travelable-607c2.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1046767576236:android:aa82a4670a19f0bb87eb09",
+        "mobilesdk_app_id": "1:469567688242:android:4f49a5f8ede28faed4362b",
         "android_client_info": {
-          "package_name": "com.podo.emergency"
+          "package_name": "com.podo.travelable"
         }
       },
       "oauth_client": [
         {
-          "client_id": "1046767576236-ku3nlbbk3g03faf9oo60oej1c8vl7vmc.apps.googleusercontent.com",
+          "client_id": "469567688242-u0d71k601hr7sddcmmku631jubaf3int.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCSBzz-pmi7fRulJmaPvrUvNRkSZhruQw4"
+          "current_key": "AIzaSyCHLZW1JK8dAIv0SA8uWB0FJfR2rE_xIqM"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "1046767576236-ku3nlbbk3g03faf9oo60oej1c8vl7vmc.apps.googleusercontent.com",
+              "client_id": "469567688242-u0d71k601hr7sddcmmku631jubaf3int.apps.googleusercontent.com",
               "client_type": 3
             },
             {
-              "client_id": "1046767576236-18ncp39hv34lce20hhsd2m3p1puh6v8l.apps.googleusercontent.com",
+              "client_id": "469567688242-tvrlmtsnh8mhh15tafq2fckhipaqgjvs.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.podo.emergency"
+                "bundle_id": "com.podo.travelable"
               }
             }
           ]
