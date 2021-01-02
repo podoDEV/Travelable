@@ -1,10 +1,11 @@
-import 'package:emergency/core/logger.dart';
-import 'package:emergency/features/country/domain/entities/country.dart';
-import 'package:emergency/features/country/domain/entities/tel.dart';
-import 'package:emergency/features/country/presentation/widgets/separator_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:maps_launcher/maps_launcher.dart';
 import 'package:url_launcher/url_launcher.dart';
+
+import '../../../../../../core/logger.dart';
+import '../../../../domain/entities/country.dart';
+import '../../../../domain/entities/tel.dart';
+import '../../../widgets/separator_widget.dart';
 
 class CountryDetailInfoWidget extends StatelessWidget {
   final Country country;

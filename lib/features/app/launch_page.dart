@@ -4,17 +4,14 @@ import 'dart:io';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 
-import '../../core/error/exceptions.dart';
 import '../../core/helpers/FCM.dart';
-import '../../core/logger.dart';
 import '../../core/usecases/usecase.dart';
 import '../../injection_container.dart';
-import '../country/presentation/bloc/country_bloc.dart';
 import '../country/presentation/pages/list/country_list_page.dart';
 import '../member/domain/usecases/login_usecase.dart';
 
 class LaunchPage extends StatefulWidget {
-  static const routeName = '/';
+  static const routeName = '/launch';
 
   @override
   _LaunchPageState createState() => _LaunchPageState();
@@ -27,6 +24,15 @@ class _LaunchPageState extends State<LaunchPage> {
   void initState() {
     super.initState();
     firebaseCloudMessagingListeners();
+    // initService();
+  }
+
+  initService() {
+    Future.delayed(
+        Duration(seconds: 1),
+        () => sl<LoginUseCase>()(NoParams()).then((_) =>
+            Navigator.pushReplacementNamed(
+                context, CountryListPage.routeName)));
   }
 
   @override
@@ -80,15 +86,6 @@ class _LaunchPageState extends State<LaunchPage> {
         print("onResume: $message");
       },
     );
-    Future(() async {
-      try {
-        await sl<LoginUseCase>()(NoParams());
-        Navigator.popAndPushNamed(context, CountryListPage.routeName);
-      } on ServerException {
-        logger.e(SERVER_FAILURE_MESSAGE);
-      }
-    });
-    // }
   }
 
   void iosPermission() {
