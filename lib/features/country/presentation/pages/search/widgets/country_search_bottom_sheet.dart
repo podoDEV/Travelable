@@ -27,7 +27,7 @@ class _CountrySearchBottomSheetState extends State<CountrySearchBottomSheet> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 390,
+      height: 310,
       padding: EdgeInsets.only(top: 13, left: 17, right: 17, bottom: 39),
       child: Column(children: <Widget>[
         _getCountryDetailBottomSheetHandlerWidget(),
@@ -37,8 +37,8 @@ class _CountrySearchBottomSheetState extends State<CountrySearchBottomSheet> {
         _getCountryDetailBottomSheetSeparator(),
         SizedBox(height: 19),
         _getCountryDetailBottomSheetInfoWidget(),
-        SizedBox(height: 17),
-        _getCountryDetailBottomSheetSeparator(),
+        // SizedBox(height: 17),
+        // _getCountryDetailBottomSheetSeparator(),
         SizedBox(height: 19),
         _getCountryDetailBottomSheetRegistWidget(context)
       ]),
@@ -113,10 +113,10 @@ class _CountrySearchBottomSheetState extends State<CountrySearchBottomSheet> {
               ],
             ),
           ),
-          SizedBox(
-            height: 10,
-          ),
-          CountryCovidWidget(covid: country.covid)
+          // SizedBox(
+          //   height: 10,
+          // ),
+          // CountryCovidWidget(covid: country.covid)
         ],
       ),
     );

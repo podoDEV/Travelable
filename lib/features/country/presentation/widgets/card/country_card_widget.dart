@@ -39,6 +39,7 @@ class CountryCardWidget extends StatelessWidget {
                       children: <Widget>[
                         CountryPrecautionLevelTagBar(country: country),
                         SizedBox(height: 14),
+
                         Container(
                             child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -50,47 +51,75 @@ class CountryCardWidget extends StatelessWidget {
                                   fontWeight: FontWeight.w700,
                                   color: Color.fromRGBO(48, 48, 48, 1)),
                             ),
-                            Text(
-                              '일정을 등록해주세요.',
-                              style: TextStyle(
-                                  fontSize: 13,
-                                  fontWeight: FontWeight.w500,
-                                  color: Color.fromRGBO(116, 116, 116, 1)),
-                            )
+                            Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                children: [
+                                  Expanded(
+                                      child: Text(
+                                    '일정을 등록해주세요.',
+                                    style: TextStyle(
+                                        fontSize: 13,
+                                        fontWeight: FontWeight.w500,
+                                        color:
+                                            Color.fromRGBO(116, 116, 116, 1)),
+                                  )),
+                                  Container(
+                                      width: 24,
+                                      height: 24,
+                                      child: FlatButton(
+                                          padding: EdgeInsets.zero,
+                                          splashColor: Colors.transparent,
+                                          highlightColor: Colors.transparent,
+                                          onPressed: () {
+                                            final bloc =
+                                                BlocProvider.of<CountryBloc>(
+                                                    context);
+                                            showModalBottomSheet(
+                                                context: context,
+                                                builder: (BuildContext bc) {
+                                                  return CountryEditBottomSheet(
+                                                      bloc: bloc,
+                                                      country: country);
+                                                });
+                                          },
+                                          child: Image.asset(
+                                              'images/btn_more.png'))),
+                                ]),
                           ],
                         )),
-                        SizedBox(height: 12),
-                        SeparatorWidget(
-                            height: 2, color: Color.fromRGBO(236, 236, 236, 1)),
-                        SizedBox(height: 16),
-                        Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            children: [
-                              Expanded(
-                                  child:
-                                      CountryCovidWidget(covid: country.covid)),
-                              Container(
-                                  width: 24,
-                                  height: 24,
-                                  child: FlatButton(
-                                      padding: EdgeInsets.zero,
-                                      splashColor: Colors.transparent,
-                                      highlightColor: Colors.transparent,
-                                      onPressed: () {
-                                        final bloc =
-                                            BlocProvider.of<CountryBloc>(
-                                                context);
-                                        showModalBottomSheet(
-                                            context: context,
-                                            builder: (BuildContext bc) {
-                                              return CountryEditBottomSheet(
-                                                  bloc: bloc, country: country);
-                                            });
-                                      },
-                                      child:
-                                          Image.asset('images/btn_more.png'))),
-                            ])
+                        // SizedBox(height: 12),
+                        // SeparatorWidget(
+                        //     height: 2, color: Color.fromRGBO(236, 236, 236, 1)),
+                        // SizedBox(height: 16),
+                        // Row(
+                        //     mainAxisAlignment: MainAxisAlignment.start,
+                        //     crossAxisAlignment: CrossAxisAlignment.end,
+                        //     children: [
+                        //       Expanded(
+                        //           child:
+                        //               CountryCovidWidget(covid: country.covid)),
+                        //       Container(
+                        //           width: 24,
+                        //           height: 24,
+                        //           child: FlatButton(
+                        //               padding: EdgeInsets.zero,
+                        //               splashColor: Colors.transparent,
+                        //               highlightColor: Colors.transparent,
+                        //               onPressed: () {
+                        //                 final bloc =
+                        //                     BlocProvider.of<CountryBloc>(
+                        //                         context);
+                        //                 showModalBottomSheet(
+                        //                     context: context,
+                        //                     builder: (BuildContext bc) {
+                        //                       return CountryEditBottomSheet(
+                        //                           bloc: bloc, country: country);
+                        //                     });
+                        //               },
+                        //               child:
+                        //                   Image.asset('images/btn_more.png'))),
+                        //     ])
                       ])))),
     );
   }
