@@ -51,7 +51,7 @@ class _CountryDetailPageState extends State<CountryDetailPage> {
         child: Column(
           children: <Widget>[
             _getCountryDetailNavigationBarWidget(context, country),
-            _getCountryDetailPageBarWidget(),
+            // _getCountryDetailPageBarWidget(),
             _getCountryDetailPageBody(country)
           ],
         ));

@@ -59,7 +59,7 @@ class _CountryListPageState extends State<CountryListPage> {
                 ),
                 SizedBox(height: 24),
                 Text(
-                  '나라를 등록해서 코로나 19 현황과\n 위급 상황 시 필요한 연락처를 알아두세요.',
+                  '나라를 등록해서\n위급 상황 시 필요한 연락처를 알아두세요.',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                       fontSize: 18,

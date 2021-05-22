@@ -18,7 +18,7 @@ class CountryCovidWidget extends StatelessWidget {
         Row(
           children: <Widget>[
             Text(
-              '코로나 현황',
+              '현황',
               style: TextStyle(
                   fontSize: 15,
                   fontWeight: FontWeight.w700,
